@@ -12,31 +12,25 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //~ Initialize Dependencies
-  await EasyLocalization.ensureInitialized();
+  //await EasyLocalization.ensureInitialized();
 
   //~ Initialize Instances
   Injection.I.init();
   await CacheManager.I.init();
 
   //~ Initialize Providers
-  final localizationNotifier = LocalizationNotifier();
-  await localizationNotifier.init();
+ // final localizationNotifier = LocalizationNotifier();
 
   final themeNotifier = ThemeNotifier();
   await themeNotifier.init();
 
   runApp(
-    EasyLocalization(
-      path: AppLocaliaztionsEnum.translationsJsonAssetsFolder,
-      supportedLocales: LocalizationNotifier.supportedLocales,
-      fallbackLocale: LocalizationNotifier.fallbackLocale,
-      child: MultiProvider(
+    MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (_) => localizationNotifier),
           ChangeNotifierProvider(create: (_) => themeNotifier),
         ],
         child: const MyApp(),
       ),
-    ),
+
   );
 }

@@ -30,9 +30,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       theme: themeNotifier.currentTheme.theme.getThemeData(false),
       darkTheme: themeNotifier.currentTheme.theme.getThemeData(true),
       themeMode: themeNotifier.currentThemeMode,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.watch<LocalizationNotifier>().appLang.locale,
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
     );

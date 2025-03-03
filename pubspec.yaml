@@ -33,6 +33,8 @@ dependencies:
 
   #~ Utils
   share_plus: ^10.1.4
+  pie_chart: ^5.4.0
+  sleek_circular_slider: ^2.0.1
 
   penta_core:
     git:
@@ -54,3 +56,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+
