@@ -1,20 +1,42 @@
+import 'package:calory_tool/app.dart';
+import 'package:calory_tool/core/cache/cache_manager.dart';
+import 'package:calory_tool/core/configs/enums/app_localiaztions_enum.dart';
+import 'package:calory_tool/core/providers/localization_notifier.dart';
+import 'package:calory_tool/core/providers/theme_notifier.dart';
+import 'package:calory_tool/injections/injection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  //~ Initialize Dependencies
+  await EasyLocalization.ensureInitialized();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+  //~ Initialize Instances
+  Injection.I.init();
+  await CacheManager.I.init();
+
+  //~ Initialize Providers
+  final localizationNotifier = LocalizationNotifier();
+  await localizationNotifier.init();
+
+  final themeNotifier = ThemeNotifier();
+  await themeNotifier.init();
+
+  runApp(
+    EasyLocalization(
+      path: AppLocaliaztionsEnum.translationsJsonAssetsFolder,
+      supportedLocales: LocalizationNotifier.supportedLocales,
+      fallbackLocale: LocalizationNotifier.fallbackLocale,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => localizationNotifier),
+          ChangeNotifierProvider(create: (_) => themeNotifier),
+        ],
+        child: const MyApp(),
       ),
-    );
-  }
+    ),
+  );
 }

@@ -1,0 +1,40 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:calory_tool/core/providers/localization_notifier.dart';
+import 'package:calory_tool/core/providers/theme_notifier.dart';
+import 'package:calory_tool/core/router/app_router.dart';
+import 'package:provider/provider.dart';
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void didChangePlatformBrightness() {
+    context.read<ThemeNotifier>().updateSystemThemeMode();
+
+    super.didChangePlatformBrightness();
+  }
+
+  final _appRouter = AppRouter();
+
+  @override
+  Widget build(BuildContext context) {
+    final themeNotifier = context.watch<ThemeNotifier>();
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: themeNotifier.currentTheme.theme.getThemeData(false),
+      darkTheme: themeNotifier.currentTheme.theme.getThemeData(true),
+      themeMode: themeNotifier.currentThemeMode,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.watch<LocalizationNotifier>().appLang.locale,
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
+    );
+  }
+}
