@@ -1,9 +1,9 @@
-import FoodModel from "./FoodModel";
+import FoodModel from "./FoodModel.js";
 
 class FoodSearchModel {
-  constructor({ pageNumber, foods }) {
+  constructor({ pageNumber, food }) {
     this.pageNumber = pageNumber;
-    this.foods = foods;
+    this.food = food;
   }
 
   static fromJson(json) {
@@ -11,14 +11,14 @@ class FoodSearchModel {
     const foodJson = foodsJson ? foodsJson["food"] : null;
     return new FoodSearchModel({
       pageNumber: foodsJson ? foodsJson["page_number"] : null,
-      foods: foodJson ? FoodModel.fromJson(foodJson) : null,
+      food: foodJson ? FoodModel.fromJson(foodJson) : null,
     });
   }
 
   toJson() {
     return {
       page_number: this.pageNumber,
-      foods: this.foods ? this.foods.toJson() : null,
+      food: this.food ? this.food.toJson() : null,
     };
   }
 }

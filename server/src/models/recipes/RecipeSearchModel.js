@@ -1,4 +1,4 @@
-import RecipeModel from "./RecipeModel";
+import RecipeModel from "./RecipeModel.js";
 
 class RecipeSearchModel {
   constructor({ pageNumber = null, recipeModel = null } = {}) {

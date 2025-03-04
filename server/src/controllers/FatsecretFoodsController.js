@@ -1,4 +1,4 @@
-import FatsecretFoodsService from "../services/FatsecretFoodService";
+import FatsecretFoodsService from "../services/FatsecretFoodsService.js";
 
 class FatsecretFoodsController {
   async search(req, res) {

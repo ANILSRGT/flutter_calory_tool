@@ -1,4 +1,4 @@
-import { post } from "axios";
+import axios from "axios";
 
 const getAccessToken = async () => {
   const FATSECRET_CLIENT_ID = process.env.FATSECRET_CLIENT_ID;
@@ -6,7 +6,7 @@ const getAccessToken = async () => {
   const TOKEN_URL = "https://oauth.fatsecret.com/connect/token";
 
   try {
-    const response = await post(
+    const response = await axios.post(
       TOKEN_URL,
       new URLSearchParams({
         grant_type: "client_credentials",
@@ -28,4 +28,4 @@ const getAccessToken = async () => {
   }
 };
 
-export default { getAccessToken };
+export { getAccessToken };

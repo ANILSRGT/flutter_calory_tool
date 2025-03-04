@@ -1,6 +1,6 @@
 import axios from "axios";
-import { fatsecretApiKey } from "../../index";
-import FoodSearchModel from "../models/foods/FoodSearchModel";
+import { fatsecretApiKey } from "../../index.js";
+import FoodSearchModel from "../models/foods/FoodSearchModel.js";
 
 class FatsecretFoodService {
   async searchFoods(query) {
@@ -15,13 +15,13 @@ class FatsecretFoodService {
         }
       );
 
-      if (!response.data) {
+      if (!response.data || response.data.error) {
         return { message: "No data found", status: 404 };
       }
 
       return { data: FoodSearchModel.fromJson(response.data), status: 200 };
     } catch (error) {
-      return { message: "Something went wrong" };
+      return { message: "Something went wrong", status: 500 };
     }
   }
 }

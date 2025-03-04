@@ -1,7 +1,8 @@
 import { Router } from "express";
+import FatsecretFoodsController from "../controllers/FatsecretFoodsController.js";
 
 const router = Router();
 
-router.get("/foods", getFoods);
+router.get("/search", FatsecretFoodsController.search);
 
 export default router;

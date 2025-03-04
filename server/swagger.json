@@ -1,0 +1,184 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server for a calorie tracking tool.",
+    "version": "1.0.0",
+    "title": "Calory Tool API",
+    "contact": {
+      "email": "support@calorytool.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/foods/search": {
+      "get": {
+        "tags": [
+          "Foods"
+        ],
+        "summary": "Search for foods",
+        "description": "Search for foods by name",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "The search query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/FoodSearchResult"
+            }
+          },
+          "400": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/recipes/search": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Search for recipes",
+        "description": "Search for recipes by name",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "The search query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/RecipeSearchResult"
+            }
+          },
+          "400": {
+            "description": "Not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FoodSearchResult": {
+      "type": "object",
+      "properties": {
+        "page_number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "foods": {
+          "$ref": "#/definitions/Food"
+        }
+      }
+    },
+    "Food": {
+      "type": "object",
+      "properties": {
+        "brand_name": {
+          "type": "string"
+        },
+        "food_description": {
+          "type": "string"
+        },
+        "food_id": {
+          "type": "string"
+        },
+        "food_name": {
+          "type": "string"
+        },
+        "food_type": {
+          "type": "string"
+        },
+        "food_url": {
+          "type": "string"
+        }
+      }
+    },
+    "RecipeSearchResult": {
+      "type": "object",
+      "properties": {
+        "page_number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "recipes": {
+          "$ref": "#/definitions/Recipe"
+        }
+      }
+    },
+    "Recipe": {
+      "type": "object",
+      "properties": {
+        "recipe_description": {
+          "type": "string"
+        },
+        "recipe_id": {
+          "type": "string"
+        },
+        "recipe_image": {
+          "type": "string"
+        },
+        "recipe_ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recipe_name": {
+          "type": "string"
+        },
+        "recipe_nutrition": {
+          "$ref": "#/definitions/RecipeNutrition"
+        },
+        "recipe_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RecipeNutrition": {
+      "type": "object",
+      "properties": {
+        "calories": {
+          "type": "number",
+          "format": "double"
+        },
+        "carbs": {
+          "type": "number",
+          "format": "double"
+        },
+        "fat": {
+          "type": "number",
+          "format": "double"
+        },
+        "protein": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    }
+  }
+}
