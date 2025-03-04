@@ -9,14 +9,6 @@ class FoodPreferenceModel {
     );
   }
 
-  factory FoodPreferenceModel.fromMap(Map<String, dynamic> map) {
-    return FoodPreferenceModel(
-      id: map['id'] as String?,
-      name: map['name'] as String?,
-      value: map['value'] as bool?,
-    );
-  }
-
   final String? id;
   final String? name;
   final bool? value;

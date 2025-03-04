@@ -1,4 +1,4 @@
-import 'package:calory_tool/data/models/food_search_model.dart';
+import 'package:calory_tool/data/models/food/food_search_model.dart';
 import 'package:calory_tool/data/params/fatsecret_api_search_food_params.dart';
 import 'package:dio/dio.dart';
 import 'package:penta_core/penta_core.dart';

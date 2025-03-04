@@ -1,5 +1,5 @@
 class FoodServingModel {
-  FoodServingModel({
+  const FoodServingModel({
     this.servingId,
     this.servingDescription,
     this.servingUrl,

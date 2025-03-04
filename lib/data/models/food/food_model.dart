@@ -1,6 +1,6 @@
-import 'package:calory_tool/data/models/food_allergen_model.dart';
-import 'package:calory_tool/data/models/food_preference_model.dart';
-import 'package:calory_tool/data/models/food_serving_model.dart';
+import 'package:calory_tool/data/models/food/food_allergen_model.dart';
+import 'package:calory_tool/data/models/food/food_preference_model.dart';
+import 'package:calory_tool/data/models/food/food_serving_model.dart';
 
 class FoodModel {
   const FoodModel({
