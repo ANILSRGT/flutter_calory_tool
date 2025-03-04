@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/presentation/pages/home/home_page.dart';
-import 'package:easy_localization/easy_localization.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
