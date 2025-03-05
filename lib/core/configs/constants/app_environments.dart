@@ -12,7 +12,5 @@ final class AppEnvironments {
   // String get fatsecretClientId => dotenv.env['FATSECRET_CLIENT_ID'] ?? '';
   // String get fatsecretClientSecret =>
   //     dotenv.env['FATSECRET_CLIENT_SECRET'] ?? '';
-  String get fatsecretConsumerKey => dotenv.env['FATSECRET_CONSUMER_KEY'] ?? '';
-  String get fatsecretConsumerSecret =>
-      dotenv.env['FATSECRET_CONSUMER_SECRET'] ?? '';
+  String get serverApiUrl => dotenv.env['SERVER_API_URL'] ?? '';
 }

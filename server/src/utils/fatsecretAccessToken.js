@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 
-async function getAccessToken() {
+async function getAccessToken(scope = "premier") {
   const FATSECRET_CLIENT_ID = process.env.FATSECRET_CLIENT_ID;
   const FATSECRET_CLIENT_SECRET = process.env.FATSECRET_CLIENT_SECRET;
   const TOKEN_URL = "https://oauth.fatsecret.com/connect/token";
@@ -11,7 +11,7 @@ async function getAccessToken() {
       TOKEN_URL,
       qs.stringify({
         grant_type: "client_credentials",
-        scope: "premier",
+        // scope: scope,
       }),
       {
         headers: {

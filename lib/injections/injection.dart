@@ -1,3 +1,4 @@
+import 'package:calory_tool/core/configs/constants/app_environments.dart';
 import 'package:calory_tool/data/datasources/fatsecret/fatsecret_remote_datasource.dart';
 import 'package:calory_tool/data/repositories/fatsecret_api_repo.dart';
 import 'package:dio/dio.dart';

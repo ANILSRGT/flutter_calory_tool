@@ -1,10 +1,11 @@
 import axios from "axios";
-import { fatsecretApiKey } from "../../index.js";
 import RecipeSearchModel from "../models/recipes/RecipeSearchModel.js";
+import { getAccessToken } from "../utils/fatsecretAccessToken.js";
 
 class FatsecretRecipeService {
-  async searchRecipes(query) {
+  async search(query) {
     try {
+      const fatsecretApiKey = await getAccessToken();
       const response = await axios.get(
         `https://platform.fatsecret.com/rest/recipes/search/v3?search_expression=${query}&format=json&region=US&language=en`,
         {

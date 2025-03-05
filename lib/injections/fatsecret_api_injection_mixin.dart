@@ -4,7 +4,7 @@ mixin FatsecretApiInjectionMixin {
   void fatsecretApiInjection(GetIt sl) {
     final fatsecretDio = Dio(
       BaseOptions(
-        baseUrl: 'localhost:3000/api/v1',
+        baseUrl: AppEnvironments.I.serverApiUrl,
         headers: {'Content-Type': 'application/json'},
         queryParameters: {},
       ),
