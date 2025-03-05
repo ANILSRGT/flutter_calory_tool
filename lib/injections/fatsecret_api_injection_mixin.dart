@@ -1,15 +1,20 @@
 part of 'injection.dart';
 
 mixin FatsecretApiInjectionMixin {
-  final _sl = GetIt.instance;
-
-  void fatsecretApiInjection() {
+  void fatsecretApiInjection(GetIt sl) {
     final fatsecretDio = Dio(
       BaseOptions(
-        baseUrl: 'https://platform.fatsecret.com/rest',
+        baseUrl: 'localhost:3000/api/v1',
         headers: {'Content-Type': 'application/json'},
-        queryParameters: {'format': 'json', 'language': 'en', 'region': 'US'},
+        queryParameters: {},
       ),
     );
+
+    sl
+      ..registerLazySingleton(() => fatsecretDio)
+      ..registerLazySingleton(
+        () => FatsecretRemoteDatasource(fatsecretDio: sl()),
+      )
+      ..registerLazySingleton(FatsecretApiRepo.new);
   }
 }

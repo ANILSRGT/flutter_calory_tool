@@ -1,3 +1,5 @@
+import 'package:calory_tool/data/datasources/fatsecret/fatsecret_remote_datasource.dart';
+import 'package:calory_tool/data/repositories/fatsecret_api_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -11,7 +13,7 @@ final class Injection with FatsecretApiInjectionMixin {
   final _sl = GetIt.instance;
 
   void init() {
-    fatsecretApiInjection();
+    fatsecretApiInjection(_sl);
   }
 
   T read<T extends Object>() => _sl.get<T>();

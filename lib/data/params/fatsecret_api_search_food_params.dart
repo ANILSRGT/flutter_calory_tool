@@ -1,13 +1,11 @@
 class FatsecretApiSearchFoodParams {
-  FatsecretApiSearchFoodParams({required this.query, this.pageNumber = 0});
+  FatsecretApiSearchFoodParams({required this.query});
 
   final String query;
-  final int pageNumber;
 
-  static const String searhExpressionKey = 'search_expression';
-  static const String pageNumberKey = 'page_number';
+  static const String queryKey = 'query';
 
   Map<String, dynamic> toMap() {
-    return {searhExpressionKey: query, pageNumberKey: pageNumber};
+    return {queryKey: query};
   }
 }

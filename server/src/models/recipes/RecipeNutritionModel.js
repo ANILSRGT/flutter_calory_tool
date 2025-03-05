@@ -1,7 +1,7 @@
 class RecipeNutritionModel {
-  constructor({ calories, carbs, fat, protein }) {
+  constructor({ calories, carbohydrate, fat, protein }) {
     this.calories = calories;
-    this.carbs = carbs;
+    this.carbohydrate = carbohydrate;
     this.fat = fat;
     this.protein = protein;
   }
@@ -9,7 +9,7 @@ class RecipeNutritionModel {
   static fromJson(json) {
     return new RecipeNutritionModel({
       calories: json["calories"] ? parseInt(json["calories"]) : null,
-      carbs: json["carbs"] ? parseFloat(json["carbs"]) : null,
+      carbohydrate: json["carbohydrate"] ? parseFloat(json["carbohydrate"]) : null,
       fat: json["fat"] ? parseFloat(json["fat"]) : null,
       protein: json["protein"] ? parseFloat(json["protein"]) : null,
     });

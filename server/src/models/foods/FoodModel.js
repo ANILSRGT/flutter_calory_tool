@@ -3,12 +3,12 @@ import FoodPreferenceModel from "./FoodPreferenceModel.js";
 import FoodServingModel from "./FoodServingModel.js";
 
 class FoodModel {
-  constructor({ id, name, brandName, type, subCategories, url, allergens, preferences, servings }) {
+  constructor({ id, name, brand_name, type, sub_categories, url, allergens, preferences, servings }) {
     this.id = id;
     this.name = name;
-    this.brandName = brandName;
+    this.brand_name = brand_name;
     this.type = type;
-    this.subCategories = subCategories;
+    this.sub_categories = sub_categories;
     this.url = url;
     this.allergens = allergens;
     this.preferences = preferences;
@@ -20,44 +20,17 @@ class FoodModel {
     return new FoodModel({
       id: json["food_id"],
       name: json["food_name"],
-      brandName: json["brand_name"],
+      brand_name: json["brand_name"],
       type: json["food_type"],
-      subCategories: json["food_sub_categories"]?.["food_sub_category"] ?? [],
+      sub_categories: json["food_sub_categories"]?.["food_sub_category"] ?? [],
       url: json["food_url"],
-      allergens: foodAttributes?.["allergens"]?.["allergen"]
-        ? FoodAllergenModel.fromJson(foodAttributes["allergens"]["allergen"])
-        : [],
-      preferences: foodAttributes?.["preferences"]?.["preference"]
-        ? FoodPreferenceModel.fromJson(foodAttributes["preferences"]["preference"])
-        : [],
-      servings: foodAttributes?.["servings"]?.["serving"]
-        ? FoodServingModel.fromJson(foodAttributes["servings"]["serving"])
-        : [],
+      allergens:
+        foodAttributes?.["allergens"]?.["allergen"]?.map(allergen => FoodAllergenModel.fromJson(allergen)) ?? [],
+      preferences:
+        foodAttributes?.["preferences"]?.["preference"]?.map(preference => FoodPreferenceModel.fromJson(preference)) ??
+        [],
+      servings: json["servings"]?.["serving"]?.map(serving => FoodServingModel.fromJson(serving)) ?? [],
     });
-  }
-
-  toJson() {
-    return {
-      food_id: this.id,
-      food_name: this.name,
-      brand_name: this.brandName,
-      food_type: this.type,
-      food_sub_categories: {
-        food_sub_category: this.subCategories,
-      },
-      food_url: this.url,
-      food_attributes: {
-        allergens: {
-          allergen: this.allergens.map(allergen => allergen.toJson()),
-        },
-        preferences: {
-          preference: this.preferences.map(preference => preference.toJson()),
-        },
-        servings: {
-          serving: this.servings.map(serving => serving.toJson()),
-        },
-      },
-    };
   }
 }
 

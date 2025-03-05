@@ -21,7 +21,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // Fatsecret API'ye istek yapmak için gerekli olan anahtarlar
-const fatsecretApiKey = getAccessToken();
+let fatsecretApiKey;
 
 // Routes
 app.use("/api/v1/foods", fatsecretFoodsRouter);
@@ -29,7 +29,7 @@ app.use("/api/v1/recipes", fatsecretRecipesRouter);
 
 // Start the server
 app.listen(PORT, async () => {
-  await fatsecretApiKey;
+  fatsecretApiKey = await getAccessToken();
   console.log(`API Proxy sunucusu ${PORT} portunda çalışıyor...`);
 });
 

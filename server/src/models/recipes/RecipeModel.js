@@ -1,3 +1,5 @@
+import RecipeNutritionModel from "./RecipeNutritionModel.js";
+
 class RecipeModel {
   constructor({ id, name, description, image, ingredients, types, nutrition }) {
     this.id = id;

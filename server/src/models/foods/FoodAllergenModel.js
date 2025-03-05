@@ -7,9 +7,9 @@ class FoodAllergenModel {
 
   static fromJson(json) {
     return new FoodAllergenModel({
-      id: json["allergen_id"],
-      name: json["allergen_name"],
-      value: json["allergen_value"] == "1" ? true : json["allergen_value"] == "0" ? false : null,
+      id: json["id"],
+      name: json["name"],
+      value: json["value"] == "1" ? true : json["value"] == "0" ? false : null,
     });
   }
 }

@@ -1,22 +1,22 @@
 class RecipeNutritionModel {
   const RecipeNutritionModel({
     this.calories,
-    this.carbs,
+    this.carbohydrates,
     this.fat,
     this.protein,
   });
 
   factory RecipeNutritionModel.fromJson(Map<String, dynamic> json) {
     return RecipeNutritionModel(
-      calories: json['calories'] as int?,
-      carbs: json['carbs'] as double?,
-      fat: json['fat'] as double?,
-      protein: json['protein'] as double?,
+      calories: (json['calories'] as num?)?.toInt(),
+      carbohydrates: (json['carbohydrates'] as num?)?.toDouble(),
+      fat: (json['fat'] as num?)?.toDouble(),
+      protein: (json['protein'] as num?)?.toDouble(),
     );
   }
 
   final int? calories;
-  final double? carbs;
+  final double? carbohydrates;
   final double? fat;
   final double? protein;
 }
