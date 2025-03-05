@@ -8,7 +8,7 @@ class RecipeNutritionModel {
 
   static fromJson(json) {
     return new RecipeNutritionModel({
-      calories: json["calories"],
+      calories: json["calories"] ? parseInt(json["calories"]) : null,
       carbs: json["carbs"] ? parseFloat(json["carbs"]) : null,
       fat: json["fat"] ? parseFloat(json["fat"]) : null,
       protein: json["protein"] ? parseFloat(json["protein"]) : null,

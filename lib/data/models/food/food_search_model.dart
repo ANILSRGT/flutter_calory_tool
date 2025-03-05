@@ -4,11 +4,13 @@ class FoodSearchModel {
   const FoodSearchModel({required this.pageNumber, required this.foods});
 
   factory FoodSearchModel.fromJson(Map<String, dynamic> json) {
-    final foodsJson = json['foods'] as Map<String, dynamic>?;
-    final foodJson = foodsJson?['food'] as Map<String, dynamic>?;
     return FoodSearchModel(
-      pageNumber: foodsJson?['page_number'] as int?,
-      foods: foodJson == null ? [] : [FoodModel.fromJson(foodJson)],
+      pageNumber: json['pageNumber'] as int?,
+      foods:
+          (json['foods'] as List?)
+              ?.map((e) => FoodModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
   }
 

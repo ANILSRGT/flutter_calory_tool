@@ -15,8 +15,8 @@ class RecipeModel {
       name: json["recipe_name"],
       description: json["recipe_description"],
       image: json["recipe_image"],
-      ingredients: json["recipe_ingredients"]?.["ingredient"]?.map(e => e) || [],
-      types: json["recipe_types"]?.["recipe_type"]?.map(e => e) || [],
+      ingredients: json["recipe_ingredients"]?.["ingredient"] ?? [],
+      types: json["recipe_types"]?.["recipe_type"] ?? [],
       nutrition: json["recipe_nutrition"] ? RecipeNutritionModel.fromJson(json["recipe_nutrition"]) : null,
     });
   }

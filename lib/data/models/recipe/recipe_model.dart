@@ -18,14 +18,12 @@ class RecipeModel {
       description: json['recipe_description'] as String?,
       image: json['recipe_image'] as String?,
       ingredients:
-          ((json['recipe_ingredients'] as Map<String, dynamic>?)?['ingredient']
-                  as List?)
-              ?.map((e) => e as String)
+          (json['recipe_ingredients'] as List<dynamic>?)
+              ?.map((dynamic e) => e as String)
               .toList(),
       types:
-          ((json['recipe_types'] as Map<String, dynamic>?)?['recipe_type']
-                  as List?)
-              ?.map((e) => e as String)
+          (json['recipe_types'] as List<dynamic>?)
+              ?.map((dynamic e) => e as String)
               .toList(),
       nutrition:
           json['recipe_nutrition'] == null
