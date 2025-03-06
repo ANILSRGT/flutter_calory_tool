@@ -76,6 +76,7 @@ class RecipeCard extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(height: 10.0,)
             ],
           ),
         ),
