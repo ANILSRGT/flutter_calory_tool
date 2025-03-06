@@ -13,10 +13,7 @@ part of 'app_router.dart';
 /// [FoodPage]
 class FoodRoute extends PageRouteInfo<void> {
   const FoodRoute({List<PageRouteInfo>? children})
-      : super(
-          FoodRoute.name,
-          initialChildren: children,
-        );
+    : super(FoodRoute.name, initialChildren: children);
 
   static const String name = 'FoodRoute';
 
@@ -32,10 +29,7 @@ class FoodRoute extends PageRouteInfo<void> {
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
+    : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -51,10 +45,7 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [MainPage]
 class MainRoute extends PageRouteInfo<void> {
   const MainRoute({List<PageRouteInfo>? children})
-      : super(
-          MainRoute.name,
-          initialChildren: children,
-        );
+    : super(MainRoute.name, initialChildren: children);
 
   static const String name = 'MainRoute';
 
@@ -67,13 +58,26 @@ class MainRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RecipeDetailsPage]
+class RecipeDetailsRoute extends PageRouteInfo<void> {
+  const RecipeDetailsRoute({List<PageRouteInfo>? children})
+    : super(RecipeDetailsRoute.name, initialChildren: children);
+
+  static const String name = 'RecipeDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RecipeDetailsPage();
+    },
+  );
+}
+
+/// generated route for
 /// [RecipesPage]
 class RecipesRoute extends PageRouteInfo<void> {
   const RecipesRoute({List<PageRouteInfo>? children})
-      : super(
-          RecipesRoute.name,
-          initialChildren: children,
-        );
+    : super(RecipesRoute.name, initialChildren: children);
 
   static const String name = 'RecipesRoute';
 
@@ -89,10 +93,7 @@ class RecipesRoute extends PageRouteInfo<void> {
 /// [SummaryPage]
 class SummaryRoute extends PageRouteInfo<void> {
   const SummaryRoute({List<PageRouteInfo>? children})
-      : super(
-          SummaryRoute.name,
-          initialChildren: children,
-        );
+    : super(SummaryRoute.name, initialChildren: children);
 
   static const String name = 'SummaryRoute';
 

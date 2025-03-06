@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
+import 'package:calory_tool/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
@@ -66,7 +68,9 @@ class RecipeCard extends StatelessWidget {
                   SizedBox.square(
                     dimension: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.router.push(const RecipeDetailsRoute());
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
                             context.appThemeExt.appColors.secondary,
