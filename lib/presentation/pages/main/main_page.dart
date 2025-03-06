@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:calory_tool/presentation/widgets/navBar/nav_bar_widget.dart';
 import 'package:calory_tool/presentation/pages/food/food_page.dart';
 import 'package:calory_tool/presentation/pages/home/home_page.dart';
 import 'package:calory_tool/presentation/pages/main/store/navigation_store.dart';
 import 'package:calory_tool/presentation/pages/recipes/recipes_page.dart';
 import 'package:calory_tool/presentation/pages/summary/summary_page_imports.dart';
+import 'package:calory_tool/presentation/widgets/navBar/nav_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
