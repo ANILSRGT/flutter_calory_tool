@@ -1,77 +1,29 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:calory_tool/presentation/pages/home/home_page.dart';
-import 'package:calory_tool/presentation/pages/home/store/navigation_store.dart';
-import 'package:calory_tool/presentation/pages/randomPages/random_pages.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class NavBarScreen extends StatefulWidget {
-  NavBarScreen({super.key});
 
-  @override
-  State<NavBarScreen> createState() => _NavBarScreenState();
-}
 
-class _NavBarScreenState extends State<NavBarScreen> {
-  final List<Widget> pages = [
-    const HomePage(),
-    const Home1Page(),
-    const Home2Page(),
-    const Home3Page(),
-    const Home4Page(),
-  ];
-
-  final PageController _pageController = PageController();
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      backgroundColor: Colors.white54,
-      bottomNavigationBar: CustomBottomNavBar(pageController: _pageController),
-      body: SafeArea(
-        child: Observer(
-          builder: (_) {
-            return PageView(
-              controller: _pageController,
-              onPageChanged: (index) {
-                navigationStore.setIndex(index);
-              },
-              children: pages,
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
 
 class CustomBottomNavBar extends StatelessWidget {
-  final PageController pageController; // Accept the PageController
+  CustomBottomNavBar({super.key, required this.selectedIndex, required this.onTap});
+
+  final int selectedIndex;
+  final void Function(int index) onTap;
 
   final List<IconData> icons = [
     Icons.home,
     Icons.safety_check,
     Icons.camera_rounded,
-    Icons.video_camera_back_outlined,
-    Icons.favorite,
+    Icons.no_meals_ouline,
   ];
 
   final List<String> labels = [
     'Home',
-    'Asteriod',
-    'Rover',
-    'Video',
-    'Favorite',
+    'Plan',
+    'Challenges',
+    'Recipes',
   ];
-
-  CustomBottomNavBar({super.key, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
@@ -80,55 +32,49 @@ class CustomBottomNavBar extends StatelessWidget {
 
     return Observer(
       builder: (_) => Container(
+        height: 85,
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: Colors.black,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 10,
-              offset: Offset(0, -1),
-            ),
-          ],
+          color: Colors.white, // Set background color to white
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: padding, horizontal: padding * 2),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(icons.length, (index) {
-              bool isSelected = navigationStore.selectedIndex == index;
+              bool isSelected = selectedIndex == index;
 
               return GestureDetector(
-                onTap: () {
-                  // When a tab is tapped, update the PageController's page
-                  pageController.jumpToPage(index);
-                  navigationStore.setIndex(index);
-                },
+                onTap: () => onTap(index),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: BoxDecoration(
                     color: isSelected
-                        ? Colors.blue.withOpacity(0.2) // Blue color for selected tab
+                        ? Colors.blue.withOpacity(0.2)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
-                      Icon(
-                        icons[index],
-                        color: isSelected ? Colors.blue : Colors.white, // Blue for selected icon
-                        size: 28,
-                      ),
-                      if (isSelected) const SizedBox(width: 6),
-                      if (isSelected)
-                        Text(
-                          labels[index],
-                          style: const TextStyle(
-                            color: Colors.blue, // Blue color for selected label
-                            fontWeight: FontWeight.w600,
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            icons[index],
+                            color: isSelected ? Colors.blue : Colors.grey[400], // Icon color changes to blue when selected
+                            size: 28,
                           ),
-                        ),
+                          if (isSelected) const SizedBox(width: 6),
+                          Text(
+                            labels[index],
+                            style: const TextStyle(
+                              color: Colors.grey, // Text color changes to blue when selected
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

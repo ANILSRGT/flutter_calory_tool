@@ -6,7 +6,7 @@ class CardWidget extends StatelessWidget {
     super.key,
     this.color,
     this.child,
-    this.elevation = 4.0,
+    this.elevation = 0.0,
   });
 
   final Color? color;

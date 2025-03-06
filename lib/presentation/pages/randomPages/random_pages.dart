@@ -7,7 +7,7 @@ class Home1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavBarScreen(),
+
     );
   }
 }
@@ -18,7 +18,6 @@ class Home2Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavBar(pageController: PageController()),
 
     );
   }
@@ -30,21 +29,9 @@ class Home3Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavBar(pageController: PageController()),
 
     );
   }
 }
 
-class Home4Page extends StatelessWidget {
-  const Home4Page({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CustomBottomNavBar(pageController: PageController()),
-
-    );
-  }
-}
 
