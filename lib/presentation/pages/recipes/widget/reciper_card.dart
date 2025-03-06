@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
 class RecipeCard extends StatelessWidget {
+  const RecipeCard({required this.image, required this.title, super.key});
   final String image;
   final String title;
-
-  RecipeCard({required this.image, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF6DBE89),
+          color: const Color(0xFF6DBE89),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 12.0, left: 10.0, right: 10.0),
+          padding: const EdgeInsets.only(top: 12, left: 10, right: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -31,7 +30,7 @@ class RecipeCard extends StatelessWidget {
                       title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
@@ -54,7 +53,7 @@ class RecipeCard extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.favorite, color: Colors.white),
+                    icon: const Icon(Icons.favorite, color: Colors.white),
                   ),
                   SizedBox.square(
                     dimension: 45,
@@ -67,7 +66,7 @@ class RecipeCard extends StatelessWidget {
                           borderRadius: AppValues.md.ext.radius.border.all,
                         ),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.arrow_forward_ios,
                           color: Colors.white,

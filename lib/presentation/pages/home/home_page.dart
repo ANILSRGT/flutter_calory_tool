@@ -2,7 +2,6 @@ import 'package:auto_route/annotations.dart';
 import 'package:calory_tool/presentation/pages/home/widget/card_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:penta_core/penta_core.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -24,12 +23,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime beforeDay = DateTime.now().subtract(Duration(days: 6));
+    final beforeDay = DateTime.now().subtract(const Duration(days: 6));
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -54,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10),
                     SizedBox(
                       height: 80,
                       child: ListView.builder(
@@ -63,14 +62,12 @@ class _HomePageState extends State<HomePage> {
                         clipBehavior: Clip.none,
                         itemBuilder: (context, index) {
                           final date = beforeDay.add(Duration(days: index));
-                          bool isSelected = date.day == currentdateTime.day;
+                          final isSelected = date.day == currentdateTime.day;
                           return GestureDetector(
                             onTap: () => setState(() => currentdateTime = date),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 300),
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 6.0,
-                              ),
+                              margin: const EdgeInsets.symmetric(horizontal: 6),
                               width: 52,
                               decoration: BoxDecoration(
                                 color:
@@ -139,11 +136,10 @@ class _HomePageState extends State<HomePage> {
                                         size: 180,
                                       ),
                                       initialValue: 1500,
-                                      min: 0,
                                       max: 3000,
                                       onChange: (double value) {},
                                     ),
-                                    Positioned(
+                                    const Positioned(
                                       top: 140,
                                       child: Text(
                                         'KCAL LEFT',
@@ -201,14 +197,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
+              const Padding(
+                padding: EdgeInsets.only(left: 8),
                 child: Text(
                   'Planed Meals',
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildMealSection(),
             ],
           ),
@@ -223,7 +219,7 @@ class _HomePageState extends State<HomePage> {
     double value,
     double min,
     double max,
-    Function(double) onChanged,
+    void Function(double) onChanged,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,13 +237,13 @@ class _HomePageState extends State<HomePage> {
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
             trackHeight: 3,
-            overlayShape: RoundSliderOverlayShape(overlayRadius: 6),
+            overlayShape: const RoundSliderOverlayShape(overlayRadius: 6),
             activeTrackColor: color,
             thumbColor: color,
             overlayColor: color.withValues(alpha: 0.2),
-            valueIndicatorShape: HandleThumbShape(),
+            valueIndicatorShape: const HandleThumbShape(),
             valueIndicatorColor: color,
-            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 4),
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 4),
           ),
           child: Slider(
             value: value,
@@ -296,11 +292,11 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(18),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 8,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),
@@ -321,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: Text(
                       '$meal: $calories kcal',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -344,18 +340,21 @@ class _HomePageState extends State<HomePage> {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: CircleAvatar(
+                    icon: const CircleAvatar(
                       backgroundColor: Colors.lightBlue,
-                        child: const Icon(Icons.add, color: Colors.white)),
+                      child: Icon(Icons.add, color: Colors.white),
+                    ),
                   ),
                 ],
               ),
               if (expandedMeals[index])
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
+                  padding: const EdgeInsets.only(top: 8),
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.0)),
-                    child: Row(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('Carb:10gr'),

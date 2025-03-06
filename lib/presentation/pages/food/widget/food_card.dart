@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 
 class FoodCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final String description;
-
-  FoodCard({
+  const FoodCard({
     required this.image,
     required this.title,
     required this.description,
+    super.key,
   });
+  final String image;
+  final String title;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.teal.shade200,
-      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 18),
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       shadowColor: Colors.black.withValues(alpha: 0.8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            clipBehavior: Clip.none,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20),
                 bottomLeft: Radius.circular(20),
@@ -32,7 +31,7 @@ class FoodCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 4),
               child: Transform.translate(
-                offset: Offset(0, -45),
+                offset: const Offset(0, -45),
                 child: Image.asset(
                   image,
                   width: 120,
@@ -50,7 +49,7 @@ class FoodCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
@@ -58,7 +57,7 @@ class FoodCard extends StatelessWidget {
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     description,
                     style: TextStyle(

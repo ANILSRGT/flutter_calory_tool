@@ -11,7 +11,8 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
+
   List<Map<String, String>> allRecipes = [
     {
       'image': 'assets/breakfast.png',
@@ -53,15 +54,13 @@ class _FoodPageState extends State<FoodPage> {
     displayedRecipes = allRecipes;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: Column(
             children: [
               Container(
@@ -78,23 +77,24 @@ class _FoodPageState extends State<FoodPage> {
                   ],
                 ),
                 child: TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          hintText: 'Search for recipes...',
-                          filled: true,
-                          fillColor: Colors.green[50],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon: const Icon(Icons.search, color: Colors.blueAccent),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 15),
-                        ),
-
-                      ),
-
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search for recipes...',
+                    filled: true,
+                    fillColor: Colors.green[50],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: Colors.blueAccent,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                ),
               ),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -102,7 +102,7 @@ class _FoodPageState extends State<FoodPage> {
                 itemBuilder: (context, index) {
                   final recipe = displayedRecipes[index];
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
+                    padding: const EdgeInsets.only(bottom: 16),
                     child: FoodCard(
                       image: recipe['image']!,
                       title: recipe['title']!,

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:calory_tool/core/cache/cache_manager.dart';
 import 'package:calory_tool/core/configs/enums/app_themes_enum.dart';
+import 'package:flutter/material.dart';
 
 final class ThemeNotifier extends ChangeNotifier {
   AppThemesEnum _currentTheme = AppThemesEnum.main;

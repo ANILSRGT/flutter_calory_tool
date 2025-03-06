@@ -11,7 +11,7 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   List<Map<String, String>> allRecipes = [
     {
@@ -80,8 +80,8 @@ class _RecipesPageState extends State<RecipesPage> {
             AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
-              title: Text(
-                "Recipes",
+              title: const Text(
+                'Recipes',
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
@@ -92,7 +92,7 @@ class _RecipesPageState extends State<RecipesPage> {
               centerTitle: true,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.filter_list, color: Colors.black87),
+                  icon: const Icon(Icons.filter_list, color: Colors.black87),
                   onPressed: () {
                     // Implement filtering action
                   },
@@ -107,23 +107,23 @@ class _RecipesPageState extends State<RecipesPage> {
                 controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search for recipes...',
-                  hintStyle: TextStyle(color: Colors.black54),
+                  hintStyle: const TextStyle(color: Colors.black54),
                   filled: true,
                   fillColor: Colors.green[50],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
                     borderSide: BorderSide.none,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.black54),
-                  contentPadding: EdgeInsets.symmetric(vertical: 15),
+                  prefixIcon: const Icon(Icons.search, color: Colors.black54),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15),
                 ),
                 onChanged: _filterRecipes,
               ),
             ),
 
             // Section Title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               child: Text(
                 'Trending Recipes',
                 style: TextStyle(
@@ -136,8 +136,8 @@ class _RecipesPageState extends State<RecipesPage> {
 
             GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,

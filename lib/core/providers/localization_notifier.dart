@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:calory_tool/core/cache/cache_manager.dart';
 import 'package:calory_tool/core/configs/enums/app_localiaztions_enum.dart';
+import 'package:flutter/material.dart';
 
 final class LocalizationNotifier extends ChangeNotifier {
   AppLocaliaztionsEnum _appLang = AppLocaliaztionsEnum.enUS;

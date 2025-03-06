@@ -1,6 +1,6 @@
-import 'package:penta_core/penta_core.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/configs/theme/themes/main/main_theme.dart';
+import 'package:penta_core/penta_core.dart';
 
 enum AppThemesEnum {
   main(value: 'main', displayName: 'Main');

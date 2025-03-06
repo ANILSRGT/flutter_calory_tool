@@ -1,8 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:calory_tool/core/providers/localization_notifier.dart';
 import 'package:calory_tool/core/providers/theme_notifier.dart';
 import 'package:calory_tool/core/router/app_router.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatefulWidget {

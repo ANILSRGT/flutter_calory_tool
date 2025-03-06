@@ -16,7 +16,7 @@ class _SummaryPageMealItem extends StatefulWidget {
 }
 
 class _SummaryPageMealItemState extends State<_SummaryPageMealItem> {
-  bool _expandedMeals = false;
+  final bool _expandedMeals = false;
 
   @override
   Widget build(BuildContext context) {

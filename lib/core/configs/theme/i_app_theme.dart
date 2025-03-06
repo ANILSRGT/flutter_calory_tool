@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:calory_tool/core/configs/theme/app_colors.dart';
 import 'package:calory_tool/core/providers/theme_notifier.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 abstract base class IAppTheme {

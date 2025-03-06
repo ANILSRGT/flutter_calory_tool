@@ -57,9 +57,7 @@ class _MainPageState extends State<MainPage> {
           builder: (_) {
             return PageView(
               controller: _pageController,
-              onPageChanged: (index) {
-                _navigationStore.setIndex(index);
-              },
+              onPageChanged: _navigationStore.setIndex,
               children: pages,
             );
           },
