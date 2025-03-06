@@ -4,57 +4,51 @@ import 'package:penta_core/penta_core.dart';
 class RecipeCard extends StatelessWidget {
   final String image;
   final String title;
-  final String description;
 
-  RecipeCard({
-    required this.image,
-    required this.title,
-    required this.description,
-  });
+  RecipeCard({required this.image, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.transparent,
       elevation: 5,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: IntrinsicHeight(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-            color: Color(0xFF30997A),
-          ),
+      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFF6DBE89),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 12.0, left: 10.0, right: 10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 11.0,
-                  right: 4.0,
-                  left: 4.0,
-                ),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: SizedBox(
+                  height: 36,
+                  child: Center(
+                    child: Text(
+                      title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-              Flexible(
+              Divider(color: Colors.grey.shade400, thickness: 1),
+              Expanded(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
+                  borderRadius: BorderRadius.circular(10),
                   child: Image.asset(image, fit: BoxFit.contain),
                 ),
               ),
+              Divider(color: Colors.grey.shade400, thickness: 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
