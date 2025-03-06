@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/presentation/pages/recipes/widget/reciper_card.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class RecipesPage extends StatefulWidget {
   const RecipesPage({super.key});
 
@@ -39,46 +41,89 @@ class _RecipesPageState extends State<RecipesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(50.0),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search for recipes...',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide.none,
+      backgroundColor: Colors.white,
+
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Custom AppBar with more elegant design
+            AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: Text(
+                "Recipes",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                  letterSpacing: 1.2,
                 ),
-                prefixIcon: Icon(Icons.search),
               ),
-              onChanged: _filterRecipes,
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.filter_list, color: Colors.black87),
+                  onPressed: () {
+                    // Implement filtering action
+                  },
+                ),
+              ],
             ),
-          ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.8,
-          ),
-          itemCount: displayedRecipes.length,
-          itemBuilder: (context, index) {
-            final recipe = displayedRecipes[index];
-            return RecipeCard(
-              image: recipe['image']!,
-              title: recipe['title']!,
-              description: recipe['description']!,
-            );
-          },
+
+            // Search bar with elegant style
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search for recipes...',
+                  hintStyle: TextStyle(color: Colors.black54),
+                  filled: true,
+                  fillColor: Colors.green[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide.none,
+                  ),
+                  prefixIcon: Icon(Icons.search, color: Colors.black54),
+                  contentPadding: EdgeInsets.symmetric(vertical: 15),
+                ),
+                onChanged: _filterRecipes,
+              ),
+            ),
+
+            // Section Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              child: Text(
+                'Trending Recipes',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                childAspectRatio: 0.75,
+              ),
+              itemCount: displayedRecipes.length,
+              itemBuilder: (context, index) {
+                final recipe = displayedRecipes[index];
+                return RecipeCard(
+                  image: recipe['image']!,
+                  title: recipe['title']!,
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
