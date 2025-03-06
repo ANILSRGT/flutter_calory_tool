@@ -3,6 +3,7 @@ import 'dart:math' show Random;
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/presentation/widgets/cards/meal_card.dart';
 import 'package:calory_tool/presentation/widgets/charts/custom_line_chart.dart';
+import 'package:calory_tool/presentation/widgets/fields/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:penta_core/penta_core.dart';

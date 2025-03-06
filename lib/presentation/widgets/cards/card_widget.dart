@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({
-    super.key,
-    this.color,
-    this.child,
-    this.elevation = 0.0,
-  });
+  const CardWidget({super.key, this.color, this.child, this.elevation = 0.0});
 
   final Color? color;
   final Widget? child;
@@ -18,14 +13,8 @@ class CardWidget extends StatelessWidget {
     return Material(
       elevation: elevation,
       borderRadius: AppValues.lg.ext.radius.border.all,
-      child: ClipRRect(
-        borderRadius: AppValues.lg.ext.radius.border.all,
-        child: Container(
-          padding: AppValues.md.ext.padding.all,
-          color: color,
-          child: child,
-        ),
-      ),
+      color: color ?? Colors.transparent,
+      child: Padding(padding: AppValues.md.ext.padding.all, child: child),
     );
   }
 }

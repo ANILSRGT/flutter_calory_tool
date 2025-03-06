@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/presentation/pages/recipes/widget/reciper_card.dart';
+import 'package:calory_tool/presentation/widgets/fields/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:penta_core/penta_core.dart';
 
 @RoutePage()
 class RecipesPage extends StatefulWidget {
@@ -23,26 +25,6 @@ class _RecipesPageState extends State<RecipesPage> {
       'image': 'assets/breakfast.png',
       'title': 'Grilled Chicken',
       'description': 'Perfectly grilled chicken.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Veggie Salad',
-      'description': 'A fresh and healthy veggie salad.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Spaghetti Bolognese',
-      'description': 'A delicious Italian dish.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Chicken Curry',
-      'description': 'A flavorful chicken curry.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Tacos',
-      'description': 'Delicious tacos with fillings.',
     },
   ];
 
@@ -70,29 +52,24 @@ class _RecipesPageState extends State<RecipesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Custom AppBar with more elegant design
             AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
-              title: const Text(
+              surfaceTintColor: Colors.transparent,
+              title: Text(
                 'Recipes',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                  letterSpacing: 1.2,
+                style: context.ext.theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               centerTitle: true,
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.filter_list, color: Colors.black87),
+                  icon: const Icon(Icons.filter_list),
                   onPressed: () {
                     // Implement filtering action
                   },
@@ -103,33 +80,21 @@ class _RecipesPageState extends State<RecipesPage> {
             // Search bar with elegant style
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: TextField(
+              child: CustomTextField(
                 controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search for recipes...',
-                  hintStyle: const TextStyle(color: Colors.black54),
-                  filled: true,
-                  fillColor: Colors.green[50],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25),
-                    borderSide: BorderSide.none,
-                  ),
-                  prefixIcon: const Icon(Icons.search, color: Colors.black54),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 15),
-                ),
+                hintText: 'Search for recipes...',
+                prefixIcon: const Icon(Icons.search),
                 onChanged: _filterRecipes,
               ),
             ),
 
             // Section Title
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
               child: Text(
                 'Trending Recipes',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                style: context.ext.theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

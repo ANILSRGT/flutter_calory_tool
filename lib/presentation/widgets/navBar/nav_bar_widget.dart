@@ -1,5 +1,7 @@
+import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:penta_core/penta_core.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({
@@ -30,8 +32,10 @@ class CustomBottomNavBar extends StatelessWidget {
           (_) => Container(
             height: 85,
             width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.white, // Set background color to white
+            decoration: BoxDecoration(
+              color: context.appThemeExt.appColors.background.byBrightness(
+                context.ext.theme.isDark,
+              ), // Set background color to white
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -54,7 +58,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       decoration: BoxDecoration(
                         color:
                             isSelected
-                                ? Colors.blue.withValues(alpha: 0.2)
+                                ? context.appThemeExt.appColors.primary
+                                    .withValues(alpha: 0.2)
                                 : Colors.transparent,
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -67,20 +72,29 @@ class CustomBottomNavBar extends StatelessWidget {
                                 icons[index],
                                 color:
                                     isSelected
-                                        ? Colors.blue
-                                        : Colors
-                                            .grey[400], // Icon color changes to blue when selected
+                                        ? context.appThemeExt.appColors.primary
+                                        : context
+                                            .appThemeExt
+                                            .appColors
+                                            .grey, // Icon color changes to blue when selected
                                 size: 28,
                               ),
                               if (isSelected) const SizedBox(width: 6),
                               Text(
                                 labels[index],
-                                style: const TextStyle(
-                                  color:
-                                      Colors
-                                          .grey, // Text color changes to blue when selected
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: context.ext.theme.textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color:
+                                          isSelected
+                                              ? context
+                                                  .appThemeExt
+                                                  .appColors
+                                                  .primary
+                                              : context
+                                                  .appThemeExt
+                                                  .appColors
+                                                  .grey, // Text color changes to blue when selected
+                                    ),
                               ),
                             ],
                           ),

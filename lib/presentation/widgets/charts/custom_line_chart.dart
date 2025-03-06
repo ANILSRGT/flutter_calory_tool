@@ -33,67 +33,66 @@ class CustomLineChart extends StatelessWidget {
       spacing: AppValues.sm.value,
       children: [
         Expanded(
-          child: ClipRRect(
-            borderRadius: AppValues.md.ext.radius.border.all,
-            child: LineChart(
-              LineChartData(
-                titlesData: const FlTitlesData(show: false),
-                borderData: FlBorderData(
-                  border: Border.all(color: Colors.grey.shade300, width: 0.5),
-                ),
-                clipData: const FlClipData.all(),
-                gridData: FlGridData(
-                  getDrawingHorizontalLine:
-                      (value) =>
-                          FlLine(color: Colors.grey.shade300, strokeWidth: 0.5),
-                  getDrawingVerticalLine:
-                      (value) =>
-                          FlLine(color: Colors.grey.shade300, strokeWidth: 0.5),
-                ),
-                minX: 0,
-                maxX: data.length.toDouble() - 1,
-                minY: minY,
-                maxY: maxY,
-                lineBarsData: [
-                  LineChartBarData(
-                    spots:
-                        data.asMap().entries.map((entry) {
-                          final index = entry.key;
-                          final spot = entry.value;
-                          return FlSpot(index.toDouble(), spot.y);
+          child: LineChart(
+            LineChartData(
+              titlesData: const FlTitlesData(show: false),
+              borderData: FlBorderData(
+                border: Border.all(color: Colors.grey.shade300, width: 0.5),
+              ),
+              clipData: const FlClipData.all(),
+              gridData: FlGridData(
+                verticalInterval: 1,
+                horizontalInterval: (maxY - minY) / 5,
+                getDrawingHorizontalLine:
+                    (value) =>
+                        FlLine(color: Colors.grey.shade300, strokeWidth: 0.5),
+                getDrawingVerticalLine:
+                    (value) =>
+                        FlLine(color: Colors.grey.shade300, strokeWidth: 0.5),
+              ),
+              minX: 0,
+              maxX: data.length.toDouble() - 1,
+              minY: minY,
+              maxY: maxY,
+              lineBarsData: [
+                LineChartBarData(
+                  spots:
+                      data.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final spot = entry.value;
+                        return FlSpot(index.toDouble(), spot.y);
+                      }).toList(),
+                  isCurved: true,
+                  gradient: LinearGradient(
+                    colors:
+                        data.map((spot) {
+                          return Color.lerp(
+                            Colors.greenAccent,
+                            Colors.redAccent,
+                            spot.y / maxY,
+                          )!;
                         }).toList(),
-                    isCurved: true,
+                  ),
+                  barWidth: 5,
+                  isStrokeCapRound: true,
+                  belowBarData: BarAreaData(
+                    show: true,
                     gradient: LinearGradient(
                       colors:
-                          data.map((spot) {
-                            return Color.lerp(
-                              Colors.greenAccent,
-                              Colors.redAccent,
-                              spot.y / maxY,
-                            )!;
-                          }).toList(),
-                    ),
-                    barWidth: 5,
-                    isStrokeCapRound: true,
-                    belowBarData: BarAreaData(
-                      show: true,
-                      gradient: LinearGradient(
-                        colors:
-                            data
-                                .map((spot) {
-                                  return Color.lerp(
-                                    Colors.greenAccent,
-                                    Colors.redAccent,
-                                    spot.y / maxY,
-                                  )!;
-                                })
-                                .map((color) => color.withValues(alpha: 0.6))
-                                .toList(),
-                      ),
+                          data
+                              .map((spot) {
+                                return Color.lerp(
+                                  Colors.greenAccent,
+                                  Colors.redAccent,
+                                  spot.y / maxY,
+                                )!;
+                              })
+                              .map((color) => color.withValues(alpha: 0.6))
+                              .toList(),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

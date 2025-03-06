@@ -1,4 +1,6 @@
+import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:penta_core/penta_core.dart';
 
 class FoodCard extends StatelessWidget {
   const FoodCard({
@@ -14,10 +16,13 @@ class FoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.teal.shade200,
+      color: context.appThemeExt.appColors.background.byBrightness(
+        context.ext.theme.isDark,
+      ),
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       shadowColor: Colors.black.withValues(alpha: 0.8),
+      elevation: 4,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,21 +54,19 @@ class FoodCard extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      letterSpacing: 1.2,
+                    style: context.ext.theme.textTheme.titleLarge?.copyWith(
+                      color:
+                          context.appThemeExt.appColors.background
+                              .byBrightness(context.ext.theme.isDark)
+                              .onColor,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     description,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey[700],
-                      height: 1.5,
+                    style: context.ext.theme.textTheme.bodyMedium?.copyWith(
+                      color: context.appThemeExt.appColors.grey,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

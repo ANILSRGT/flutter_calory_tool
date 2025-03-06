@@ -3,11 +3,11 @@ part of 'main_theme.dart';
 mixin MainThemeAppColorsMixin {
   AppColors get colors => AppColors(
     primary: OnColor(
-      value: const Color(0xFF662CBA),
+      value: const Color(0xFF40B290),
       onColor: const Color(0xFFFBFBFB),
     ),
     secondary: OnColor(
-      value: const Color(0xFFBB77FD),
+      value: const Color(0xFF40B2A8),
       onColor: const Color(0xFFFBFBFB),
     ),
     background: BrightnessOnColor(

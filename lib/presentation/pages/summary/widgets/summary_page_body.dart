@@ -64,7 +64,7 @@ class _SummaryPageBodyState extends State<_SummaryPageBody> {
                 style: context.ext.theme.textTheme.titleLarge,
               ),
               AppValues.md.ext.sizedBox.vertical,
-              TextField(
+              CustomTextField(
                 controller: _controller,
                 readOnly: true,
                 onTap: () {
@@ -79,11 +79,7 @@ class _SummaryPageBodyState extends State<_SummaryPageBody> {
                     }
                   });
                 },
-                decoration: const InputDecoration(
-                  labelText: 'Date',
-                  suffixIcon: Icon(Icons.calendar_today),
-                  border: OutlineInputBorder(),
-                ),
+                suffixIcon: const Icon(Icons.calendar_today),
               ),
               AppValues.md.ext.sizedBox.vertical,
               const _SummaryPageMealItem(

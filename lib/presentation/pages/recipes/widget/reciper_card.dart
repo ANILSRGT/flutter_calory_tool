@@ -1,3 +1,4 @@
+import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
@@ -9,11 +10,13 @@ class RecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5,
+      elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFF6DBE89),
+          color: context.appThemeExt.appColors.white.byBrightness(
+            context.ext.theme.isDark,
+          ),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
@@ -30,52 +33,58 @@ class RecipeCard extends StatelessWidget {
                       title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                      style: context.ext.theme.textTheme.titleLarge?.copyWith(
+                        color:
+                            context.appThemeExt.appColors.white
+                                .byBrightness(context.ext.theme.isDark)
+                                .onColor,
                       ),
                       textAlign: TextAlign.center,
                     ),
                   ),
                 ),
               ),
-              Divider(color: Colors.grey.shade400, thickness: 1),
+              AppValues.sm.ext.sizedBox.vertical,
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(image, fit: BoxFit.contain),
                 ),
               ),
-              Divider(color: Colors.grey.shade400, thickness: 1),
+              AppValues.sm.ext.sizedBox.vertical,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.favorite, color: Colors.white),
+                    color:
+                        context.appThemeExt.appColors.white
+                            .byBrightness(context.ext.theme.isDark)
+                            .onColor,
+                    icon: const Icon(Icons.favorite_outline),
                   ),
                   SizedBox.square(
                     dimension: 45,
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.teal,
+                        backgroundColor:
+                            context.appThemeExt.appColors.secondary,
+                        foregroundColor:
+                            context.appThemeExt.appColors.secondary.onColor,
+                        iconColor:
+                            context.appThemeExt.appColors.secondary.onColor,
                         padding: EdgeInsets.zero,
                         shape: RoundedRectangleBorder(
                           borderRadius: AppValues.md.ext.radius.border.all,
                         ),
                       ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: const Center(child: Icon(Icons.arrow_forward_ios)),
                     ),
                   ),
                 ],
               ),
+              AppValues.sm.ext.sizedBox.vertical,
             ],
           ),
         ),

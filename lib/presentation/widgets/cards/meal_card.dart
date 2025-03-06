@@ -1,4 +1,6 @@
+import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:penta_core/penta_core.dart';
 
 class MealCard extends StatefulWidget {
   const MealCard({
@@ -27,13 +29,15 @@ class MealCardState extends State<MealCard> {
           margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.appThemeExt.appColors.white.byBrightness(
+              context.ext.theme.isDark,
+            ),
             borderRadius: BorderRadius.circular(18),
             boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
-                blurRadius: 8,
-                offset: Offset(0, 4),
+                blurRadius: 6,
+                offset: Offset(0, 2),
               ),
             ],
           ),
@@ -54,10 +58,11 @@ class MealCardState extends State<MealCard> {
                   Expanded(
                     child: Text(
                       '${widget.meal}: ${widget.calories} kcal',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                      style: context.ext.theme.textTheme.titleMedium!.copyWith(
+                        color:
+                            context.appThemeExt.appColors.white
+                                .byBrightness(context.ext.theme.isDark)
+                                .onColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -68,28 +73,55 @@ class MealCardState extends State<MealCard> {
                         _expandedMeals = !_expandedMeals;
                       });
                     },
+                    color: context.appThemeExt.appColors.grey,
                     icon: Icon(
                       _expandedMeals
                           ? Icons.arrow_upward
                           : Icons.arrow_downward,
-                      color: Colors.grey,
                     ),
                   ),
                 ],
               ),
               if (_expandedMeals)
                 Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                  padding: AppValues.sm.ext.padding.directional.top,
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Carb:10gr'),
-                        Text('Yağ:10gr'),
-                        Text('Protein:10gr'),
+                        Text(
+                          'Carb:10gr',
+                          style: context.ext.theme.textTheme.bodyLarge!
+                              .copyWith(
+                                color:
+                                    context.appThemeExt.appColors.white
+                                        .byBrightness(context.ext.theme.isDark)
+                                        .onColor,
+                              ),
+                        ),
+                        Text(
+                          'Yağ:10gr',
+                          style: context.ext.theme.textTheme.bodyLarge!
+                              .copyWith(
+                                color:
+                                    context.appThemeExt.appColors.white
+                                        .byBrightness(context.ext.theme.isDark)
+                                        .onColor,
+                              ),
+                        ),
+                        Text(
+                          'Protein:10gr',
+                          style: context.ext.theme.textTheme.bodyLarge!
+                              .copyWith(
+                                color:
+                                    context.appThemeExt.appColors.white
+                                        .byBrightness(context.ext.theme.isDark)
+                                        .onColor,
+                              ),
+                        ),
                       ],
                     ),
                   ),

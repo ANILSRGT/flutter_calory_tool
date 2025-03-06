@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/presentation/pages/food/widget/food_card.dart';
+import 'package:calory_tool/presentation/widgets/fields/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:penta_core/penta_core.dart';
 
 @RoutePage()
 class FoodPage extends StatefulWidget {
@@ -24,26 +26,6 @@ class _FoodPageState extends State<FoodPage> {
       'title': 'Grilled Chicken',
       'description': 'Perfectly grilled chicken with spices.',
     },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Veggie Salad',
-      'description': 'A fresh and healthy veggie salad.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Spaghetti Bolognese',
-      'description': 'A delicious classic Italian dish.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Chicken Curry',
-      'description': 'A flavorful chicken curry with spices.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Tacos',
-      'description': 'Delicious tacos with a variety of fillings.',
-    },
   ];
 
   List<Map<String, String>> displayedRecipes = [];
@@ -57,44 +39,17 @@ class _FoodPageState extends State<FoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.2),
-                      blurRadius: 8,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search for recipes...',
-                    filled: true,
-                    fillColor: Colors.green[50],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      color: Colors.blueAccent,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 15),
-                  ),
-                ),
+              CustomTextField(
+                controller: _searchController,
+                hintText: 'Search for recipes...',
+                prefixIcon: const Icon(Icons.search),
               ),
-              const SizedBox(height: 15),
+              ...AppValues.xl6.ext.sizedBox.vertical.ext.widget * 2,
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -102,7 +57,7 @@ class _FoodPageState extends State<FoodPage> {
                 itemBuilder: (context, index) {
                   final recipe = displayedRecipes[index];
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
+                    padding: AppValues.lg.ext.padding.directional.bottom,
                     child: FoodCard(
                       image: recipe['image']!,
                       title: recipe['title']!,

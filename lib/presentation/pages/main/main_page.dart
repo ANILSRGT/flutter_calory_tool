@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:calory_tool/core/widgets/navBar/nav_bar_widget.dart';
+import 'package:calory_tool/presentation/widgets/navBar/nav_bar_widget.dart';
 import 'package:calory_tool/presentation/pages/food/food_page.dart';
 import 'package:calory_tool/presentation/pages/home/home_page.dart';
 import 'package:calory_tool/presentation/pages/main/store/navigation_store.dart';

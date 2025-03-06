@@ -27,6 +27,27 @@ final class MainTheme extends IAppTheme
       appBarTheme: appBarTheme,
       elevatedButtonTheme: elevatedButtonTheme(isDark),
       chipTheme: chipTheme(isDark),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: colors.primary.withValues(alpha: 0.1),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+      ),
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: colors.background.byBrightness(isDark),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: colors.primary.withValues(alpha: 0.1),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+        ),
+      ),
       sliderTheme: SliderThemeData(
         activeTrackColor: colors.primary,
         inactiveTrackColor: colors.grey.withValues(alpha: 0.5),
