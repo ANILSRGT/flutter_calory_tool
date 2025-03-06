@@ -124,6 +124,8 @@ class _RecipeDetailsPageBody extends StatelessWidget {
                         itemCount: 2,
                         itemBuilder: (context, index) {
                           return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            spacing: AppValues.sm.value,
                             children: [
                               Text(
                                 '• Nutrition $index',
