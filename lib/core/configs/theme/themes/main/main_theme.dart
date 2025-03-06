@@ -27,6 +27,21 @@ final class MainTheme extends IAppTheme
       appBarTheme: appBarTheme,
       elevatedButtonTheme: elevatedButtonTheme(isDark),
       chipTheme: chipTheme(isDark),
+      sliderTheme: SliderThemeData(
+        activeTrackColor: colors.primary,
+        inactiveTrackColor: colors.grey.withValues(alpha: 0.5),
+        thumbColor: colors.primary,
+        overlayColor: colors.primary.withValues(alpha: 0.5),
+        thumbSize: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.dragged)) {
+            return const Size.square(20);
+          }
+          if (states.contains(WidgetState.disabled)) {
+            return const Size.square(5);
+          }
+          return const Size.square(15);
+        }),
+      ),
       iconButtonTheme: const IconButtonThemeData(
         style: ButtonStyle(
           padding: WidgetStatePropertyAll(EdgeInsets.all(3)),
