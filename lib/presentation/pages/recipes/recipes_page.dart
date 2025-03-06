@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/presentation/pages/recipes/widget/reciper_card.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class RecipesPage extends StatefulWidget {
   const RecipesPage({super.key});
 
@@ -12,12 +14,36 @@ class _RecipesPageState extends State<RecipesPage> {
   TextEditingController _searchController = TextEditingController();
 
   List<Map<String, String>> allRecipes = [
-    {'image': 'assets/breakfast.png', 'title': 'Delicious Pancakes', 'description': 'Fluffy and tasty pancakes.'},
-    {'image': 'assets/breakfast.png', 'title': 'Grilled Chicken', 'description': 'Perfectly grilled chicken.'},
-    {'image': 'assets/breakfast.png', 'title': 'Veggie Salad', 'description': 'A fresh and healthy veggie salad.'},
-    {'image': 'assets/breakfast.png', 'title': 'Spaghetti Bolognese', 'description': 'A delicious Italian dish.'},
-    {'image': 'assets/breakfast.png', 'title': 'Chicken Curry', 'description': 'A flavorful chicken curry.'},
-    {'image': 'assets/breakfast.png', 'title': 'Tacos', 'description': 'Delicious tacos with fillings.'},
+    {
+      'image': 'assets/breakfast.png',
+      'title': 'Delicious Pancakes',
+      'description': 'Fluffy and tasty pancakes.',
+    },
+    {
+      'image': 'assets/breakfast.png',
+      'title': 'Grilled Chicken',
+      'description': 'Perfectly grilled chicken.',
+    },
+    {
+      'image': 'assets/breakfast.png',
+      'title': 'Veggie Salad',
+      'description': 'A fresh and healthy veggie salad.',
+    },
+    {
+      'image': 'assets/breakfast.png',
+      'title': 'Spaghetti Bolognese',
+      'description': 'A delicious Italian dish.',
+    },
+    {
+      'image': 'assets/breakfast.png',
+      'title': 'Chicken Curry',
+      'description': 'A flavorful chicken curry.',
+    },
+    {
+      'image': 'assets/breakfast.png',
+      'title': 'Tacos',
+      'description': 'Delicious tacos with fillings.',
+    },
   ];
 
   List<Map<String, String>> displayedRecipes = [];
@@ -30,9 +56,14 @@ class _RecipesPageState extends State<RecipesPage> {
 
   void _filterRecipes(String query) {
     setState(() {
-      displayedRecipes = allRecipes
-          .where((recipe) => recipe['title']!.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      displayedRecipes =
+          allRecipes
+              .where(
+                (recipe) => recipe['title']!.toLowerCase().contains(
+                  query.toLowerCase(),
+                ),
+              )
+              .toList();
     });
   }
 
@@ -43,7 +74,10 @@ class _RecipesPageState extends State<RecipesPage> {
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(

@@ -3,8 +3,8 @@ import 'package:calory_tool/core/widgets/navBar/nav_bar_widget.dart';
 import 'package:calory_tool/presentation/pages/food/food_page.dart';
 import 'package:calory_tool/presentation/pages/home/home_page.dart';
 import 'package:calory_tool/presentation/pages/main/store/navigation_store.dart';
-import 'package:calory_tool/presentation/pages/randomPages/random_pages.dart';
 import 'package:calory_tool/presentation/pages/recipes/recipes_page.dart';
+import 'package:calory_tool/presentation/pages/summary/summary_page_imports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -20,12 +20,12 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> pages = [
     const HomePage(),
     const FoodPage(),
-     const  Home3Page(),
-     const RecipesPage(),
+    const SummaryPage(),
+    const RecipesPage(),
   ];
 
   final PageController _pageController = PageController();
-  final NavigationStore _navigationStore=NavigationStore();
+  final NavigationStore _navigationStore = NavigationStore();
 
   @override
   void dispose() {
@@ -43,7 +43,11 @@ class _MainPageState extends State<MainPage> {
           return CustomBottomNavBar(
             selectedIndex: _navigationStore.selectedIndex,
             onTap: (index) {
-              _pageController.animateToPage(index, duration: Durations.medium3, curve: Curves.ease);
+              _pageController.animateToPage(
+                index,
+                duration: Durations.medium3,
+                curve: Curves.ease,
+              );
             },
           );
         },

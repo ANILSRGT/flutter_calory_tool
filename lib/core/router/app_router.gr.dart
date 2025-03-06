@@ -10,6 +10,25 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [FoodPage]
+class FoodRoute extends PageRouteInfo<void> {
+  const FoodRoute({List<PageRouteInfo>? children})
+      : super(
+          FoodRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FoodRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FoodPage();
+    },
+  );
+}
+
+/// generated route for
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -43,6 +62,44 @@ class MainRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const MainPage();
+    },
+  );
+}
+
+/// generated route for
+/// [RecipesPage]
+class RecipesRoute extends PageRouteInfo<void> {
+  const RecipesRoute({List<PageRouteInfo>? children})
+      : super(
+          RecipesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RecipesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RecipesPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SummaryPage]
+class SummaryRoute extends PageRouteInfo<void> {
+  const SummaryRoute({List<PageRouteInfo>? children})
+      : super(
+          SummaryRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SummaryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SummaryPage();
     },
   );
 }
