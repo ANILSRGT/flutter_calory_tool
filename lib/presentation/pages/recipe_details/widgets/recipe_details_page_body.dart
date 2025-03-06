@@ -5,7 +5,7 @@ class _RecipeDetailsPageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return CustomSafeArea(
       child: SingleChildScrollView(
         child: Padding(
           padding: AppValues.md.ext.padding.horizontal,

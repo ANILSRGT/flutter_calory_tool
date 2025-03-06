@@ -5,6 +5,7 @@ import 'package:calory_tool/presentation/pages/main/store/navigation_store.dart'
 import 'package:calory_tool/presentation/pages/recipes/recipes_page.dart';
 import 'package:calory_tool/presentation/pages/summary/summary_page_imports.dart';
 import 'package:calory_tool/presentation/widgets/navBar/nav_bar_widget.dart';
+import 'package:calory_tool/presentation/widgets/safearea/custom_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -37,7 +38,6 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: Colors.white54,
       bottomNavigationBar: Observer(
         builder: (_) {
           return CustomBottomNavBar(
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
           );
         },
       ),
-      body: SafeArea(
+      body: CustomSafeArea(
         child: Observer(
           builder: (_) {
             return PageView(
