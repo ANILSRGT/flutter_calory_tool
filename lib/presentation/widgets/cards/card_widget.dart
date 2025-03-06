@@ -14,7 +14,7 @@ class CardWidget extends StatelessWidget {
       elevation: elevation,
       borderRadius: AppValues.lg.ext.radius.border.all,
       color: color ?? Colors.transparent,
-      child: Padding(padding: AppValues.md.ext.padding.all, child: child),
+      child: Padding(padding: AppValues.lg.ext.padding.all, child: child),
     );
   }
 }
