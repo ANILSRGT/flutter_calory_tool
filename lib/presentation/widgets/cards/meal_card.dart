@@ -23,27 +23,35 @@ class MealCardState extends State<MealCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: context.appThemeExt.appColors.white.byBrightness(
-              context.ext.theme.isDark,
-            ),
-            borderRadius: BorderRadius.circular(18),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 6,
-                offset: Offset(0, 2),
-              ),
-            ],
+    return AnimatedSize(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+      alignment: Alignment.topCenter,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: context.appThemeExt.appColors.white.byBrightness(
+            context.ext.theme.isDark,
           ),
-          child: Column(
-            children: [
-              Row(
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _expandedMeals = !_expandedMeals;
+                });
+              },
+              child: Row(
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
@@ -67,69 +75,56 @@ class MealCardState extends State<MealCard> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _expandedMeals = !_expandedMeals;
-                      });
-                    },
-                    color: context.appThemeExt.appColors.grey,
-                    icon: Icon(
-                      _expandedMeals
-                          ? Icons.arrow_upward
-                          : Icons.arrow_downward,
-                    ),
+                  Icon(
+                    _expandedMeals ? Icons.arrow_upward : Icons.arrow_downward,
                   ),
                 ],
               ),
-              if (_expandedMeals)
-                Padding(
-                  padding: AppValues.sm.ext.padding.directional.top,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Carb:10gr',
-                          style: context.ext.theme.textTheme.bodyLarge!
-                              .copyWith(
-                                color:
-                                    context.appThemeExt.appColors.white
-                                        .byBrightness(context.ext.theme.isDark)
-                                        .onColor,
-                              ),
+            ),
+            if (_expandedMeals)
+              Padding(
+                padding: AppValues.sm.ext.padding.directional.top,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Carb:10gr',
+                        style: context.ext.theme.textTheme.bodyLarge!.copyWith(
+                          color:
+                              context.appThemeExt.appColors.white
+                                  .byBrightness(context.ext.theme.isDark)
+                                  .onColor,
                         ),
-                        Text(
-                          'Yağ:10gr',
-                          style: context.ext.theme.textTheme.bodyLarge!
-                              .copyWith(
-                                color:
-                                    context.appThemeExt.appColors.white
-                                        .byBrightness(context.ext.theme.isDark)
-                                        .onColor,
-                              ),
+                      ),
+                      Text(
+                        'Yağ:10gr',
+                        style: context.ext.theme.textTheme.bodyLarge!.copyWith(
+                          color:
+                              context.appThemeExt.appColors.white
+                                  .byBrightness(context.ext.theme.isDark)
+                                  .onColor,
                         ),
-                        Text(
-                          'Protein:10gr',
-                          style: context.ext.theme.textTheme.bodyLarge!
-                              .copyWith(
-                                color:
-                                    context.appThemeExt.appColors.white
-                                        .byBrightness(context.ext.theme.isDark)
-                                        .onColor,
-                              ),
+                      ),
+                      Text(
+                        'Protein:10gr',
+                        style: context.ext.theme.textTheme.bodyLarge!.copyWith(
+                          color:
+                              context.appThemeExt.appColors.white
+                                  .byBrightness(context.ext.theme.isDark)
+                                  .onColor,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

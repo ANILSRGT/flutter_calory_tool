@@ -1,0 +1,1 @@
+enum FavoritesPageTypeFiltersEnum { recipes, foods }

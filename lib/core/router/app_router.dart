@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:calory_tool/presentation/pages/favorites/favorites_page_imports.dart';
 import 'package:calory_tool/presentation/pages/food/food_page.dart';
 import 'package:calory_tool/presentation/pages/home/home_page.dart';
 import 'package:calory_tool/presentation/pages/main/main_page.dart';
@@ -22,6 +23,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: SummaryRoute.page),
     AutoRoute(page: FoodRoute.page),
     AutoRoute(page: RecipeDetailsRoute.page),
+    AutoRoute(page: FavoritesRoute.page),
   ];
 
   @override

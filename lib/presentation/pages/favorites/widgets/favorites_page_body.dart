@@ -1,0 +1,38 @@
+part of '../favorites_page_imports.dart';
+
+class _FavoritesPageBody extends StatelessWidget {
+  const _FavoritesPageBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomSafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: AppValues.xl.ext.padding.horizontal,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Favorites',
+                    style: context.ext.theme.textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.filter_list),
+                  ),
+                ],
+              ),
+              AppValues.xl6.ext.sizedBox.vertical,
+              const _FavoritesPageList(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

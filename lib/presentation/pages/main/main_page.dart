@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:calory_tool/presentation/pages/favorites/favorites_page_imports.dart';
 import 'package:calory_tool/presentation/pages/food/food_page.dart';
 import 'package:calory_tool/presentation/pages/home/home_page.dart';
 import 'package:calory_tool/presentation/pages/main/store/navigation_store.dart';
@@ -18,11 +19,32 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final List<Widget> pages = [
-    const HomePage(),
-    const FoodPage(),
-    const SummaryPage(),
-    const RecipesPage(),
+  final List<CustomBottomNavBarData> data = [
+    CustomBottomNavBarData(
+      icon: Icons.home,
+      label: 'Home',
+      page: const HomePage(),
+    ),
+    CustomBottomNavBarData(
+      icon: Icons.fastfood,
+      label: 'Food',
+      page: const FoodPage(),
+    ),
+    CustomBottomNavBarData(
+      icon: Icons.favorite,
+      label: 'Favorites',
+      page: const FavoritesPage(),
+    ),
+    CustomBottomNavBarData(
+      icon: Icons.bar_chart,
+      label: 'Summary',
+      page: const SummaryPage(),
+    ),
+    CustomBottomNavBarData(
+      icon: Icons.book,
+      label: 'Recipes',
+      page: const RecipesPage(),
+    ),
   ];
 
   final PageController _pageController = PageController();
@@ -41,6 +63,7 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: Observer(
         builder: (_) {
           return CustomBottomNavBar(
+            data: data,
             selectedIndex: _navigationStore.selectedIndex,
             onTap: (index) {
               _pageController.animateToPage(
@@ -58,7 +81,7 @@ class _MainPageState extends State<MainPage> {
             return PageView(
               controller: _pageController,
               onPageChanged: _navigationStore.setIndex,
-              children: pages,
+              children: data.map((e) => e.page).toList(),
             );
           },
         ),
