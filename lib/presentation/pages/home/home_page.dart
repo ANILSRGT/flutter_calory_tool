@@ -4,6 +4,8 @@ import 'package:calory_tool/presentation/widgets/cards/card_widget.dart';
 import 'package:calory_tool/presentation/widgets/cards/meal_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:penta_core/penta_core.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -225,6 +227,27 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 10),
               _buildMealSection(),
+              Center(
+                child: Html(
+                  shrinkWrap: true,
+                  data: '''
+                  <a href="https://www.fatsecret.com">Powered by fatsecret</a>
+                ''',
+                  style: {
+                    'a': Style(
+                      color: Colors.blue,
+                      fontSize: FontSize(16),
+                      textAlign: TextAlign.center,
+                    ),
+                  },
+                  onLinkTap: (url, attributes, element) {
+                    launchUrl(
+                      Uri.parse('https://www.fatsecret.com'),
+                      mode: LaunchMode.inAppBrowserView,
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
