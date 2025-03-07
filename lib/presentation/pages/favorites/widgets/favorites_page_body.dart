@@ -38,6 +38,7 @@ class _FavoritesPageBody extends StatelessWidget {
                   ),
                 ],
               ),
+              const _FavoritesPageSearchField(),
               AppValues.xl6.ext.sizedBox.vertical,
               const _FavoritesPageList(),
             ],
