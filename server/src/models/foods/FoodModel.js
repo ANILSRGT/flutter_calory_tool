@@ -3,7 +3,7 @@ import FoodPreferenceModel from "./FoodPreferenceModel.js";
 import FoodServingModel from "./FoodServingModel.js";
 
 class FoodModel {
-  constructor({ id, name, brand_name, type, sub_categories, url, allergens, preferences, servings }) {
+  constructor({ id, name, brand_name, type, sub_categories, url, allergens, preferences, servings, imageUrl }) {
     this.id = id;
     this.name = name;
     this.brand_name = brand_name;
@@ -13,6 +13,7 @@ class FoodModel {
     this.allergens = allergens;
     this.preferences = preferences;
     this.servings = servings;
+    this.imageUrl = imageUrl;
   }
 
   static fromJson(json) {
@@ -30,6 +31,7 @@ class FoodModel {
         foodAttributes?.["preferences"]?.["preference"]?.map(preference => FoodPreferenceModel.fromJson(preference)) ??
         [],
       servings: json["servings"]?.["serving"]?.map(serving => FoodServingModel.fromJson(serving)) ?? [],
+      imageUrl: json["food_images"]?.["food_image"]?.[0]?.["image_url"],
     });
   }
 }

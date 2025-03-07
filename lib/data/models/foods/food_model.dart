@@ -13,6 +13,7 @@ class FoodModel {
     this.brandName,
     this.type,
     this.url,
+    this.imageUrl,
   });
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
@@ -42,6 +43,7 @@ class FoodModel {
           servings
               .map((e) => FoodServingModel.fromJson(e as Map<String, dynamic>))
               .toList(),
+      imageUrl: json['image_url'] as String?,
     );
   }
 
@@ -54,4 +56,5 @@ class FoodModel {
   final List<FoodAllergenModel> allergens;
   final List<FoodPreferenceModel> preferences;
   final List<FoodServingModel> servings;
+  final String? imageUrl;
 }
