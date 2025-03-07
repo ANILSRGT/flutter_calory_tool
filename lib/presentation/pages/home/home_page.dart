@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 80,
                     child: ListView.builder(
+                      shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: 7,
                       clipBehavior: Clip.none,

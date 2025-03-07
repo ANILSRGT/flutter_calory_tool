@@ -4,10 +4,13 @@ import 'package:calory_tool/core/configs/constants/app_environments.dart';
 import 'package:calory_tool/core/providers/theme_notifier.dart';
 import 'package:calory_tool/injections/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show DeviceOrientation, SystemChrome;
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   //~ Initialize Dependencies
   await AppEnvironments.I.init();
