@@ -22,7 +22,18 @@ class _FavoritesPageBody extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final filter = await showModalBottomSheet<
+                        FavoritesPageTypeFiltersEnum
+                      >(
+                        context: context,
+                        builder: (_) => const _FavoritesPageFilterSheet(),
+                      );
+
+                      if (filter != null) {
+                        FavoritesPage._viewModel.setTypeFilter(filter);
+                      }
+                    },
                     icon: const Icon(Icons.filter_list),
                   ),
                 ],

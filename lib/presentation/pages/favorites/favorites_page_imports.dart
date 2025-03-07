@@ -14,3 +14,4 @@ part 'widgets/favorites_page_body.dart';
 part 'widgets/favorites_page_list.dart';
 part 'widgets/favorites_page_food_list.dart';
 part 'widgets/favorites_page_recipe_list.dart';
+part 'widgets/favorites_page_filter_sheet.dart';

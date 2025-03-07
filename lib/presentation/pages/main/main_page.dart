@@ -41,7 +41,7 @@ class _MainPageState extends State<MainPage> {
       page: const SummaryPage(),
     ),
     CustomBottomNavBarData(
-      icon: Icons.book,
+      icon: Icons.menu_book_rounded,
       label: 'Recipes',
       page: const RecipesPage(),
     ),
@@ -60,20 +60,22 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: Observer(
-        builder: (_) {
-          return CustomBottomNavBar(
-            data: data,
-            selectedIndex: _navigationStore.selectedIndex,
-            onTap: (index) {
-              _pageController.animateToPage(
-                index,
-                duration: Durations.medium3,
-                curve: Curves.ease,
-              );
-            },
-          );
-        },
+      bottomNavigationBar: CustomSafeArea(
+        child: Observer(
+          builder: (_) {
+            return CustomBottomNavBar(
+              data: data,
+              selectedIndex: _navigationStore.selectedIndex,
+              onTap: (index) {
+                _pageController.animateToPage(
+                  index,
+                  duration: Durations.medium3,
+                  curve: Curves.ease,
+                );
+              },
+            );
+          },
+        ),
       ),
       body: CustomSafeArea(
         child: Observer(
