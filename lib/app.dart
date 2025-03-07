@@ -1,6 +1,7 @@
 import 'package:calory_tool/core/providers/theme_notifier.dart';
 import 'package:calory_tool/core/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatefulWidget {
@@ -30,6 +31,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       themeMode: themeNotifier.currentThemeMode,
       routerDelegate: _appRouter.delegate(),
       routeInformationParser: _appRouter.defaultRouteParser(),
+      builder: (context, child) {
+        return OKToast(child: child!);
+      },
     );
   }
 }

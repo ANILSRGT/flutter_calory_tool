@@ -30,10 +30,17 @@ class FavoritesRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [FoodDetailPage]
-class FoodDetailRoute extends PageRouteInfo<void> {
-  const FoodDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class FoodDetailRoute extends PageRouteInfo<FoodDetailRouteArgs> {
+  FoodDetailRoute({
+    Key? key,
+    required FoodModel foodModel,
+    List<PageRouteInfo>? children,
+  }) : super(
           FoodDetailRoute.name,
+          args: FoodDetailRouteArgs(
+            key: key,
+            foodModel: foodModel,
+          ),
           initialChildren: children,
         );
 
@@ -42,9 +49,29 @@ class FoodDetailRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const FoodDetailPage();
+      final args = data.argsAs<FoodDetailRouteArgs>();
+      return FoodDetailPage(
+        key: args.key,
+        foodModel: args.foodModel,
+      );
     },
   );
+}
+
+class FoodDetailRouteArgs {
+  const FoodDetailRouteArgs({
+    this.key,
+    required this.foodModel,
+  });
+
+  final Key? key;
+
+  final FoodModel foodModel;
+
+  @override
+  String toString() {
+    return 'FoodDetailRouteArgs{key: $key, foodModel: $foodModel}';
+  }
 }
 
 /// generated route for

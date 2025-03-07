@@ -1,26 +1,22 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/router/app_router.dart';
+import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
 class FoodCard extends StatelessWidget {
   const FoodCard({
-    required this.image,
-    required this.title,
-    required this.description,
-    super.key,
+   required this.foodModel
   });
 
-  final String image;
-  final String title;
-  final String description;
+  final FoodModel foodModel;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.router.push(const FoodDetailRoute());
+        context.router.push( FoodDetailRoute(foodModel: foodModel));
       },
       borderRadius: BorderRadius.circular(20),
       child: Card(
@@ -29,7 +25,7 @@ class FoodCard extends StatelessWidget {
         ),
         margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        shadowColor: Colors.black.withOpacity(0.8),
+        shadowColor: Colors.black.withValues(alpha: 0.8),
         elevation: 4,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +42,7 @@ class FoodCard extends StatelessWidget {
                 child: Transform.translate(
                   offset: const Offset(0, -45),
                   child: Image.asset(
-                    image,
+                    'assets/breakfast.png',
                     width: 120,
                     height: 120,
                     fit: BoxFit.cover,
@@ -62,7 +58,7 @@ class FoodCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      foodModel.name?? 'N/A',
                       style: context.ext.theme.textTheme.titleLarge?.copyWith(
                         color: context.appThemeExt.appColors.background
                             .byBrightness(context.ext.theme.isDark)
@@ -71,14 +67,7 @@ class FoodCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      description,
-                      style: context.ext.theme.textTheme.bodyMedium?.copyWith(
-                        color: context.appThemeExt.appColors.grey,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+
                   ],
                 ),
               ),

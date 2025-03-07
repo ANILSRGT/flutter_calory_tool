@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/allergens/allergens_page.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/serving/serving_page.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,10 @@ import 'package:penta_core/penta_core.dart';
 
 @RoutePage()
 class FoodDetailPage extends StatefulWidget {
-  const FoodDetailPage({super.key});
+  const FoodDetailPage({super.key,required this.foodModel});
+
+
+  final FoodModel foodModel ;
 
   @override
   State<FoodDetailPage> createState() => _FoodDetailPageState();
@@ -39,7 +43,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppBar(title: const Text('Food #'), centerTitle: true),
+                AppBar(title:  Text(widget.foodModel.name??'N/A'), centerTitle: true),
                 Image.asset(
                   'assets/breakfast.png',
                   width: context.ext.screen.byOrientation(
@@ -56,13 +60,15 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
                 Wrap(
                   alignment: WrapAlignment.center,
                   spacing: AppValues.sm.value,
-                  children: List.generate(3, (index) {
-                    return Chip(label: Text('Category $index'));
+                  children: List.generate(widget.foodModel.subCategories.length, (index) {
+                    final category = widget.foodModel.subCategories[index];
+                    return Chip(label: Text(category));
                   }),
                 ),
                 AppValues.md.ext.sizedBox.vertical,
+                if(widget.foodModel.brandName!= null)
                 Text(
-                  'Food Brand',
+                  widget.foodModel.brandName!,
                   textAlign: TextAlign.center,
                   style: context.ext.theme.textTheme.bodyLarge,
                 ),
@@ -72,7 +78,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
                 TabBar(
                   controller: _tabController,
                   tabs: const [
-                    Tab(text: 'Details'),
+                    Tab(text: 'Serving'),
                     Tab(text: 'Allergens'),
                     Tab(text: 'Preferences'),
                   ],
@@ -83,7 +89,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      Serving(),
+                      Serving(foodServingModel: widget.foodModel.servings,),
                       AllergensPage(),
                       const Center(child: Text('Related foods content')),
                     ],
