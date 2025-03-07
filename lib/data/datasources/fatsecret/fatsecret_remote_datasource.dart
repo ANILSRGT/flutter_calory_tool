@@ -36,7 +36,8 @@ final class FatsecretRemoteDatasource {
           res.data!['data'] as Map<String, dynamic>,
         ),
       );
-    } on Exception {
+    } on Exception catch (e){
+      print("object");
       return const ResponseModelFail(
         error: ErrorModel(
           message: 'Failed to search food',

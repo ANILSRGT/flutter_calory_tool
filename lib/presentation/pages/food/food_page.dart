@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:calory_tool/core/providers/food_provider.dart';
 import 'package:calory_tool/presentation/widgets/cards/food_card.dart';
 import 'package:calory_tool/presentation/widgets/fields/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class FoodPage extends StatefulWidget {
@@ -15,26 +17,25 @@ class FoodPage extends StatefulWidget {
 class _FoodPageState extends State<FoodPage> {
   final TextEditingController _searchController = TextEditingController();
 
-  List<Map<String, String>> allRecipes = [
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Delicious Pancakes',
-      'description': 'Fluffy and tasty pancakes for breakfast.',
-    },
-    {
-      'image': 'assets/breakfast.png',
-      'title': 'Grilled Chicken',
-      'description': 'Perfectly grilled chicken with spices.',
-    },
-  ];
+  String _searchText='';
 
-  List<Map<String, String>> displayedRecipes = [];
+  late final PentaDebounceable<void, String> _fetchSuggestions =
+  PentaDebouncer.debounce(
+    debounceDuration: const Duration(milliseconds: 1000),
+    function: (query) async {
+      if (_searchText == query) return;
+      _searchText = query;
 
-  @override
-  void initState() {
-    super.initState();
-    displayedRecipes = allRecipes;
-  }
+      context.read<FoodProvider>().clearFoods();
+      if (query.isEmpty) {
+        return;
+      }
+
+      context.read<FoodProvider>().fetchsearchfoods(query);
+    },
+  );
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,20 +49,22 @@ class _FoodPageState extends State<FoodPage> {
                 controller: _searchController,
                 hintText: 'Search for recipes...',
                 prefixIcon: const Icon(Icons.search),
+                onChanged: (value) {
+                  _fetchSuggestions(value);
+                },
               ),
               ...AppValues.xl6.ext.sizedBox.vertical.ext.widget * 2,
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: displayedRecipes.length,
+                itemCount: context.watch<FoodProvider>().foods?.foods.length?? 0,
+
                 itemBuilder: (context, index) {
-                  final recipe = displayedRecipes[index];
+                  final food = context.watch<FoodProvider>().foods!.foods[index];
                   return Padding(
                     padding: AppValues.lg.ext.padding.directional.bottom,
                     child: FoodCard(
-                      image: recipe['image']!,
-                      title: recipe['title']!,
-                      description: recipe['description']!,
+                    foodModel: food,
                     ),
                   );
                 },

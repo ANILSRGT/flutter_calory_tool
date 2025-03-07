@@ -11,11 +11,8 @@ class _FavoritesPageFoodList extends StatelessWidget {
       itemCount: 10,
       separatorBuilder: (context, index) => AppValues.xl.ext.sizedBox.vertical,
       itemBuilder: (context, index) {
-        return const FoodCard(
-          image: 'assets/breakfast.png',
-          title: 'title',
-          description: 'description',
-        );
+
+        return Text('data');
       },
     );
   }

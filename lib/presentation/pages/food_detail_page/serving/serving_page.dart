@@ -1,8 +1,11 @@
+import 'package:calory_tool/data/models/foods/food_serving_model.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/serving/serving_filter_sheet.dart';
 import 'package:flutter/material.dart';
 
 class Serving extends StatefulWidget {
-  const Serving({super.key});
+  const Serving({super.key,required this.foodServingModel});
+
+  final List<FoodServingModel> foodServingModel;
 
   @override
   State<Serving> createState() => _ServingState();
