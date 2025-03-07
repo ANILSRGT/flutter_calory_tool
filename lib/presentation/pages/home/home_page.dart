@@ -5,10 +5,10 @@ import 'package:calory_tool/presentation/widgets/cards/meal_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:penta_core/penta_core.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
