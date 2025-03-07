@@ -29,6 +29,25 @@ class FavoritesRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [FoodDetailPage]
+class FoodDetailRoute extends PageRouteInfo<void> {
+  const FoodDetailRoute({List<PageRouteInfo>? children})
+      : super(
+          FoodDetailRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FoodDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FoodDetailPage();
+    },
+  );
+}
+
+/// generated route for
 /// [FoodPage]
 class FoodRoute extends PageRouteInfo<void> {
   const FoodRoute({List<PageRouteInfo>? children})

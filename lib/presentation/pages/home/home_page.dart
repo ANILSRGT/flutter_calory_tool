@@ -203,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               buildStyledSlider(
                                 'Fat',
-                                context.appThemeExt.appColors.warning.light,
+                                context.appThemeExt.appColors.success.light,
                                 fat,
                                 0,
                                 500,
