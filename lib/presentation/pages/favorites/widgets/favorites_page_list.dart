@@ -13,9 +13,10 @@ class _FavoritesPageListState extends State<_FavoritesPageList> {
     return Observer(
       builder: (_) {
         return switch (FavoritesPage._viewModel.typeFilter) {
-          FavoritesPageTypeFiltersEnum.foods => const _FavoritesPageFoodList(),
-          FavoritesPageTypeFiltersEnum.recipes =>
+          FavoriteCategory.foods => const _FavoritesPageFoodList(),
+          FavoriteCategory.recipes =>
             const _FavoritesPageRecipeList(),
+
         };
       },
     );

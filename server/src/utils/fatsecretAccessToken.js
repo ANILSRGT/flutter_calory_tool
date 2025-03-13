@@ -11,7 +11,7 @@ async function getAccessToken(scope = "premier") {
       TOKEN_URL,
       qs.stringify({
         grant_type: "client_credentials",
-        // scope: scope,
+        scope: "premier"
       }),
       {
         headers: {

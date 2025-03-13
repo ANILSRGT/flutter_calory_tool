@@ -1,4 +1,3 @@
-
 import 'package:calory_tool/data/models/foods/food_search_model.dart';
 import 'package:calory_tool/data/params/fatsecret_api_search_food_params.dart';
 import 'package:calory_tool/data/repositories/fatsecret_api_repo.dart';

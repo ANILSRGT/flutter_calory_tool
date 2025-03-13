@@ -39,38 +39,51 @@ class _FoodPageState extends State<FoodPage> {
 
   @override
   Widget build(BuildContext context) {
+    final items=context.watch<FoodProvider>().foods?.foods.where((e)=>e.imageUrl!=null).toList();
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-          child: Column(
-            children: [
-              CustomTextField(
+      backgroundColor: Colors.grey.shade100,
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 15.0),
+              child: Text(
+                'What Would You Like \n To Cook Today?',textAlign: TextAlign.center,
+                style: context.ext.theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: CustomTextField(
                 controller: _searchController,
                 hintText: 'Search for recipes...',
                 prefixIcon: const Icon(Icons.search),
-                onChanged: (value) {
-                  _fetchSuggestions(value);
-                },
-              ),
-              ...AppValues.xl6.ext.sizedBox.vertical.ext.widget * 2,
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: context.watch<FoodProvider>().foods?.foods.length?? 0,
+                onChanged: _fetchSuggestions,
 
-                itemBuilder: (context, index) {
-                  final food = context.watch<FoodProvider>().foods!.foods[index];
-                  return Padding(
-                    padding: AppValues.lg.ext.padding.directional.bottom,
-                    child: FoodCard(
-                    foodModel: food,
-                    ),
-                  );
-                },
               ),
-            ],
-          ),
+            ),
+
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: GridView.builder(
+                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: context.ext.screen.width~/180,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 0.75,
+                  ),
+                  itemCount: items?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final food = items![index];
+                    return FoodCard(foodModel:food);
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

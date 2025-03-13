@@ -1,4 +1,4 @@
-import 'package:calory_tool/presentation/pages/favorites/enums/favorites_page_type_filters_enum.dart';
+import 'package:calory_tool/enum/favorite_category.dart';
 import 'package:mobx/mobx.dart';
 
 part 'favorites_page_view_model.g.dart';
@@ -8,13 +8,16 @@ class FavoritesPageViewModel = _FavoritesPageViewModelBase
 
 abstract class _FavoritesPageViewModelBase with Store {
   @observable
-  FavoritesPageTypeFiltersEnum _typeFilter = FavoritesPageTypeFiltersEnum.foods;
+  FavoriteCategory _typeFilter = FavoriteCategory.foods;
 
   @computed
-  FavoritesPageTypeFiltersEnum get typeFilter => _typeFilter;
+  FavoriteCategory get typeFilter => _typeFilter;
 
   @action
-  void setTypeFilter(FavoritesPageTypeFiltersEnum typeFilter) {
+  void setTypeFilter(FavoriteCategory typeFilter) {
     _typeFilter = typeFilter;
   }
+
+
+
 }

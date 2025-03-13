@@ -1,168 +1,292 @@
 part of '../recipe_details_page_imports.dart';
 
+
 class _RecipeDetailsPageBody extends StatelessWidget {
-  const _RecipeDetailsPageBody();
+  const _RecipeDetailsPageBody({required this.recipeModel});
+
+  final RecipeModel recipeModel;
+
 
   @override
   Widget build(BuildContext context) {
-    return CustomSafeArea(
-      child: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildImageSection(context),
+            SizedBox(height: 15.0,),
+            Center(
+              child: Container(child: Text(recipeModel.name ??'',style: TextStyle(
+                fontSize: 23,fontWeight: FontWeight.w700
+              ),),),
+            ),
+            const SizedBox(height: 20),
+            _buildTypeChips(),
+            const SizedBox(height: 20),
+            _buildTabSection(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabSection(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          TabBar(
+            labelStyle: TextStyle(fontSize: 18),
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.black,
+            tabs: const [
+              Tab(text: 'Ingredients'),
+              Tab(text: 'Nutrition'),
+            ],
+          ),
+          SizedBox(
+            height: 400,
+            child: TabBarView(
+              children: [
+                _buildIngredientsSection(context),
+                _buildNutritionSection(context),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget _buildImageSection(BuildContext context) {
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          ),
+          child: Image.network(
+            recipeModel.image ?? '',
+            width: double.infinity,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height * 0.45,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned(
+          top: 35,
+          left: 16,
+          child: GlassEffectButton(
+            icon: Icons.arrow_back_outlined,
+            onPressed: () => context.router.popForced(),
+          ),
+        ),
+        Positioned(
+          top: 35,
+          right: 16,
+          child: GlassEffectButton(
+            icon:  context.watch<FavoritesProvider>().recipe.any((e)=>e.id==recipeModel.id)? Icons.favorite: Icons.favorite_outline,
+            onPressed: () {
+              context.read<FavoritesProvider>().toogleFavoriteRecipe(recipeModel);
+
+            },
+          ),
+        ),
+
+      ],
+    );
+  }
+
+  Widget _buildTypeChips() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Wrap(
+        spacing: 8.0,
+        runSpacing: 8.0,
+        children: recipeModel.types.map((type) =>
+            Chip(
+              label: Text(type, style: const TextStyle(color: Colors.white)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0)),
+            )).toList(),
+      ),
+
+    );
+  }
+
+  Widget _buildIngredientsSection(BuildContext context) {
+    return SingleChildScrollView(
+      child: Card(
+        margin: EdgeInsets.only(bottom: 30.0),
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        color: Colors.white,
         child: Padding(
-          padding: AppValues.md.ext.padding.horizontal,
+          padding: const EdgeInsets.only(top: 16.0, bottom: 30.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppBar(title: const Text('Recipe #'), centerTitle: true),
-              CardWidget(
-                elevation: 3,
-                color: context.appThemeExt.appColors.white.byBrightness(
-                  context.ext.theme.isDark,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Image.asset(
-                      'assets/breakfast.png',
-                      width: context.ext.screen.byOrientation(
-                        portrait: context.ext.screen.width * 0.5,
-                        landscape: context.ext.screen.height * 0.5,
-                      ),
-                      height: context.ext.screen.byOrientation(
-                        portrait: context.ext.screen.width * 0.5,
-                        landscape: context.ext.screen.height * 0.5,
-                      ),
-                      fit: BoxFit.contain,
-                    ),
-                    AppValues.md.ext.sizedBox.vertical,
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: AppValues.sm.value,
-                      children: List.generate(3, (index) {
-                        return Chip(label: Text('Card $index'));
-                      }),
-                    ),
-                    AppValues.md.ext.sizedBox.vertical,
-                    Text(
-                      'Pariatur veniam do laborum proident. Reprehenderit minim veniam culpa aute ut. Occaecat eiusmod est pariatur id. Id ex officia ad ea est labore irure do qui qui. Nisi culpa adipisicing et est mollit consequat excepteur. Nostrud sit do magna aliqua.',
-                      textAlign: TextAlign.center,
-                      style: context.ext.theme.textTheme.bodyLarge?.copyWith(
-                        color:
-                            context.appThemeExt.appColors.white
-                                .byBrightness(context.ext.theme.isDark)
-                                .onColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              AppValues.md.ext.sizedBox.vertical,
-              CardWidget(
-                elevation: 3,
-                color: context.appThemeExt.appColors.white.byBrightness(
-                  context.ext.theme.isDark,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Ingredients',
-                      style: context.ext.theme.textTheme.titleLarge?.copyWith(
-                        color:
-                            context.appThemeExt.appColors.white
-                                .byBrightness(context.ext.theme.isDark)
-                                .onColor,
-                      ),
-                    ),
+              Column(
+                children: recipeModel.ingredients.map((ingredient) =>
                     Padding(
-                      padding: AppValues.sm.ext.padding.horizontal,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 2,
-                        itemBuilder: (context, index) {
-                          return Text(
-                            '• Ingredient $index',
-                            style: context.ext.theme.textTheme.bodyLarge
-                                ?.copyWith(
-                                  color:
-                                      context.appThemeExt.appColors.white
-                                          .byBrightness(
-                                            context.ext.theme.isDark,
-                                          )
-                                          .onColor,
-                                ),
-                          );
-                        },
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 25.0),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.check_circle, size: 20, color: Colors
+                              .green),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              ingredient,
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(fontSize: 18),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
+                    )).toList(),
               ),
-              AppValues.md.ext.sizedBox.vertical,
-              CardWidget(
-                elevation: 3,
-                color: context.appThemeExt.appColors.white.byBrightness(
-                  context.ext.theme.isDark,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Nutrition',
-                      style: context.ext.theme.textTheme.titleLarge?.copyWith(
-                        color:
-                            context.appThemeExt.appColors.white
-                                .byBrightness(context.ext.theme.isDark)
-                                .onColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: AppValues.sm.ext.padding.horizontal,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 2,
-                        itemBuilder: (context, index) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            spacing: AppValues.sm.value,
-                            children: [
-                              Text(
-                                '• Nutrition $index',
-                                style: context.ext.theme.textTheme.bodyLarge
-                                    ?.copyWith(
-                                      color:
-                                          context.appThemeExt.appColors.white
-                                              .byBrightness(
-                                                context.ext.theme.isDark,
-                                              )
-                                              .onColor,
-                                    ),
-                              ),
-                              Text(
-                                'Value $index',
-                                style: context.ext.theme.textTheme.bodyMedium
-                                    ?.copyWith(
-                                      color:
-                                          context.appThemeExt.appColors.white
-                                              .byBrightness(
-                                                context.ext.theme.isDark,
-                                              )
-                                              .onColor,
-                                    ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
       ),
     );
   }
+
+
+  Widget _buildNutritionSection(BuildContext context) {
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16.0, bottom: 30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  _buildNutritionRow(context, 'Calories',
+                      '${recipeModel.nutrition?.calories ?? 0} kcal'),
+                  _buildNutritionRow(context, 'Protein',
+                      '${recipeModel.nutrition?.protein ?? 0} g'),
+                  _buildNutritionRow(
+                      context, 'Fat', '${recipeModel.nutrition?.fat ?? 0} g'),
+                  _buildNutritionRow(context, 'Carbs',
+                      '${recipeModel.nutrition?.carbohydrates ?? 0} g'),
+                ],
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNutritionRow(BuildContext context, String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+      child: Row(
+        children: [
+          const Icon(Icons.add_circle, size: 20, color: Colors.green),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '$label: $value',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(fontSize: 18),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
+
+
+class GlassEffectBox extends StatelessWidget {
+  final String text;
+
+  const GlassEffectBox({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.3), // Beyaz cam efekti
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.white.withValues(alpha: 0.5), // Beyaz gölge
+                blurRadius: 15,
+                spreadRadius: 5,
+                offset: Offset(3, 3),
+              ),
+            ],
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.5),
+              width: 1.5,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class GlassEffectButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const GlassEffectButton({super.key, required this.icon, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white70,
+
+          ),
+          child: IconButton(
+            icon: Icon(icon, color: Colors.black),
+            onPressed: onPressed,
+          ),
+        ),
+      ),
+    );
+  }
+}
+

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
+import 'package:calory_tool/data/models/recipes/recipe_model.dart';
 import 'package:calory_tool/presentation/pages/favorites/favorites_page_imports.dart';
 import 'package:calory_tool/presentation/pages/food/food_page.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/food_detail_page.dart';

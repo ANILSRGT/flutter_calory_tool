@@ -17,7 +17,7 @@ class _FavoritesPageFilterSheet extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children:
-              FavoritesPageTypeFiltersEnum.values
+          FavoriteCategory.values
                   .map(
                     (filter) => ListTile(
                       title: Text(filter.displayName),

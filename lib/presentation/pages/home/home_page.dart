@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
+import 'package:calory_tool/presentation/pages/main/main_page.dart';
 import 'package:calory_tool/presentation/widgets/cards/card_widget.dart';
 import 'package:calory_tool/presentation/widgets/cards/meal_card.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -218,16 +219,28 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(height: 20),
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(left: 8),
-                child: Text(
-                  'Planed Meals',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Planed Meals',
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                    ),
+                    IconButton(onPressed: () {
+                      MainPage.pageController.animateToPage(1, duration: Durations.medium3, curve: Curves.ease);
+                    }, icon: CircleAvatar(
+                      maxRadius: 16,
+                        backgroundColor: context.appThemeExt.appColors.primary,
+                        child: Icon(Icons.add,color: Colors.white,)))
+                  ],
                 ),
               ),
               const SizedBox(height: 10),
               _buildMealSection(),
               Center(
+
                 child: Html(
                   shrinkWrap: true,
                   data: '''
@@ -319,3 +332,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+

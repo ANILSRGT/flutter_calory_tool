@@ -7,6 +7,7 @@ class _FavoritesPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: SingleChildScrollView(
+
         child: Padding(
           padding: AppValues.xl.ext.padding.horizontal,
           child: Column(
@@ -24,7 +25,7 @@ class _FavoritesPageBody extends StatelessWidget {
                   IconButton(
                     onPressed: () async {
                       final filter = await showModalBottomSheet<
-                        FavoritesPageTypeFiltersEnum
+                          FavoriteCategory
                       >(
                         context: context,
                         builder: (_) => const _FavoritesPageFilterSheet(),

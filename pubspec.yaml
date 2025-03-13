@@ -68,3 +68,16 @@ flutter:
   assets:
     - .env
     - assets/
+    - assets/fonts/
+
+  fonts:
+    - family: BalooDa2
+      fonts:
+        - asset: assets/fonts/BalooDa2-Bold.ttf
+        - asset: assets/fonts/BalooDa2-ExtraBold.ttf
+        - asset: assets/fonts/BalooDa2-Medium.ttf
+        - asset: assets/fonts/BalooDa2-Regular.ttf
+        - asset: assets/fonts/BalooDa2-SemiBold.ttf
+
+
+

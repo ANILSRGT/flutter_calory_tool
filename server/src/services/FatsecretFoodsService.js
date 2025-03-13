@@ -18,12 +18,16 @@ class FatsecretFoodService {
         }
       );
 
+      console.log(fatsecretApiKey)
+
       if (!response.data || response.data.error) {
+        console.log(response.data);
         return { message: "No data found", status: 404 };
       }
 
       return { data: FoodSearchModel.fromJson(response.data), status: 200 };
     } catch (error) {
+    console.log(error);
       return { message: "Something went wrong", status: 500 };
     }
   }

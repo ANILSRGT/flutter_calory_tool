@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:calory_tool/core/providers/favorite_provider.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/allergens/allergens_page.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/serving/serving_page.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class FoodDetailPage extends StatefulWidget {
@@ -43,9 +45,24 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppBar(title:  Text(widget.foodModel.name??'N/A'), centerTitle: true),
-                Image.asset(
-                  'assets/breakfast.png',
+                AppBar(
+                    title:  Text(widget.foodModel.name??'N/A'),
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          context.read<FavoritesProvider>().toogleFavoriteFood(widget.foodModel);
+                        },
+                        icon: Icon(
+                          context.watch<FavoritesProvider>().foods.any((e) => e.id == widget.foodModel.id)
+                              ? Icons.favorite
+                              : Icons.favorite_outline,
+                        ),
+                      ),
+
+                    ],
+                    centerTitle: true),
+                Image.network(
+                  widget.foodModel.imageUrl ??'',
                   width: context.ext.screen.byOrientation(
                     portrait: context.ext.screen.width * 0.5,
                     landscape: context.ext.screen.height * 0.5,

@@ -1,96 +1,54 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/router/app_router.dart';
+import 'package:calory_tool/data/models/recipes/recipe_model.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
 class RecipeCard extends StatelessWidget {
-  const RecipeCard({required this.image, required this.title, super.key});
-  final String image;
-  final String title;
+  const RecipeCard({super.key, required this.recipeModel});
+
+  final RecipeModel recipeModel;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+    final theme = context.ext.theme;
+    final colors = context.appThemeExt.appColors;
+    final textColor = colors.white.byBrightness(theme.isDark).onColor;
+
+    return GestureDetector(
+      onTap: () {
+        context.router.push(RecipeDetailsRoute(recipeModel: recipeModel));
+      },
       child: Container(
-        decoration: BoxDecoration(
-          color: context.appThemeExt.appColors.white.byBrightness(
-            context.ext.theme.isDark,
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 12, left: 10, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: SizedBox(
-                  height: 36,
-                  child: Center(
-                    child: Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.ext.theme.textTheme.titleLarge?.copyWith(
-                        color:
-                            context.appThemeExt.appColors.white
-                                .byBrightness(context.ext.theme.isDark)
-                                .onColor,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+        margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                recipeModel.image ?? '',
+                height: 150,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                recipeModel.name ?? '',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: textColor,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              AppValues.sm.ext.sizedBox.vertical,
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(image, fit: BoxFit.contain),
-                ),
-              ),
-              AppValues.sm.ext.sizedBox.vertical,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    color:
-                        context.appThemeExt.appColors.white
-                            .byBrightness(context.ext.theme.isDark)
-                            .onColor,
-                    icon: const Icon(Icons.favorite_outline),
-                  ),
-                  SizedBox.square(
-                    dimension: 45,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context.router.push(const RecipeDetailsRoute());
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            context.appThemeExt.appColors.secondary,
-                        foregroundColor:
-                            context.appThemeExt.appColors.secondary.onColor,
-                        iconColor:
-                            context.appThemeExt.appColors.secondary.onColor,
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: AppValues.md.ext.radius.border.all,
-                        ),
-                      ),
-                      child: const Center(child: Icon(Icons.arrow_forward_ios)),
-                    ),
-                  ),
-                ],
-              ),
-              AppValues.sm.ext.sizedBox.vertical,
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -6,73 +6,72 @@ import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
 class FoodCard extends StatelessWidget {
-  const FoodCard({
-   required this.foodModel
-  });
+  const FoodCard({required this.foodModel, super.key});
 
   final FoodModel foodModel;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    final theme = context.ext.theme;
+    final colors = context.appThemeExt.appColors;
+    final textColor = colors.white.byBrightness(theme.isDark).onColor;
+
+    return GestureDetector(
       onTap: () {
-        context.router.push( FoodDetailRoute(foodModel: foodModel));
+        context.router.push(FoodDetailRoute(foodModel: foodModel));
       },
-      borderRadius: BorderRadius.circular(20),
-      child: Card(
-        color: context.appThemeExt.appColors.background.byBrightness(
-          context.ext.theme.isDark,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+
         ),
-        margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        shadowColor: Colors.black.withValues(alpha: 0.8),
-        elevation: 4,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 4),
-                child: Transform.translate(
-                  offset: const Offset(0, -45),
-                  child: Image.asset(
-                    'assets/breakfast.png',
-                    width: 120,
-                    height: 120,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            children: [
+              Container(
+                height: 180,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
+                    image: NetworkImage(foodModel.imageUrl ?? ''),
                     fit: BoxFit.cover,
                   ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding:
-                const EdgeInsets.symmetric(vertical: 12, horizontal: 18),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      foodModel.name?? 'N/A',
-                      style: context.ext.theme.textTheme.titleLarge?.copyWith(
-                        color: context.appThemeExt.appColors.background
-                            .byBrightness(context.ext.theme.isDark)
-                            .onColor,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8),
+                child: Container(
 
-                  ],
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.white70,
+                        Colors.grey.shade600.withValues(alpha: 0.4),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
               ),
-            ),
-          ],
+
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  foodModel.name ?? 'Unknown Food',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

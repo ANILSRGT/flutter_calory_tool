@@ -2,6 +2,7 @@ part of 'main_theme.dart';
 
 mixin MainThemeTextThemeMixin implements MainThemeAppColorsMixin {
   TextTheme textTheme(bool isDark) => const TextTheme(
+
     displayLarge: TextStyle(fontSize: 57),
     displayMedium: TextStyle(fontSize: 45),
     displaySmall: TextStyle(fontSize: 36),
@@ -20,5 +21,7 @@ mixin MainThemeTextThemeMixin implements MainThemeAppColorsMixin {
   ).apply(
     bodyColor: colors.background.byBrightness(isDark).onColor,
     displayColor: colors.background.byBrightness(isDark).onColor,
+    fontFamily: 'BalooDa2'
+
   );
 }

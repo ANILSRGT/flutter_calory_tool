@@ -9,11 +9,11 @@ part of 'favorites_page_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$FavoritesPageViewModel on _FavoritesPageViewModelBase, Store {
-  Computed<FavoritesPageTypeFiltersEnum>? _$typeFilterComputed;
+  Computed<FavoriteCategory>? _$typeFilterComputed;
 
   @override
-  FavoritesPageTypeFiltersEnum get typeFilter => (_$typeFilterComputed ??=
-          Computed<FavoritesPageTypeFiltersEnum>(() => super.typeFilter,
+  FavoriteCategory get typeFilter => (_$typeFilterComputed ??=
+          Computed<FavoriteCategory>(() => super.typeFilter,
               name: '_FavoritesPageViewModelBase.typeFilter'))
       .value;
 
@@ -21,13 +21,13 @@ mixin _$FavoritesPageViewModel on _FavoritesPageViewModelBase, Store {
       Atom(name: '_FavoritesPageViewModelBase._typeFilter', context: context);
 
   @override
-  FavoritesPageTypeFiltersEnum get _typeFilter {
+  FavoriteCategory get _typeFilter {
     _$_typeFilterAtom.reportRead();
     return super._typeFilter;
   }
 
   @override
-  set _typeFilter(FavoritesPageTypeFiltersEnum value) {
+  set _typeFilter(FavoriteCategory value) {
     _$_typeFilterAtom.reportWrite(value, super._typeFilter, () {
       super._typeFilter = value;
     });
@@ -37,7 +37,7 @@ mixin _$FavoritesPageViewModel on _FavoritesPageViewModelBase, Store {
       ActionController(name: '_FavoritesPageViewModelBase', context: context);
 
   @override
-  void setTypeFilter(FavoritesPageTypeFiltersEnum typeFilter) {
+  void setTypeFilter(FavoriteCategory typeFilter) {
     final _$actionInfo = _$_FavoritesPageViewModelBaseActionController
         .startAction(name: '_FavoritesPageViewModelBase.setTypeFilter');
     try {

@@ -14,6 +14,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
+  static final PageController pageController = PageController();
+
   @override
   State<MainPage> createState() => _MainPageState();
 }
@@ -47,12 +49,12 @@ class _MainPageState extends State<MainPage> {
     ),
   ];
 
-  final PageController _pageController = PageController();
-  final NavigationStore _navigationStore = NavigationStore();
+
+  static final NavigationStore _navigationStore = NavigationStore();
 
   @override
   void dispose() {
-    _pageController.dispose();
+    MainPage.pageController.dispose();
     super.dispose();
   }
 
@@ -67,7 +69,7 @@ class _MainPageState extends State<MainPage> {
               data: data,
               selectedIndex: _navigationStore.selectedIndex,
               onTap: (index) {
-                _pageController.animateToPage(
+                MainPage.pageController.animateToPage(
                   index,
                   duration: Durations.medium3,
                   curve: Curves.ease,
@@ -81,7 +83,7 @@ class _MainPageState extends State<MainPage> {
         child: Observer(
           builder: (_) {
             return PageView(
-              controller: _pageController,
+              controller: MainPage.pageController,
               onPageChanged: _navigationStore.setIndex,
               children: data.map((e) => e.page).toList(),
             );

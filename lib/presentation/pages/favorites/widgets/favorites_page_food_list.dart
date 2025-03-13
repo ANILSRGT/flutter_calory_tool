@@ -5,14 +5,16 @@ class _FavoritesPageFoodList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final foods = context.watch<FavoritesProvider>().foods;
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
+      itemCount: foods.length,
       separatorBuilder: (context, index) => AppValues.xl.ext.sizedBox.vertical,
       itemBuilder: (context, index) {
+          final item = foods[index];
 
-        return Text('data');
+        return FoodCard(foodModel: item);
       },
     );
   }
