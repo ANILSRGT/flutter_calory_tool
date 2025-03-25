@@ -21,29 +21,30 @@ class _FoodPageState extends State<FoodPage> {
   String _searchText = '';
 
   late final PentaDebounceable<void, String> _fetchSuggestions =
-  PentaDebouncer.debounce(
-    debounceDuration: const Duration(milliseconds: 1000),
-    function: (query) async {
-      if (_searchText == query) return;
-      _searchText = query;
+      PentaDebouncer.debounce(
+        debounceDuration: const Duration(milliseconds: 1000),
+        function: (query) async {
+          if (_searchText == query) return;
+          _searchText = query;
 
-      context.read<FoodProvider>().clearFoods();
-      if (query.isEmpty) {
-        return;
-      }
+          context.read<FoodProvider>().clearFoods();
+          if (query.isEmpty) {
+            return;
+          }
 
-      context.read<FoodProvider>().fetchsearchfoods(query);
-    },
-  );
+          context.read<FoodProvider>().fetchsearchfoods(query);
+        },
+      );
 
   @override
   Widget build(BuildContext context) {
-    final items = context
-        .watch<FoodProvider>()
-        .foods
-        ?.foods
-        .where((e) => e.imageUrl != null)
-        .toList();
+    final items =
+        context
+            .watch<FoodProvider>()
+            .foods
+            ?.foods
+            .where((e) => e.imageUrl != null)
+            .toList();
 
     return Scaffold(
       backgroundColor: Colors.grey[200], // Sayfa arka planını hafif gri yaptık
@@ -61,15 +62,17 @@ class _FoodPageState extends State<FoodPage> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: ListView.builder(
-                  itemCount: items?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final food = items![index];
-                    return FoodCard(foodModel: food);
-                  },
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 10,
                 ),
+                itemCount: items?.length ?? 0,
+                separatorBuilder: (context, index) => const SizedBox(height: 8),
+                itemBuilder: (context, index) {
+                  final food = items![index];
+                  return FoodCard(foodModel: food);
+                },
               ),
             ),
           ],

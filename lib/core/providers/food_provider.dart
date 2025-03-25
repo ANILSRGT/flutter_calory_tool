@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calory_tool/core/cache/cache_manager.dart';
 import 'package:calory_tool/core/models/food_cache_model.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
@@ -13,7 +15,6 @@ final class FoodProvider extends ChangeNotifier {
   FoodSearchModel? foods;
   bool isLoading = false;
 
-  PlannedMealsEnum? currentMealType;
   final List<FoodCacheModel> sevenDaysFoods = [];
 
   void init() {
@@ -56,19 +57,11 @@ final class FoodProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setCurrentMealType(PlannedMealsEnum mealType) {
-    currentMealType = mealType;
-    notifyListeners();
-  }
-
-  Future<void> toggleSevenDaysFood(FoodModel food) async {
-    if (currentMealType == null) return;
-
-    await CacheManager.I.dailyFoods.toggleFood(
-      food,
-      currentMealType!,
-      DateTime.now(),
-    );
+  Future<void> toggleSevenDaysFood(
+    FoodModel food,
+    PlannedMealsEnum mealType,
+  ) async {
+    await CacheManager.I.dailyFoods.toggleFood(food, mealType, DateTime.now());
 
     _checkSevenDaysFoods();
     notifyListeners();

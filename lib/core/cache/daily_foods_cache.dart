@@ -7,12 +7,17 @@ final class _DailyFoodsCache {
 
   late final Box<FoodCacheModel> _dailyFoodsBox;
 
+  final String _dailyFoodsName = 'dailyFoods';
+
   Future<void> _init() async {
-    _dailyFoodsBox = await Hive.openBox<FoodCacheModel>('daily_foods');
+    _dailyFoodsBox = await Hive.openBox(_dailyFoodsName);
   }
 
   FoodCacheModel getDailyFoods(DateTime date) {
-    final foods = _dailyFoodsBox.get(date.toUtc().toString());
+    final foods = _dailyFoodsBox.get(
+      DateFormat('yyyy-MM-dd').format(date.toUtc()),
+    );
+
     return foods ?? FoodCacheModel.empty(date.toLocal());
   }
 
@@ -22,11 +27,19 @@ final class _DailyFoodsCache {
     DateTime date,
   ) async {
     final foods = getDailyFoods(date);
-    if (foods.containsFood(food.id, type)) {
-      foods.removeFood(food.id, type);
+
+    foods.foodEntries.putIfAbsent(type, () => []);
+
+    final hasFood = foods.foodEntries[type]!.any((e) => e.id == food.id);
+    if (hasFood) {
+      foods.foodEntries[type]!.removeWhere((e) => e.id == food.id);
     } else {
-      foods.addFood(food, type);
+      foods.foodEntries[type]!.add(food);
     }
-    await _dailyFoodsBox.put(date.toUtc().toString(), foods);
+
+    await _dailyFoodsBox.put(
+      DateFormat('yyyy-MM-dd').format(date.toUtc()),
+      foods.copyWith(foodEntries: foods.foodEntries),
+    );
   }
 }

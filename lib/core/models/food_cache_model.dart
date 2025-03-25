@@ -21,16 +21,18 @@ class FoodCacheModel extends HiveObject {
   @HiveField(1)
   Map<PlannedMealsEnum, List<FoodModel>> foodEntries;
 
-  void addFood(FoodModel food, PlannedMealsEnum type) {
-    foodEntries[type] ??= [];
-    foodEntries[type]!.add(food);
-  }
-
-  void removeFood(String? id, PlannedMealsEnum type) {
-    foodEntries[type]?.removeWhere((element) => element.id == id);
-  }
-
-  bool containsFood(String? foodId, PlannedMealsEnum type) {
-    return foodEntries[type]?.any((element) => element.id == foodId) ?? false;
+  FoodCacheModel copyWith({
+    DateTime? date,
+    Map<PlannedMealsEnum, List<FoodModel>>? foodEntries,
+  }) {
+    return FoodCacheModel(
+      date: date ?? this.date,
+      foodEntries:
+          foodEntries ??
+          {
+            for (final entry in this.foodEntries.entries)
+              entry.key: List<FoodModel>.from(entry.value),
+          },
+    );
   }
 }

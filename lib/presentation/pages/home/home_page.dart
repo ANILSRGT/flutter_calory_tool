@@ -143,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  homeCard(
+                  HomeCard(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -234,11 +234,37 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.only(left: 8),
-                child: Text(
-                  'Planed Meals',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Planed Meals',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                      ),
+                    ),
+                    if (currentdateTime.toUtc().ext.compare.isSameDay(
+                      DateTime.now().toUtc(),
+                    ))
+                      IconButton(
+                        onPressed: () {
+                          MainPage.pageController.animateToPage(
+                            1,
+                            duration: Durations.medium3,
+                            curve: Curves.ease,
+                          );
+                        },
+                        icon: CircleAvatar(
+                          maxRadius: 16,
+                          backgroundColor:
+                              context.appThemeExt.appColors.primary,
+                          child: const Icon(Icons.add, color: Colors.white),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               const SizedBox(height: 10),
@@ -317,28 +343,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMealSection() {
+    final foodsCache = context
+        .watch<FoodProvider>()
+        .sevenDaysFoods
+        .ext
+        .where
+        .firstOrNull(
+          (e) => e.date.toUtc().ext.compare.isSameDay(currentdateTime.toUtc()),
+        );
     return Column(
-      spacing: AppValues.md.value,
+      spacing: 10,
       children:
           PlannedMealsEnum.values
               .map(
                 (e) => MealCard(
                   meal: e.displayName,
                   imagePath: 'assets/breakfast.png',
-                  foods: const [],
-                  onAddPressed:
-                      currentdateTime.toUtc().ext.compare.isSameDay(
-                            DateTime.now().toUtc(),
-                          )
-                          ? () {
-                            context.read<FoodProvider>().setCurrentMealType(e);
-                            MainPage.pageController.animateToPage(
-                              1,
-                              duration: Durations.medium3,
-                              curve: Curves.ease,
-                            );
-                          }
-                          : null,
+                  foods: foodsCache?.foodEntries[e] ?? [],
                 ),
               )
               .toList(),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calory_tool/core/configs/enums/app_localiaztions_enum.dart';
 import 'package:calory_tool/core/configs/enums/app_themes_enum.dart';
 import 'package:calory_tool/core/models/food_cache_model.dart';
@@ -15,6 +17,7 @@ import 'package:calory_tool/data/models/recipes/recipe_model.dart';
 import 'package:calory_tool/data/models/recipes/recipe_nutrition_model.dart';
 import 'package:calory_tool/data/models/recipes/recipe_search_model.dart';
 import 'package:calory_tool/enum/planned_meals_enum.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

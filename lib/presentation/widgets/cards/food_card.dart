@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/providers/favorite_provider.dart';
+import 'package:calory_tool/core/providers/food_provider.dart';
 import 'package:calory_tool/core/router/app_router.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
+import 'package:calory_tool/enum/planned_meals_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +20,9 @@ class FoodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.ext.theme;
     final colors = context.appThemeExt.appColors;
-    final isFavorite = context.watch<FavoritesProvider>().foods.any((e) => e.id == foodModel.id);
+    final isFavorite = context.watch<FavoritesProvider>().foods.any(
+      (e) => e.id == foodModel.id,
+    );
 
     return GestureDetector(
       onTap: () {
@@ -24,14 +30,12 @@ class FoodCard extends StatelessWidget {
       },
       child: Card(
         color: theme.isDark ? Colors.grey[900] : Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 4,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
+            spacing: 8,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
@@ -40,11 +44,14 @@ class FoodCard extends StatelessWidget {
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.broken_image, size: 80, color: Colors.grey),
+                  errorBuilder:
+                      (context, error, stackTrace) => const Icon(
+                        Icons.broken_image,
+                        size: 80,
+                        color: Colors.grey,
+                      ),
                 ),
               ),
-              const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   foodModel.name ?? 'Unknown Food',
@@ -57,17 +64,58 @@ class FoodCard extends StatelessWidget {
                   maxLines: 1,
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  context.read<FavoritesProvider>().toogleFavoriteFood(foodModel);
+              GestureDetector(
+                onTap: () {
+                  context.read<FavoritesProvider>().toogleFavoriteFood(
+                    foodModel,
+                  );
                 },
-                icon: CircleAvatar(
-
+                child: CircleAvatar(
+                  radius: 14,
                   backgroundColor: Colors.grey.withValues(alpha: 0.3),
                   child: Icon(
                     isFavorite ? Icons.favorite : Icons.favorite_outline,
                     color: isFavorite ? Colors.red : Colors.grey,
-                    size: 28,
+                    size: 16,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  final mealType = await showModalBottomSheet<PlannedMealsEnum>(
+                    context: context,
+                    builder: (context) {
+                      return SingleChildScrollView(
+                        child: SafeArea(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children:
+                                PlannedMealsEnum.values.map((e) {
+                                  return GestureDetector(
+                                    onTap: () => context.router.popForced(e),
+                                    child: ListTile(title: Text(e.displayName)),
+                                  );
+                                }).toList(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+
+                  if (mealType != null && context.mounted) {
+                    await context.read<FoodProvider>().toggleSevenDaysFood(
+                      foodModel,
+                      mealType,
+                    );
+                  }
+                },
+                child: CircleAvatar(
+                  radius: 14,
+                  backgroundColor: context.appThemeExt.appColors.primary,
+                  child: Icon(
+                    Icons.add,
+                    color: context.appThemeExt.appColors.primary.onColor,
+                    size: 16,
                   ),
                 ),
               ),

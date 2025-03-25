@@ -127,7 +127,7 @@ class MealCardState extends State<MealCard> {
                                   ),
                                 ),
                                 Text(
-                                  '${e.servings.map((e) => e.calories ?? 0)} kcal',
+                                  '${e.servings.first.calcium} kcal',
                                   style: context.ext.theme.textTheme.bodyLarge
                                       ?.copyWith(
                                         color:
