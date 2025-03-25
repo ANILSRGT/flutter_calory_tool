@@ -1,9 +1,13 @@
 import 'package:calory_tool/data/models/foods/food_allergen_model.dart';
 import 'package:calory_tool/data/models/foods/food_preference_model.dart';
 import 'package:calory_tool/data/models/foods/food_serving_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class FoodModel {
-  const FoodModel({
+part 'food_model.g.dart';
+
+@HiveType(typeId: 0)
+class FoodModel extends HiveObject {
+  FoodModel({
     required this.subCategories,
     required this.allergens,
     required this.preferences,
@@ -47,14 +51,33 @@ class FoodModel {
     );
   }
 
+  @HiveField(0)
   final String? id;
+
+  @HiveField(1)
   final String? name;
+
+  @HiveField(2)
   final String? brandName;
+
+  @HiveField(3)
   final String? type;
+
+  @HiveField(4)
   final List<String> subCategories;
+
+  @HiveField(5)
   final String? url;
+
+  @HiveField(6)
   final List<FoodAllergenModel> allergens;
+
+  @HiveField(7)
   final List<FoodPreferenceModel> preferences;
+
+  @HiveField(8)
   final List<FoodServingModel> servings;
+
+  @HiveField(9)
   final String? imageUrl;
 }

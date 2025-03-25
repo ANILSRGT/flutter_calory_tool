@@ -1,29 +1,76 @@
+import 'package:calory_tool/core/cache/cache_manager.dart';
+import 'package:calory_tool/core/models/food_cache_model.dart';
+import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:calory_tool/data/models/foods/food_search_model.dart';
 import 'package:calory_tool/data/params/fatsecret_api_search_food_params.dart';
 import 'package:calory_tool/data/repositories/fatsecret_api_repo.dart';
+import 'package:calory_tool/enum/planned_meals_enum.dart';
 import 'package:calory_tool/injections/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 
 final class FoodProvider extends ChangeNotifier {
-  FoodSearchModel? foods ;
+  FoodSearchModel? foods;
   bool isLoading = false;
-  Future<void> fetchsearchfoods(String query)async{
-    isLoading=true;
+
+  PlannedMealsEnum? currentMealType;
+  final List<FoodCacheModel> sevenDaysFoods = [];
+
+  void init() {
+    _checkSevenDaysFoods();
     notifyListeners();
-   final res=await Injection.I.read<FatsecretApiRepo>().searchFood(FatsecretApiSearchFoodParams(query: query));
-    res.when(onSuccess: (data) {
-      foods= data;
-    }, onFail: (fail) {
+  }
+
+  void _checkSevenDaysFoods() {
+    sevenDaysFoods.clear();
+
+    for (var i = 0; i < 7; i++) {
+      final food = CacheManager.I.dailyFoods.getDailyFoods(
+        DateTime.now().subtract(Duration(days: i)),
+      );
+      sevenDaysFoods.add(food);
+    }
+  }
+
+  Future<void> fetchsearchfoods(String query) async {
+    isLoading = true;
+    notifyListeners();
+    final res = await Injection.I.read<FatsecretApiRepo>().searchFood(
+      FatsecretApiSearchFoodParams(query: query),
+    );
+    res.when(
+      onSuccess: (data) {
+        foods = data;
+      },
+      onFail: (fail) {
         showToast(fail.error.message);
-    },);
-    isLoading=false;
-    notifyListeners();
+      },
+    );
+    isLoading = false;
 
-  }
-  void clearFoods(){
-    foods= null;
     notifyListeners();
   }
 
+  void clearFoods() {
+    foods = null;
+    notifyListeners();
+  }
+
+  void setCurrentMealType(PlannedMealsEnum mealType) {
+    currentMealType = mealType;
+    notifyListeners();
+  }
+
+  Future<void> toggleSevenDaysFood(FoodModel food) async {
+    if (currentMealType == null) return;
+
+    await CacheManager.I.dailyFoods.toggleFood(
+      food,
+      currentMealType!,
+      DateTime.now(),
+    );
+
+    _checkSevenDaysFoods();
+    notifyListeners();
+  }
 }

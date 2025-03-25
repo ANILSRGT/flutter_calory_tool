@@ -4,12 +4,12 @@ class _SummaryPageMealItem extends StatefulWidget {
   const _SummaryPageMealItem({
     required this.meal,
     required this.imagePath,
-    required this.calories,
+    required this.foods,
   });
 
   final String meal;
   final String imagePath;
-  final int calories;
+  final List<FoodModel> foods;
 
   @override
   State<_SummaryPageMealItem> createState() => _SummaryPageMealItemState();
@@ -23,7 +23,7 @@ class _SummaryPageMealItemState extends State<_SummaryPageMealItem> {
     return MealCard(
       meal: widget.meal,
       imagePath: widget.imagePath,
-      calories: widget.calories,
+      foods: widget.foods,
     );
   }
 }

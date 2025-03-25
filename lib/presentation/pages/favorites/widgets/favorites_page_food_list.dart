@@ -6,13 +6,18 @@ class _FavoritesPageFoodList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final foods = context.watch<FavoritesProvider>().foods;
-    return ListView.separated(
+    return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: foods.length,
-      separatorBuilder: (context, index) => AppValues.xl.ext.sizedBox.vertical,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: context.ext.screen.width ~/ 180,
+        crossAxisSpacing: AppValues.sm.value,
+        mainAxisSpacing: AppValues.sm.value,
+        childAspectRatio: 0.7,
+      ),
       itemBuilder: (context, index) {
-          final item = foods[index];
+        final item = foods[index];
 
         return FoodCard(foodModel: item);
       },

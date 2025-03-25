@@ -1,5 +1,10 @@
-class FoodSuggestedServingModel {
-  const FoodSuggestedServingModel({
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'food_suggested_serving_model.g.dart';
+
+@HiveType(typeId: 9)
+class FoodSuggestedServingModel extends HiveObject {
+  FoodSuggestedServingModel({
     this.servingId,
     this.servingDescription,
     this.metricServingDescription,
@@ -17,9 +22,18 @@ class FoodSuggestedServingModel {
     );
   }
 
+  @HiveField(0)
   final int? servingId;
+
+  @HiveField(1)
   final String? servingDescription;
+
+  @HiveField(2)
   final String? metricServingDescription;
+
+  @HiveField(3)
   final double? metricMeasureAmount;
+
+  @HiveField(4)
   final double? numberOfUnits;
 }

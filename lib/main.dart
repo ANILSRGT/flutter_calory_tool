@@ -29,13 +29,16 @@ Future<void> main() async {
   final themeNotifier = ThemeNotifier();
   await themeNotifier.init();
 
+  final favoritesProvider = FavoritesProvider()..init();
+  final foodProvider = FoodProvider()..init();
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=>FavoritesProvider()),
-        ChangeNotifierProvider(create: (_)=>RecipeProvider()),
+        ChangeNotifierProvider(create: (_) => favoritesProvider),
+        ChangeNotifierProvider(create: (_) => RecipeProvider()),
         ChangeNotifierProvider(create: (_) => themeNotifier),
-        ChangeNotifierProvider(create: (_) => FoodProvider()),
+        ChangeNotifierProvider(create: (_) => foodProvider),
       ],
       child: const MyApp(),
     ),

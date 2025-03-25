@@ -1,7 +1,11 @@
 import 'package:calory_tool/data/models/recipes/recipe_nutrition_model.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class RecipeModel {
-  const RecipeModel({
+part 'recipe_model.g.dart';
+
+@HiveType(typeId: 10)
+class RecipeModel extends HiveObject {
+  RecipeModel({
     required this.ingredients,
     required this.types,
     this.id,
@@ -28,11 +32,24 @@ class RecipeModel {
     );
   }
 
+  @HiveField(0)
   final String? id;
+
+  @HiveField(1)
   final String? name;
+
+  @HiveField(2)
   final String? description;
+
+  @HiveField(3)
   final String? image;
+
+  @HiveField(4)
   final List<String> ingredients;
+
+  @HiveField(5)
   final List<String> types;
+
+  @HiveField(6)
   final RecipeNutritionModel? nutrition;
 }

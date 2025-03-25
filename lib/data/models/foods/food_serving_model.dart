@@ -1,5 +1,10 @@
-class FoodServingModel {
-  const FoodServingModel({
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'food_serving_model.g.dart';
+
+@HiveType(typeId: 8)
+class FoodServingModel extends HiveObject {
+  FoodServingModel({
     required this.id,
     required this.description,
     required this.url,
@@ -57,29 +62,54 @@ class FoodServingModel {
     );
   }
 
+  @HiveField(0)
   final String? id;
+  @HiveField(1)
   final String? description;
+  @HiveField(2)
   final String? url;
+  @HiveField(3)
   final double? metricServingAmount;
+  @HiveField(4)
   final String? metricServingUnit;
+  @HiveField(5)
   final double? numberOfUnits;
+  @HiveField(6)
   final String? measurementDescription;
+  @HiveField(7)
   final double? calories;
+  @HiveField(8)
   final double? carbohydrate;
+  @HiveField(9)
   final double? protein;
+  @HiveField(10)
   final double? fat;
+  @HiveField(11)
   final double? saturatedFat;
+  @HiveField(12)
   final double? polyunsaturatedFat;
+  @HiveField(13)
   final double? monounsaturatedFat;
+  @HiveField(14)
   final double? cholesterol;
+  @HiveField(15)
   final double? sodium;
+  @HiveField(16)
   final double? potassium;
+  @HiveField(17)
   final double? fiber;
+  @HiveField(18)
   final double? sugar;
+  @HiveField(19)
   final double? addedSugars;
+  @HiveField(20)
   final double? vitaminA;
+  @HiveField(21)
   final double? vitaminC;
+  @HiveField(22)
   final double? vitaminD;
+  @HiveField(23)
   final double? calcium;
+  @HiveField(24)
   final double? iron;
 }

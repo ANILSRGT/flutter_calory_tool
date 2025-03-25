@@ -1,5 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
+import 'package:calory_tool/core/providers/food_provider.dart';
+import 'package:calory_tool/enum/planned_meals_enum.dart';
 import 'package:calory_tool/presentation/pages/main/main_page.dart';
 import 'package:calory_tool/presentation/widgets/cards/card_widget.dart';
 import 'package:calory_tool/presentation/widgets/cards/meal_card.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:penta_core/penta_core.dart';
+import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,11 +23,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _dateScrollController = ScrollController();
   DateTime currentdateTime = DateTime.now();
   double carb = 250;
   double protein = 150;
   double fat = 80;
   List<bool> expandedMeals = [false, false, false];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _dateScrollController.jumpTo(
+        _dateScrollController.position.maxScrollExtent,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 80,
                     child: ListView.builder(
+                      controller: _dateScrollController,
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: 7,
@@ -219,28 +234,16 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const SizedBox(height: 20),
-               Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Planed Meals',
-                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-                    ),
-                    IconButton(onPressed: () {
-                      MainPage.pageController.animateToPage(1, duration: Durations.medium3, curve: Curves.ease);
-                    }, icon: CircleAvatar(
-                      maxRadius: 16,
-                        backgroundColor: context.appThemeExt.appColors.primary,
-                        child: Icon(Icons.add,color: Colors.white,)))
-                  ],
+                child: Text(
+                  'Planed Meals',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                 ),
               ),
               const SizedBox(height: 10),
               _buildMealSection(),
               Center(
-
                 child: Html(
                   shrinkWrap: true,
                   data: '''
@@ -313,24 +316,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  final List<Map<String, dynamic>> meals = [
-    {'name': 'Kahvaltı', 'image': 'assets/breakfast.png', 'calories': 400},
-    {'name': 'Öğle Yemeği', 'image': 'assets/breakfast.png', 'calories': 600},
-    {'name': 'Akşam Yemeği', 'image': 'assets/breakfast.png', 'calories': 500},
-  ];
-
   Widget _buildMealSection() {
     return Column(
-      children: List.generate(meals.length, (index) {
-        final meal = meals[index];
-        return MealCard(
-          meal: meal['name'] as String,
-          imagePath: meal['image'] as String,
-          calories: meal['calories'] as int,
-        );
-      }),
+      spacing: AppValues.md.value,
+      children:
+          PlannedMealsEnum.values
+              .map(
+                (e) => MealCard(
+                  meal: e.displayName,
+                  imagePath: 'assets/breakfast.png',
+                  foods: const [],
+                  onAddPressed:
+                      currentdateTime.toUtc().ext.compare.isSameDay(
+                            DateTime.now().toUtc(),
+                          )
+                          ? () {
+                            context.read<FoodProvider>().setCurrentMealType(e);
+                            MainPage.pageController.animateToPage(
+                              1,
+                              duration: Durations.medium3,
+                              curve: Curves.ease,
+                            );
+                          }
+                          : null,
+                ),
+              )
+              .toList(),
     );
   }
 }
-
-

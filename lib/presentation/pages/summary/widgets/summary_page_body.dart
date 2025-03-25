@@ -81,20 +81,22 @@ class _SummaryPageBodyState extends State<_SummaryPageBody> {
               suffixIcon: const Icon(Icons.calendar_today),
             ),
             AppValues.md.ext.sizedBox.vertical,
-            const _SummaryPageMealItem(
-              meal: 'Meal',
+            const MealCard(
+              meal: 'Breakfast',
               imagePath: 'assets/breakfast.png',
-              calories: 2,
+              foods: [],
             ),
-            const _SummaryPageMealItem(
-              meal: 'Meal',
+            AppValues.md.ext.sizedBox.vertical,
+            const MealCard(
+              meal: 'Lunch',
               imagePath: 'assets/breakfast.png',
-              calories: 2,
+              foods: [],
             ),
-            const _SummaryPageMealItem(
-              meal: 'Meal',
+            AppValues.md.ext.sizedBox.vertical,
+            const MealCard(
+              meal: 'Dinner',
               imagePath: 'assets/breakfast.png',
-              calories: 2,
+              foods: [],
             ),
           ],
         ),

@@ -1,4 +1,9 @@
-class FoodNutritionalContentModel {
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'food_nutritional_content_model.g.dart';
+
+@HiveType(typeId: 5)
+class FoodNutritionalContentModel extends HiveObject {
   FoodNutritionalContentModel({
     this.calories,
     this.carbohydrate,
@@ -39,20 +44,36 @@ class FoodNutritionalContentModel {
     );
   }
 
+  @HiveField(0)
   final double? calories;
+  @HiveField(1)
   final double? carbohydrate;
+  @HiveField(2)
   final double? protein;
+  @HiveField(3)
   final double? fat;
+  @HiveField(4)
   final double? saturatedFat;
+  @HiveField(5)
   final double? polyunsaturatedFat;
+  @HiveField(6)
   final double? monounsaturatedFat;
+  @HiveField(7)
   final double? cholesterol;
+  @HiveField(8)
   final double? sodium;
+  @HiveField(9)
   final double? potassium;
+  @HiveField(10)
   final double? fiber;
+  @HiveField(11)
   final double? sugar;
+  @HiveField(12)
   final double? vitaminA;
+  @HiveField(13)
   final double? vitaminC;
+  @HiveField(14)
   final double? calcium;
+  @HiveField(15)
   final double? iron;
 }

@@ -2,7 +2,6 @@ part of 'injection.dart';
 
 mixin FatsecretApiInjectionMixin {
   void fatsecretApiInjection(GetIt sl) {
-    print(AppEnvironments.I.serverApiUrl);
     final fatsecretDio = Dio(
       BaseOptions(
         baseUrl: AppEnvironments.I.serverApiUrl,

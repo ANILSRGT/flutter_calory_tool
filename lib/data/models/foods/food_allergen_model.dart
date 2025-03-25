@@ -1,5 +1,10 @@
-class FoodAllergenModel {
-  const FoodAllergenModel({required this.id, required this.name, this.value});
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'food_allergen_model.g.dart';
+
+@HiveType(typeId: 2)
+class FoodAllergenModel extends HiveObject {
+  FoodAllergenModel({required this.id, required this.name, this.value});
 
   factory FoodAllergenModel.fromJson(Map<String, dynamic> json) {
     return FoodAllergenModel(
@@ -9,7 +14,10 @@ class FoodAllergenModel {
     );
   }
 
+  @HiveField(0)
   final String? id;
+  @HiveField(1)
   final String? name;
+  @HiveField(2)
   final bool? value;
 }

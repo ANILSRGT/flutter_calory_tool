@@ -1,4 +1,5 @@
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
+import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
@@ -6,13 +7,15 @@ class MealCard extends StatefulWidget {
   const MealCard({
     required this.meal,
     required this.imagePath,
-    required this.calories,
+    required this.foods,
+    this.onAddPressed,
     super.key,
   });
 
   final String meal;
   final String imagePath;
-  final int calories;
+  final List<FoodModel> foods;
+  final VoidCallback? onAddPressed;
 
   @override
   State<MealCard> createState() => MealCardState();
@@ -28,7 +31,6 @@ class MealCardState extends State<MealCard> {
       curve: Curves.easeIn,
       alignment: Alignment.topCenter,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: context.appThemeExt.appColors.white.byBrightness(
@@ -65,8 +67,8 @@ class MealCardState extends State<MealCard> {
                   const SizedBox(width: 15),
                   Expanded(
                     child: Text(
-                      '${widget.meal}: ${widget.calories} kcal',
-                      style: context.ext.theme.textTheme.titleMedium!.copyWith(
+                      '${widget.meal}: ${widget.foods.map((e) => e.servings.isNotEmpty ? e.servings.first.calories : 0).fold<int>(0, (a, b) => a + (b ?? 0).toInt())} kcal',
+                      style: context.ext.theme.textTheme.titleMedium?.copyWith(
                         color:
                             context.appThemeExt.appColors.white
                                 .byBrightness(context.ext.theme.isDark)
@@ -78,6 +80,17 @@ class MealCardState extends State<MealCard> {
                   Icon(
                     _expandedMeals ? Icons.arrow_upward : Icons.arrow_downward,
                   ),
+                  AppValues.md.ext.sizedBox.horizontal,
+                  if (widget.onAddPressed != null)
+                    GestureDetector(
+                      onTap: widget.onAddPressed,
+                      child: CircleAvatar(
+                        backgroundColor: context.appThemeExt.appColors.primary,
+                        foregroundColor:
+                            context.appThemeExt.appColors.primary.onColor,
+                        child: const Icon(Icons.add),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -88,37 +101,47 @@ class MealCardState extends State<MealCard> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Carb:10gr',
-                        style: context.ext.theme.textTheme.bodyLarge!.copyWith(
-                          color:
-                              context.appThemeExt.appColors.white
-                                  .byBrightness(context.ext.theme.isDark)
-                                  .onColor,
-                        ),
-                      ),
-                      Text(
-                        'Yağ:10gr',
-                        style: context.ext.theme.textTheme.bodyLarge!.copyWith(
-                          color:
-                              context.appThemeExt.appColors.white
-                                  .byBrightness(context.ext.theme.isDark)
-                                  .onColor,
-                        ),
-                      ),
-                      Text(
-                        'Protein:10gr',
-                        style: context.ext.theme.textTheme.bodyLarge!.copyWith(
-                          color:
-                              context.appThemeExt.appColors.white
-                                  .byBrightness(context.ext.theme.isDark)
-                                  .onColor,
-                        ),
-                      ),
-                    ],
+                  child: Column(
+                    children:
+                        widget.foods.map((e) {
+                          return Padding(
+                            padding:
+                                AppValues.sm.ext.padding.directional.bottom,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    e.name ?? '',
+                                    style: context.ext.theme.textTheme.bodyLarge
+                                        ?.copyWith(
+                                          color:
+                                              context
+                                                  .appThemeExt
+                                                  .appColors
+                                                  .white
+                                                  .byBrightness(
+                                                    context.ext.theme.isDark,
+                                                  )
+                                                  .onColor,
+                                        ),
+                                  ),
+                                ),
+                                Text(
+                                  '${e.servings.map((e) => e.calories ?? 0)} kcal',
+                                  style: context.ext.theme.textTheme.bodyLarge
+                                      ?.copyWith(
+                                        color:
+                                            context.appThemeExt.appColors.white
+                                                .byBrightness(
+                                                  context.ext.theme.isDark,
+                                                )
+                                                .onColor,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
                   ),
                 ),
               ),
