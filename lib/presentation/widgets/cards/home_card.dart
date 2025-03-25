@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 
-class CardWidget extends StatelessWidget {
-  const CardWidget({super.key, this.color, this.child, this.elevation = 0.0});
+class homeCard extends StatelessWidget {
+  const homeCard({super.key, this.color, this.child, this.elevation = 0.0});
 
   final Color? color;
   final Widget? child;

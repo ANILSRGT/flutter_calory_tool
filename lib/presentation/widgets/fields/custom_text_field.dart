@@ -62,7 +62,7 @@ class CustomTextField extends StatelessWidget {
         ),
         enabledBorder: border,
         focusedBorder: border.copyWith(
-          borderSide: BorderSide(color: context.appThemeExt.appColors.primary),
+          borderSide: BorderSide(color: context.appThemeExt.appColors.grey),
         ),
         disabledBorder: border.copyWith(
           borderSide: BorderSide(

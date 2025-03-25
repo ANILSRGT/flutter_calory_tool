@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/presentation/pages/main/main_page.dart';
-import 'package:calory_tool/presentation/widgets/cards/card_widget.dart';
+import 'package:calory_tool/presentation/widgets/cards/home_card.dart';
 import 'package:calory_tool/presentation/widgets/cards/meal_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  CardWidget(
+                  homeCard(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

@@ -44,33 +44,40 @@ class _RecipesPageState extends State<RecipesPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // 📌 Daha Modern Başlık
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
               child: Column(
                 children: [
-                  Text(
-                    'What Would You Like \n To Cook Today?',
-                    textAlign: TextAlign.center,
-                    style: context.ext.theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22, // Daha büyük yazı
-                      fontFamily: 'Poppins', // Daha modern font
-                    ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/nusret.jpg',
+                        width: 140,
+                        height: 130,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        'What Would You Like \n To Cook Today?',
+                        textAlign: TextAlign.center,
+                        style: context.ext.theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          fontFamily: 'Poppins',
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Divider(color: Colors.grey.shade400, thickness: 1), // İnce çizgi
                 ],
               ),
             ),
 
-            // 📌 Modern Arama Kutusu
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(30), // Daha yuvarlak tasarım
+                  borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black12,
@@ -80,6 +87,7 @@ class _RecipesPageState extends State<RecipesPage> {
                   ],
                 ),
                 child: CustomTextField(
+
                   controller: _searchController,
                   hintText: 'Search for recipes...',
                   prefixIcon: const Icon(Icons.search, color: Colors.grey),
@@ -94,13 +102,13 @@ class _RecipesPageState extends State<RecipesPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: items == null || items.isEmpty
-                    ? const Center(child: CircularProgressIndicator()) // Yüklenme animasyonu
+                    ? const SizedBox.shrink()
                     : GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: context.ext.screen.width ~/ 200, // Daha dengeli
-                    crossAxisSpacing: 8, // Boşluklar artırıldı
+                    crossAxisCount: context.ext.screen.width ~/ 200,
+                    crossAxisSpacing: 8,
                     mainAxisSpacing: 10,
-                    childAspectRatio: 0.78, // Oran iyileştirildi
+                    childAspectRatio: 0.78,
                   ),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
