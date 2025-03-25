@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:calory_tool/data/models/foods/food_category_model.dart';
 import 'package:calory_tool/data/models/foods/food_image_recognition_model.dart';
 import 'package:calory_tool/data/models/foods/food_search_model.dart';
@@ -130,7 +132,7 @@ final class FatsecretRemoteDatasource {
           error: ErrorModel(
             message: 'No data found',
             throwMessage:
-                'fatsecret_remote_datasource/searchFood/null: No data found',
+                'fatsecret_remote_datasource/searchRecipe/null: No data found',
           ),
         );
       }
@@ -143,9 +145,9 @@ final class FatsecretRemoteDatasource {
     } on Exception catch (e) {
       return const ResponseModelFail(
         error: ErrorModel(
-          message: 'Failed to search food',
+          message: 'Failed to search recipe',
           throwMessage:
-              'fatsecret_remote_datasource/searchFood/catch: Failed to search food',
+              'fatsecret_remote_datasource/searchRecipe/catch: Failed to search recipe',
         ),
       );
     }

@@ -12,9 +12,8 @@ mixin FatsecretApiInjectionMixin {
     );
 
     sl
-      ..registerLazySingleton(() => fatsecretDio)
       ..registerLazySingleton(
-        () => FatsecretRemoteDatasource(fatsecretDio: sl()),
+        () => FatsecretRemoteDatasource(fatsecretDio: fatsecretDio),
       )
       ..registerLazySingleton(FatsecretApiRepo.new);
   }
