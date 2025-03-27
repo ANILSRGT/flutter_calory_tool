@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> {
                                                 .primary,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                  bottomLabelText: 'KCAL LEFT',
+                                  bottomLabelText: 'Calories (kcal)',
                                   bottomLabelStyle: context
                                       .ext
                                       .theme

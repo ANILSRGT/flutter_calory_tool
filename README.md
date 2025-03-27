@@ -1,5 +1,9 @@
 # calory_tool
 
+<!-- <video width="270" height="600" controls>
+  <source src="resources/calory_tool.mp4" type="video/mp4">
+</video> -->
+
 # Attributes
 
 - **croissant.gif**: <a href="https://www.flaticon.com/free-animated-icons/breakfast" title="breakfast animated icons">Breakfast animated icons created by Freepik - Flaticon</a>
