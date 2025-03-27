@@ -1,20 +1,28 @@
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
+import 'package:calory_tool/core/providers/food_provider.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
+import 'package:calory_tool/enum/planned_meals_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:penta_core/penta_core.dart';
+import 'package:provider/provider.dart';
 
 class MealCard extends StatefulWidget {
   const MealCard({
     required this.meal,
     required this.imagePath,
+    required this.plannedMeal,
     required this.foods,
+    required this.date,
     this.onAddPressed,
     super.key,
   });
 
   final String meal;
+  final PlannedMealsEnum plannedMeal;
   final String imagePath;
   final List<FoodModel> foods;
+  final DateTime date;
   final VoidCallback? onAddPressed;
 
   @override
@@ -26,6 +34,9 @@ class MealCardState extends State<MealCard> {
 
   @override
   Widget build(BuildContext context) {
+    final sameDay = widget.date.toUtc().ext.compare.isSameDay(
+      DateTime.now().toUtc(),
+    );
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeIn,
@@ -67,7 +78,7 @@ class MealCardState extends State<MealCard> {
                   const SizedBox(width: 15),
                   Expanded(
                     child: Text(
-                      '${widget.meal}: ${widget.foods.map((e) => e.servings.isNotEmpty ? e.servings.first.calories : 0).fold<int>(0, (a, b) => a + (b ?? 0).toInt())} kcal',
+                      '${widget.meal}: ${widget.foods.map((e) => e.servings.isNotEmpty ? (e.servings.first.calories ?? 0) * e.amount : 0).fold<double>(0, (a, b) => a + b)} kcal',
                       style: context.ext.theme.textTheme.titleMedium?.copyWith(
                         color:
                             context.appThemeExt.appColors.white
@@ -98,6 +109,7 @@ class MealCardState extends State<MealCard> {
               Padding(
                 padding: AppValues.sm.ext.padding.directional.top,
                 child: Container(
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -107,38 +119,130 @@ class MealCardState extends State<MealCard> {
                           return Padding(
                             padding:
                                 AppValues.sm.ext.padding.directional.bottom,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    e.name ?? '',
-                                    style: context.ext.theme.textTheme.bodyLarge
-                                        ?.copyWith(
-                                          color:
-                                              context
-                                                  .appThemeExt
-                                                  .appColors
-                                                  .white
-                                                  .byBrightness(
-                                                    context.ext.theme.isDark,
-                                                  )
-                                                  .onColor,
-                                        ),
+                            child: Slidable(
+                              key: UniqueKey(),
+                              enabled: sameDay,
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    label: 'Decrease',
+                                    backgroundColor:
+                                        context
+                                            .appThemeExt
+                                            .appColors
+                                            .error
+                                            .light,
+                                    foregroundColor:
+                                        context
+                                            .appThemeExt
+                                            .appColors
+                                            .error
+                                            .light
+                                            .onColor,
+                                    icon: Icons.remove,
+                                    onPressed: (context) {
+                                      if (e.id == null) return;
+
+                                      context
+                                          .read<FoodProvider>()
+                                          .removeSevenDaysFood(
+                                            e.id!,
+                                            widget.plannedMeal,
+                                            widget.date,
+                                          );
+                                    },
                                   ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
                                 ),
-                                Text(
-                                  '${e.servings.first.calcium} kcal',
-                                  style: context.ext.theme.textTheme.bodyLarge
-                                      ?.copyWith(
-                                        color:
-                                            context.appThemeExt.appColors.white
-                                                .byBrightness(
-                                                  context.ext.theme.isDark,
-                                                )
-                                                .onColor,
+                                child: Row(
+                                  spacing: AppValues.sm.value,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius:
+                                          AppValues.xs.ext.radius.border.all,
+                                      child: Image.network(
+                                        e.imageUrl ?? '',
+                                        width: 42,
+                                        height: 42,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (
+                                          context,
+                                          error,
+                                          stackTrace,
+                                        ) {
+                                          return Container(
+                                            width: 42,
+                                            height: 42,
+                                            color:
+                                                context
+                                                    .appThemeExt
+                                                    .appColors
+                                                    .grey,
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                color:
+                                                    context
+                                                        .appThemeExt
+                                                        .appColors
+                                                        .lightGrey,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        e.name ?? '',
+                                        style: context
+                                            .ext
+                                            .theme
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                              color:
+                                                  context
+                                                      .appThemeExt
+                                                      .appColors
+                                                      .white
+                                                      .byBrightness(
+                                                        context
+                                                            .ext
+                                                            .theme
+                                                            .isDark,
+                                                      )
+                                                      .onColor,
+                                            ),
+                                      ),
+                                    ),
+                                    Text(
+                                      '${e.servings.first.calories} x${e.amount} kcal',
+                                      style: context
+                                          .ext
+                                          .theme
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                            color:
+                                                context
+                                                    .appThemeExt
+                                                    .appColors
+                                                    .white
+                                                    .byBrightness(
+                                                      context.ext.theme.isDark,
+                                                    )
+                                                    .onColor,
+                                          ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           );
                         }).toList(),

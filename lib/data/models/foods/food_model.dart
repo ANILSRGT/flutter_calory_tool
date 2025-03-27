@@ -18,6 +18,7 @@ class FoodModel extends HiveObject {
     this.type,
     this.url,
     this.imageUrl,
+    this.amount = 0,
   });
 
   factory FoodModel.fromJson(Map<String, dynamic> json) {
@@ -80,4 +81,7 @@ class FoodModel extends HiveObject {
 
   @HiveField(9)
   final String? imageUrl;
+
+  @HiveField(10)
+  int amount;
 }

@@ -21,7 +21,7 @@ final class _DailyFoodsCache {
     return foods ?? FoodCacheModel.empty(date.toLocal());
   }
 
-  Future<void> toggleFood(
+  Future<void> addFood(
     FoodModel food,
     PlannedMealsEnum type,
     DateTime date,
@@ -32,14 +32,41 @@ final class _DailyFoodsCache {
 
     final hasFood = foods.foodEntries[type]!.any((e) => e.id == food.id);
     if (hasFood) {
-      foods.foodEntries[type]!.removeWhere((e) => e.id == food.id);
+      final foodIndex =
+          ++foods.foodEntries[type]!
+              .firstWhere((element) => element.id == food.id)
+              .amount;
     } else {
       foods.foodEntries[type]!.add(food);
     }
 
     await _dailyFoodsBox.put(
       DateFormat('yyyy-MM-dd').format(date.toUtc()),
-      foods.copyWith(foodEntries: foods.foodEntries),
+      foods,
+    );
+  }
+
+  Future<void> removeFood(
+    String foodId,
+    PlannedMealsEnum type,
+    DateTime date,
+  ) async {
+    final foods = getDailyFoods(date);
+
+    final hasFood = foods.foodEntries[type]!.any((e) => e.id == foodId);
+    if (hasFood) {
+      if (foods.foodEntries[type]!.any((e) => e.amount <= 1)) {
+        foods.foodEntries[type]!.removeWhere((e) => e.id == foodId);
+      } else {
+        --foods.foodEntries[type]!
+            .firstWhere((element) => element.id == foodId)
+            .amount;
+      }
+    }
+
+    await _dailyFoodsBox.put(
+      DateFormat('yyyy-MM-dd').format(date.toUtc()),
+      foods,
     );
   }
 }

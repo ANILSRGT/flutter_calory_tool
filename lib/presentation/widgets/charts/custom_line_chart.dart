@@ -37,6 +37,7 @@ class CustomLineChart extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               interval: (maxY - minY) / 5,
+              reservedSize: 50,
               getTitlesWidget: (value, meta) {
                 return Padding(
                   padding: AppValues.sm.ext.padding.directional.right,

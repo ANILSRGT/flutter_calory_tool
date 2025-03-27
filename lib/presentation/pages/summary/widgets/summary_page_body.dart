@@ -9,16 +9,24 @@ class _SummaryPageBody extends StatefulWidget {
 
 class _SummaryPageBodyState extends State<_SummaryPageBody> {
   final _controller = TextEditingController();
+  DateTime _currentDate = DateTime.now();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _controller.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    _controller.text = DateFormat('yyyy-MM-dd').format(_currentDate);
   }
 
   @override
   Widget build(BuildContext context) {
-    final date = DateTime.now();
+    final foods = context
+        .watch<FoodProvider>()
+        .sevenDaysFoods
+        .ext
+        .where
+        .firstOrNull(
+          (e) => e.date.toUtc().ext.compare.isSameDay(_currentDate.toUtc()),
+        );
     return SingleChildScrollView(
       child: Padding(
         padding: AppValues.lg.ext.padding.horizontal,
@@ -46,15 +54,49 @@ class _SummaryPageBodyState extends State<_SummaryPageBody> {
               child: CustomLineChart(
                 data:
                     List.generate(7, (index) {
-                      final day = date.subtract(Duration(days: index));
+                      final day = DateTime.now().subtract(
+                        Duration(days: index),
+                      );
                       return CustomLineChartData(
                         xLabel: DateFormat('E').format(day),
                         yLabel: (index + 1).toString(),
-                        y: Random().nextInt(12).toDouble() + 2,
+                        y:
+                            context
+                                .watch<FoodProvider>()
+                                .sevenDaysFoods
+                                .ext
+                                .where
+                                .firstOrNull(
+                                  (e) => e.date.toUtc().ext.compare.isSameDay(
+                                    day.toUtc(),
+                                  ),
+                                )
+                                ?.foodEntries
+                                .values
+                                .fold(
+                                  0,
+                                  (a, b) =>
+                                      (a ?? 0) +
+                                      b.fold(
+                                        0,
+                                        (a, b) =>
+                                            a +
+                                            (b.servings.first.calories ?? 0),
+                                      ),
+                                ) ??
+                            0,
                       );
                     }).reversed.toList(),
                 minY: 0,
-                maxY: 14,
+                maxY: context
+                    .watch<FoodProvider>()
+                    .sevenDaysFoods
+                    .expand(
+                      (e) => e.foodEntries.values.expand(
+                        (e) => e.map((e) => e.servings.first.calories ?? 0),
+                      ),
+                    )
+                    .fold(50, (a, b) => a + b),
               ),
             ),
             AppValues.xl2.ext.sizedBox.vertical,
@@ -66,38 +108,34 @@ class _SummaryPageBodyState extends State<_SummaryPageBody> {
             CustomTextField(
               controller: _controller,
               readOnly: true,
-              onTap: () {
-                showDatePicker(
+              onTap: () async {
+                final date = await showDatePicker(
                   context: context,
-                  initialDate: date,
-                  firstDate: DateTime(2025),
+                  initialDate: _currentDate,
+                  firstDate: DateTime.now().subtract(const Duration(days: 6)),
                   lastDate: DateTime.now(),
-                ).then((value) {
-                  if (value != null) {
-                    _controller.text = DateFormat('yyyy-MM-dd').format(value);
-                  }
-                });
+                );
+                if (date == null) return;
+                _currentDate = date;
+                _controller.text = DateFormat('yyyy-MM-dd').format(date);
+                setState(() {});
               },
               suffixIcon: const Icon(Icons.calendar_today),
             ),
             AppValues.md.ext.sizedBox.vertical,
-            const MealCard(
-              meal: 'Breakfast',
-              imagePath: 'assets/breakfast.png',
-              foods: [],
-            ),
-            AppValues.md.ext.sizedBox.vertical,
-            const MealCard(
-              meal: 'Lunch',
-              imagePath: 'assets/breakfast.png',
-              foods: [],
-            ),
-            AppValues.md.ext.sizedBox.vertical,
-            const MealCard(
-              meal: 'Dinner',
-              imagePath: 'assets/breakfast.png',
-              foods: [],
-            ),
+            ...PlannedMealsEnum.values
+                .map(
+                  (e) => _SummaryPageMealItem(
+                    meal: e.displayName,
+                    imagePath: e.imagePath,
+                    foods: foods?.foodEntries[e] ?? [],
+                    plannedMeal: e,
+                    date: _currentDate,
+                  ),
+                )
+                .expand(
+                  (element) => [element, AppValues.md.ext.sizedBox.vertical],
+                ),
           ],
         ),
       ),

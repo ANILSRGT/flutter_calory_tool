@@ -5,11 +5,15 @@ class _SummaryPageMealItem extends StatefulWidget {
     required this.meal,
     required this.imagePath,
     required this.foods,
+    required this.plannedMeal,
+    required this.date,
   });
 
   final String meal;
   final String imagePath;
   final List<FoodModel> foods;
+  final PlannedMealsEnum plannedMeal;
+  final DateTime date;
 
   @override
   State<_SummaryPageMealItem> createState() => _SummaryPageMealItemState();
@@ -24,6 +28,8 @@ class _SummaryPageMealItemState extends State<_SummaryPageMealItem> {
       meal: widget.meal,
       imagePath: widget.imagePath,
       foods: widget.foods,
+      plannedMeal: widget.plannedMeal,
+      date: widget.date,
     );
   }
 }

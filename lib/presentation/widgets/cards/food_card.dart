@@ -103,7 +103,7 @@ class FoodCard extends StatelessWidget {
                   );
 
                   if (mealType != null && context.mounted) {
-                    await context.read<FoodProvider>().toggleSevenDaysFood(
+                    await context.read<FoodProvider>().addSevenDaysFood(
                       foodModel,
                       mealType,
                     );

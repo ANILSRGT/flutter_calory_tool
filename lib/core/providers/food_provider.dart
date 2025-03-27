@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:calory_tool/core/cache/cache_manager.dart';
 import 'package:calory_tool/core/models/food_cache_model.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
@@ -57,11 +55,22 @@ final class FoodProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleSevenDaysFood(
+  Future<void> addSevenDaysFood(
     FoodModel food,
     PlannedMealsEnum mealType,
   ) async {
-    await CacheManager.I.dailyFoods.toggleFood(food, mealType, DateTime.now());
+    await CacheManager.I.dailyFoods.addFood(food, mealType, DateTime.now());
+
+    _checkSevenDaysFoods();
+    notifyListeners();
+  }
+
+  Future<void> removeSevenDaysFood(
+    String foodId,
+    PlannedMealsEnum mealType,
+    DateTime date,
+  ) async {
+    await CacheManager.I.dailyFoods.removeFood(foodId, mealType, date);
 
     _checkSevenDaysFoods();
     notifyListeners();

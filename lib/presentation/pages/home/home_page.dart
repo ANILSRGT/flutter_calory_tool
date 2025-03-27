@@ -25,10 +25,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _dateScrollController = ScrollController();
   DateTime currentdateTime = DateTime.now();
-  double carb = 250;
-  double protein = 150;
-  double fat = 80;
-  List<bool> expandedMeals = [false, false, false];
 
   @override
   void initState() {
@@ -43,7 +39,50 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final beforeDay = DateTime.now().subtract(const Duration(days: 6));
-
+    final foodsCache = context
+        .watch<FoodProvider>()
+        .sevenDaysFoods
+        .ext
+        .where
+        .firstOrNull(
+          (e) => e.date.toUtc().ext.compare.isSameDay(currentdateTime.toUtc()),
+        );
+    final calories =
+        foodsCache?.foodEntries.values
+            .expand((e) => e)
+            .fold<double>(
+              0,
+              (previousValue, element) =>
+                  previousValue + (element.servings.first.calories ?? 0),
+            ) ??
+        0;
+    final carb =
+        foodsCache?.foodEntries.values
+            .expand((e) => e)
+            .fold<double>(
+              0,
+              (previousValue, element) =>
+                  previousValue + (element.servings.first.carbohydrate ?? 0),
+            ) ??
+        0;
+    final protein =
+        foodsCache?.foodEntries.values
+            .expand((e) => e)
+            .fold<double>(
+              0,
+              (previousValue, element) =>
+                  previousValue + (element.servings.first.protein ?? 0),
+            ) ??
+        0;
+    final fat =
+        foodsCache?.foodEntries.values
+            .expand((e) => e)
+            .fold<double>(
+              0,
+              (previousValue, element) =>
+                  previousValue + (element.servings.first.fat ?? 0),
+            ) ??
+        0;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -148,51 +187,59 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Expanded(
-                          child: SleekCircularSlider(
-                            appearance: CircularSliderAppearance(
-                              infoProperties: InfoProperties(
-                                modifier:
-                                    (percentage) =>
-                                        percentage.ceil().toString(),
-                                mainLabelStyle: context
-                                    .ext
-                                    .theme
-                                    .textTheme
-                                    .headlineMedium
-                                    ?.copyWith(
-                                      color:
-                                          context.appThemeExt.appColors.primary,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                bottomLabelText: 'KCAL LEFT',
-                                bottomLabelStyle: context
-                                    .ext
-                                    .theme
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color:
-                                          context.appThemeExt.appColors.primary,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                          child: IgnorePointer(
+                            child: SleekCircularSlider(
+                              appearance: CircularSliderAppearance(
+                                infoProperties: InfoProperties(
+                                  modifier:
+                                      (percentage) =>
+                                          percentage.ceil().toString(),
+                                  mainLabelStyle: context
+                                      .ext
+                                      .theme
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                        color:
+                                            context
+                                                .appThemeExt
+                                                .appColors
+                                                .primary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                  bottomLabelText: 'KCAL LEFT',
+                                  bottomLabelStyle: context
+                                      .ext
+                                      .theme
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color:
+                                            context
+                                                .appThemeExt
+                                                .appColors
+                                                .primary,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                ),
+                                customWidths: CustomSliderWidths(
+                                  trackWidth: 6,
+                                  progressBarWidth: 12,
+                                ),
+                                customColors: CustomSliderColors(
+                                  progressBarColors: [
+                                    context.appThemeExt.appColors.primary,
+                                    context.appThemeExt.appColors.primary,
+                                  ],
+                                  trackColor:
+                                      context.appThemeExt.appColors.lightGrey,
+                                ),
+                                size: 180,
                               ),
-                              customWidths: CustomSliderWidths(
-                                trackWidth: 6,
-                                progressBarWidth: 12,
-                              ),
-                              customColors: CustomSliderColors(
-                                progressBarColors: [
-                                  context.appThemeExt.appColors.primary,
-                                  context.appThemeExt.appColors.primary,
-                                ],
-                                trackColor:
-                                    context.appThemeExt.appColors.lightGrey,
-                              ),
-                              size: 180,
+                              initialValue: calories,
+                              max: 3000,
+                              onChange: (double value) {},
                             ),
-                            initialValue: 1500,
-                            max: 3000,
-                            onChange: (double value) {},
                           ),
                         ),
                         const SizedBox(width: 20),
@@ -207,7 +254,6 @@ class _HomePageState extends State<HomePage> {
                                 carb,
                                 0,
                                 500,
-                                (value) => setState(() => carb = value),
                               ),
                               buildStyledSlider(
                                 'Protein',
@@ -215,7 +261,6 @@ class _HomePageState extends State<HomePage> {
                                 protein,
                                 0,
                                 500,
-                                (value) => setState(() => protein = value),
                               ),
                               buildStyledSlider(
                                 'Fat',
@@ -223,7 +268,6 @@ class _HomePageState extends State<HomePage> {
                                 fat,
                                 0,
                                 500,
-                                (value) => setState(() => fat = value),
                               ),
                             ],
                           ),
@@ -303,7 +347,6 @@ class _HomePageState extends State<HomePage> {
     double value,
     double min,
     double max,
-    void Function(double) onChanged,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -318,24 +361,26 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         const SizedBox(height: 10),
-        SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            trackHeight: 3,
-            overlayShape: const RoundSliderOverlayShape(overlayRadius: 6),
-            activeTrackColor: color,
-            thumbColor: color,
-            overlayColor: color.withValues(alpha: 0.2),
-            valueIndicatorShape: const HandleThumbShape(),
-            valueIndicatorColor: color,
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 4),
-          ),
-          child: Slider(
-            value: value,
-            min: min,
-            max: max,
-            onChanged: onChanged,
-            divisions: (max - min).toInt(),
-            label: '${value.toInt()}g',
+        IgnorePointer(
+          child: SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              trackHeight: 3,
+              overlayShape: const RoundSliderOverlayShape(overlayRadius: 6),
+              activeTrackColor: color,
+              thumbColor: color,
+              overlayColor: color.withValues(alpha: 0.2),
+              valueIndicatorShape: const HandleThumbShape(),
+              valueIndicatorColor: color,
+              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 4),
+            ),
+            child: Slider(
+              value: value,
+              min: min,
+              max: max,
+              onChanged: (_) {},
+              divisions: (max - min).toInt(),
+              label: '${value.toInt()}g',
+            ),
           ),
         ),
       ],
@@ -358,8 +403,10 @@ class _HomePageState extends State<HomePage> {
               .map(
                 (e) => MealCard(
                   meal: e.displayName,
-                  imagePath: 'assets/breakfast.png',
+                  imagePath: e.imagePath,
                   foods: foodsCache?.foodEntries[e] ?? [],
+                  plannedMeal: e,
+                  date: currentdateTime,
                 ),
               )
               .toList(),
