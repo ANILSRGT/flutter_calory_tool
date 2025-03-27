@@ -27,13 +27,14 @@ class FoodModelAdapter extends TypeAdapter<FoodModel> {
       type: fields[3] as String?,
       url: fields[5] as String?,
       imageUrl: fields[9] as String?,
+      amount: fields[10] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, FoodModel obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,7 +54,9 @@ class FoodModelAdapter extends TypeAdapter<FoodModel> {
       ..writeByte(8)
       ..write(obj.servings)
       ..writeByte(9)
-      ..write(obj.imageUrl);
+      ..write(obj.imageUrl)
+      ..writeByte(10)
+      ..write(obj.amount);
   }
 
   @override

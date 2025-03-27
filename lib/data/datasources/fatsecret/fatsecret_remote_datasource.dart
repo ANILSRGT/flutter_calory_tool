@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:calory_tool/data/models/foods/food_category_model.dart';
 import 'package:calory_tool/data/models/foods/food_image_recognition_model.dart';
 import 'package:calory_tool/data/models/foods/food_search_model.dart';
@@ -40,7 +38,7 @@ final class FatsecretRemoteDatasource {
           res.data!['data'] as Map<String, dynamic>,
         ),
       );
-    } on Exception catch (e) {
+    } on Exception {
       return const ResponseModelFail(
         error: ErrorModel(
           message: 'Failed to search food',
@@ -142,7 +140,7 @@ final class FatsecretRemoteDatasource {
           res.data!['data'] as Map<String, dynamic>,
         ),
       );
-    } on Exception catch (e) {
+    } on Exception {
       return const ResponseModelFail(
         error: ErrorModel(
           message: 'Failed to search recipe',

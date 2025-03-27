@@ -5,6 +5,7 @@ import 'package:calory_tool/presentation/pages/favorites/favorites_page_imports.
 import 'package:calory_tool/presentation/pages/food/food_page.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/food_detail_page.dart';
 import 'package:calory_tool/presentation/pages/home/home_page.dart';
+import 'package:calory_tool/presentation/pages/info/info_page.dart';
 import 'package:calory_tool/presentation/pages/main/main_page.dart';
 import 'package:calory_tool/presentation/pages/recipe_details/recipe_details_page_imports.dart';
 import 'package:calory_tool/presentation/pages/recipes/recipes_page.dart';
@@ -29,6 +30,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: RecipeDetailsRoute.page),
     AutoRoute(page: FavoritesRoute.page),
     AutoRoute(page: FoodDetailRoute.page),
+    AutoRoute(page: InfoRoute.page),
   ];
 
   @override

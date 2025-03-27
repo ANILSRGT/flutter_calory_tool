@@ -3,7 +3,7 @@ import 'package:calory_tool/presentation/pages/food_detail_page/serving/serving_
 import 'package:flutter/material.dart';
 
 class Serving extends StatefulWidget {
-  const Serving({super.key,required this.foodServingModel});
+  const Serving({super.key, required this.foodServingModel});
 
   final List<FoodServingModel> foodServingModel;
 
@@ -12,7 +12,6 @@ class Serving extends StatefulWidget {
 }
 
 class _ServingState extends State<Serving> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +50,11 @@ class _ServingState extends State<Serving> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.filter_list_rounded, color: Colors.green, size: 28),
+                    icon: const Icon(
+                      Icons.filter_list_rounded,
+                      color: Colors.green,
+                      size: 28,
+                    ),
                     onPressed: () {
                       showModalBottomSheet(
                         context: context,

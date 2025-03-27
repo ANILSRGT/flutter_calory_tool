@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/providers/favorite_provider.dart';

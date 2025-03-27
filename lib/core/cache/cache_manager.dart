@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:calory_tool/core/configs/enums/app_localiaztions_enum.dart';
 import 'package:calory_tool/core/configs/enums/app_themes_enum.dart';
 import 'package:calory_tool/core/models/food_cache_model.dart';

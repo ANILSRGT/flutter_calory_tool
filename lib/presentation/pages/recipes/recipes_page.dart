@@ -19,24 +19,28 @@ class _RecipesPageState extends State<RecipesPage> {
   String _searchText = '';
 
   late final PentaDebounceable<void, String> _fetchSuggestions =
-  PentaDebouncer.debounce(
-    debounceDuration: const Duration(milliseconds: 800),
-    function: (query) async {
-      if (_searchText == query) return;
-      _searchText = query;
+      PentaDebouncer.debounce(
+        debounceDuration: const Duration(milliseconds: 800),
+        function: (query) async {
+          if (_searchText == query) return;
+          _searchText = query;
 
-      context.read<RecipeProvider>().clearRecipes();
-      if (query.isEmpty) return;
+          context.read<RecipeProvider>().clearRecipes();
+          if (query.isEmpty) return;
 
-      await context.read<RecipeProvider>().fetchsearchRecipe(query);
-    },
-  );
+          await context.read<RecipeProvider>().fetchsearchRecipe(query);
+        },
+      );
 
   @override
   Widget build(BuildContext context) {
-    final items = context.watch<RecipeProvider>().recipes?.recipes
-        .where((e) => e.image != null)
-        .toList();
+    final items =
+        context
+            .watch<RecipeProvider>()
+            .recipes
+            ?.recipes
+            .where((e) => e.image != null)
+            .toList();
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -45,28 +49,31 @@ class _RecipesPageState extends State<RecipesPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
-              child: Column(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 15.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/nusret.jpg',
-                        width: 140,
-                        height: 130,
-                        fit: BoxFit.cover,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        'What Would You Like \n To Cook Today?',
-                        textAlign: TextAlign.center,
-                        style: context.ext.theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                    ],
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      'assets/gif/cookbook.gif',
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'What Would You Like \n To Cook Today?',
+                    textAlign: TextAlign.center,
+                    style: context.ext.theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      fontFamily: 'Poppins',
+                    ),
                   ),
                 ],
               ),
@@ -87,7 +94,6 @@ class _RecipesPageState extends State<RecipesPage> {
                   ],
                 ),
                 child: CustomTextField(
-
                   controller: _searchController,
                   hintText: 'Search for recipes...',
                   prefixIcon: const Icon(Icons.search, color: Colors.grey),
@@ -101,26 +107,28 @@ class _RecipesPageState extends State<RecipesPage> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: items == null || items.isEmpty
-                    ? const SizedBox.shrink()
-                    : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: context.ext.screen.width ~/ 200,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.78,
-                  ),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    final recipe = items[index];
+                child:
+                    items == null || items.isEmpty
+                        ? const SizedBox.shrink()
+                        : GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: context.ext.screen.width ~/ 200,
+                                crossAxisSpacing: 8,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 0.78,
+                              ),
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            final recipe = items[index];
 
-                    return AnimatedOpacity(
-                      duration: Duration(milliseconds: 500),
-                      opacity: 1.0,
-                      child: RecipeCard(recipeModel: recipe),
-                    );
-                  },
-                ),
+                            return AnimatedOpacity(
+                              duration: Duration(milliseconds: 500),
+                              opacity: 1.0,
+                              child: RecipeCard(recipeModel: recipe),
+                            );
+                          },
+                        ),
               ),
             ),
           ],

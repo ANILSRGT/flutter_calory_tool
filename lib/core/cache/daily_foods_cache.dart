@@ -31,14 +31,13 @@ final class _DailyFoodsCache {
     foods.foodEntries.putIfAbsent(type, () => []);
 
     final hasFood = foods.foodEntries[type]!.any((e) => e.id == food.id);
-    if (hasFood) {
-      final foodIndex =
-          ++foods.foodEntries[type]!
-              .firstWhere((element) => element.id == food.id)
-              .amount;
-    } else {
+    if (!hasFood) {
       foods.foodEntries[type]!.add(food);
     }
+
+    ++foods.foodEntries[type]!
+        .firstWhere((element) => element.id == food.id)
+        .amount;
 
     await _dailyFoodsBox.put(
       DateFormat('yyyy-MM-dd').format(date.toUtc()),

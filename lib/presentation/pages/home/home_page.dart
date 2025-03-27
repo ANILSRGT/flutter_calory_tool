@@ -1,6 +1,7 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/providers/food_provider.dart';
+import 'package:calory_tool/core/router/app_router.dart';
 import 'package:calory_tool/enum/planned_meals_enum.dart';
 import 'package:calory_tool/presentation/pages/main/main_page.dart';
 import 'package:calory_tool/presentation/widgets/cards/home_card.dart';
@@ -102,6 +103,14 @@ class _HomePageState extends State<HomePage> {
                       style: context.ext.theme.textTheme.headlineMedium
                           ?.copyWith(fontWeight: FontWeight.w500),
                     ),
+                    actions: [
+                      IconButton(
+                        onPressed: () {
+                          context.router.push(const InfoRoute());
+                        },
+                        icon: const Icon(Icons.info),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
