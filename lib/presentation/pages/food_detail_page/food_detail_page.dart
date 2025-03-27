@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:calory_tool/core/providers/favorite_provider.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
-import 'package:calory_tool/presentation/pages/food_detail_page/allergens/allergens_page.dart';
-import 'package:calory_tool/presentation/pages/food_detail_page/serving/serving_page.dart';
+import 'package:calory_tool/presentation/pages/food_detail_page/allergens/food_detail_page_allergens.dart';
+import 'package:calory_tool/presentation/pages/food_detail_page/preferences/food_detail_page_preferences.dart';
+import 'package:calory_tool/presentation/pages/food_detail_page/serving/food_detail_page_serving.dart';
+import 'package:calory_tool/presentation/widgets/safearea/custom_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:penta_core/penta_core.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +38,7 @@ class _FoodDetailPageState extends State<FoodDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: CustomSafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: AppValues.md.ext.padding.horizontal,
@@ -63,17 +65,21 @@ class _FoodDetailPageState extends State<FoodDetailPage>
                   ],
                   centerTitle: true,
                 ),
-                Image.network(
-                  widget.foodModel.imageUrl ?? '',
-                  width: context.ext.screen.byOrientation(
-                    portrait: context.ext.screen.width * 0.5,
-                    landscape: context.ext.screen.height * 0.5,
+                Center(
+                  child: SizedBox(
+                    width: context.ext.screen.byOrientation(
+                      portrait: context.ext.screen.width * 0.5,
+                      landscape: context.ext.screen.height * 0.5,
+                    ),
+                    height: context.ext.screen.byOrientation(
+                      portrait: context.ext.screen.width * 0.5,
+                      landscape: context.ext.screen.height * 0.5,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(widget.foodModel.imageUrl ?? ''),
+                    ),
                   ),
-                  height: context.ext.screen.byOrientation(
-                    portrait: context.ext.screen.width * 0.5,
-                    landscape: context.ext.screen.height * 0.5,
-                  ),
-                  fit: BoxFit.contain,
                 ),
                 AppValues.md.ext.sizedBox.vertical,
                 Wrap(
@@ -99,23 +105,29 @@ class _FoodDetailPageState extends State<FoodDetailPage>
                 // TabBar
                 TabBar(
                   controller: _tabController,
+                  onTap: (index) {
+                    setState(() {});
+                  },
                   tabs: const [
                     Tab(text: 'Serving'),
                     Tab(text: 'Allergens'),
                     Tab(text: 'Preferences'),
                   ],
                 ),
-
-                SizedBox(
-                  height: 200,
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      Serving(foodServingModel: widget.foodModel.servings),
-                      const AllergensPage(),
-                      const Center(child: Text('Related foods content')),
-                    ],
-                  ),
+                Builder(
+                  builder: (context) {
+                    return _tabController.index == 0
+                        ? FoodDetailPageServing(
+                          foodServingModel: widget.foodModel.servings,
+                        )
+                        : _tabController.index == 1
+                        ? FoodDetailPageAllergens(
+                          foodAllergens: widget.foodModel.allergens,
+                        )
+                        : FoodDetailPagePreferences(
+                          foodPreferences: widget.foodModel.preferences,
+                        );
+                  },
                 ),
               ],
             ),
