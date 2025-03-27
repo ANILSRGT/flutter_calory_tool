@@ -1,4 +1,4 @@
-enum FavoriteCategory{
+enum FavoriteCategory {
   recipes(displayName: 'Recipes'),
   foods(displayName: 'Foods');
 

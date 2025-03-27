@@ -9,16 +9,16 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class FoodDetailPage extends StatefulWidget {
-  const FoodDetailPage({super.key,required this.foodModel});
+  const FoodDetailPage({required this.foodModel, super.key});
 
-
-  final FoodModel foodModel ;
+  final FoodModel foodModel;
 
   @override
   State<FoodDetailPage> createState() => _FoodDetailPageState();
 }
 
-class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProviderStateMixin {
+class _FoodDetailPageState extends State<FoodDetailPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -33,8 +33,6 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,23 +44,27 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 AppBar(
-                    title:  Text(widget.foodModel.name??'N/A'),
-                    actions: [
-                      IconButton(
-                        onPressed: () {
-                          context.read<FavoritesProvider>().toogleFavoriteFood(widget.foodModel);
-                        },
-                        icon: Icon(
-                          context.watch<FavoritesProvider>().foods.any((e) => e.id == widget.foodModel.id)
-                              ? Icons.favorite
-                              : Icons.favorite_outline,
-                        ),
+                  title: Text(widget.foodModel.name ?? 'N/A'),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        context.read<FavoritesProvider>().toogleFavoriteFood(
+                          widget.foodModel,
+                        );
+                      },
+                      icon: Icon(
+                        context.watch<FavoritesProvider>().foods.any(
+                              (e) => e.id == widget.foodModel.id,
+                            )
+                            ? Icons.favorite
+                            : Icons.favorite_outline,
                       ),
-
-                    ],
-                    centerTitle: true),
+                    ),
+                  ],
+                  centerTitle: true,
+                ),
                 Image.network(
-                  widget.foodModel.imageUrl ??'',
+                  widget.foodModel.imageUrl ?? '',
                   width: context.ext.screen.byOrientation(
                     portrait: context.ext.screen.width * 0.5,
                     landscape: context.ext.screen.height * 0.5,
@@ -77,18 +79,21 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
                 Wrap(
                   alignment: WrapAlignment.center,
                   spacing: AppValues.sm.value,
-                  children: List.generate(widget.foodModel.subCategories.length, (index) {
-                    final category = widget.foodModel.subCategories[index];
-                    return Chip(label: Text(category));
-                  }),
+                  children: List.generate(
+                    widget.foodModel.subCategories.length,
+                    (index) {
+                      final category = widget.foodModel.subCategories[index];
+                      return Chip(label: Text(category));
+                    },
+                  ),
                 ),
                 AppValues.md.ext.sizedBox.vertical,
-                if(widget.foodModel.brandName!= null)
-                Text(
-                  widget.foodModel.brandName!,
-                  textAlign: TextAlign.center,
-                  style: context.ext.theme.textTheme.bodyLarge,
-                ),
+                if (widget.foodModel.brandName != null)
+                  Text(
+                    widget.foodModel.brandName!,
+                    textAlign: TextAlign.center,
+                    style: context.ext.theme.textTheme.bodyLarge,
+                  ),
                 AppValues.md.ext.sizedBox.vertical,
 
                 // TabBar
@@ -106,8 +111,8 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      Serving(foodServingModel: widget.foodModel.servings,),
-                      AllergensPage(),
+                      Serving(foodServingModel: widget.foodModel.servings),
+                      const AllergensPage(),
                       const Center(child: Text('Related foods content')),
                     ],
                   ),
@@ -120,5 +125,3 @@ class _FoodDetailPageState extends State<FoodDetailPage> with SingleTickerProvid
     );
   }
 }
-
-

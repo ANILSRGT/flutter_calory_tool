@@ -49,10 +49,7 @@ class _RecipesPageState extends State<RecipesPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 15.0,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -85,7 +82,7 @@ class _RecipesPageState extends State<RecipesPage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 6,
@@ -106,7 +103,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child:
                     items == null || items.isEmpty
                         ? const SizedBox.shrink()
@@ -123,8 +120,8 @@ class _RecipesPageState extends State<RecipesPage> {
                             final recipe = items[index];
 
                             return AnimatedOpacity(
-                              duration: Duration(milliseconds: 500),
-                              opacity: 1.0,
+                              duration: const Duration(milliseconds: 500),
+                              opacity: 1,
                               child: RecipeCard(recipeModel: recipe),
                             );
                           },

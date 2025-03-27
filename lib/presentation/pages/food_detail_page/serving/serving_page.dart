@@ -3,7 +3,7 @@ import 'package:calory_tool/presentation/pages/food_detail_page/serving/serving_
 import 'package:flutter/material.dart';
 
 class Serving extends StatefulWidget {
-  const Serving({super.key, required this.foodServingModel});
+  const Serving({required this.foodServingModel, super.key});
 
   final List<FoodServingModel> foodServingModel;
 
@@ -16,7 +16,7 @@ class _ServingState extends State<Serving> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -24,7 +24,7 @@ class _ServingState extends State<Serving> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 10,
@@ -40,7 +40,7 @@ class _ServingState extends State<Serving> {
                     onTap: () {
                       // Details action
                     },
-                    child: Text(
+                    child: const Text(
                       'Show Details',
                       style: TextStyle(
                         fontSize: 18,
@@ -59,7 +59,7 @@ class _ServingState extends State<Serving> {
                       showModalBottomSheet(
                         context: context,
                         builder: (BuildContext context) {
-                          return ServingFilterSheet();
+                          return const ServingFilterSheet();
                         },
                       );
                     },

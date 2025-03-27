@@ -1,7 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:calory_tool/core/providers/favorite_provider.dart';
 import 'package:calory_tool/core/providers/food_provider.dart';
-import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:calory_tool/presentation/widgets/cards/food_card.dart';
 import 'package:calory_tool/presentation/widgets/fields/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +30,7 @@ class _FoodPageState extends State<FoodPage> {
             return;
           }
 
-          context.read<FoodProvider>().fetchsearchfoods(query);
+          await context.read<FoodProvider>().fetchsearchfoods(query);
         },
       );
 

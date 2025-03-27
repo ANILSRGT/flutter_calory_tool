@@ -9,12 +9,12 @@ class ServingFilterSheet extends StatefulWidget {
 }
 
 class _ServingFilterSheetState extends State<ServingFilterSheet> {
-  final _filters = <String, bool>{"a": false, "b": false};
+  final _filters = <String, bool>{'a': false, 'b': false};
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -38,9 +38,9 @@ class _ServingFilterSheetState extends State<ServingFilterSheet> {
           const SizedBox(height: 20),
           GestureDetector(
             onTap: () {
-               context.router.popForced();
+              context.router.popForced();
             },
-            child: Text('Apply'),
+            child: const Text('Apply'),
           ),
         ],
       ),

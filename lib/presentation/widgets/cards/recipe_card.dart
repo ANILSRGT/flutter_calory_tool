@@ -8,7 +8,7 @@ import 'package:penta_core/penta_core.dart';
 import 'package:provider/provider.dart';
 
 class RecipeCard extends StatelessWidget {
-  const RecipeCard({super.key, required this.recipeModel});
+  const RecipeCard({required this.recipeModel, super.key});
 
   final RecipeModel recipeModel;
 
@@ -24,9 +24,7 @@ class RecipeCard extends StatelessWidget {
       },
       child: Card(
         elevation: 6,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
@@ -38,8 +36,8 @@ class RecipeCard extends StatelessWidget {
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
-              // Gradient Overlay
 
+              // Gradient Overlay
               Positioned(
                 top: 5,
                 right: 5,
@@ -47,23 +45,21 @@ class RecipeCard extends StatelessWidget {
                   backgroundColor: Colors.white.withValues(alpha: 0.4),
                   child: IconButton(
                     onPressed: () {
-                      context.read<FavoritesProvider>().toogleFavoriteRecipe(recipeModel);
+                      context.read<FavoritesProvider>().toogleFavoriteRecipe(
+                        recipeModel,
+                      );
                     },
                     icon: Consumer<FavoritesProvider>(
                       builder: (context, favorites, _) {
-                        bool isFavorite = favorites.recipe.any((e) => e.id == recipeModel.id);
+                        final isFavorite = favorites.recipe.any(
+                          (e) => e.id == recipeModel.id,
+                        );
                         return Icon(
                           Icons.favorite_rounded,
                           color: isFavorite ? Colors.red : Colors.white,
                           size: 24,
-                          shadows: isFavorite
-                              ? []
-                              : [
-                            Shadow(
-                              blurRadius: 2,
-                              color: Colors.black,
-                            ),
-                          ],
+                          shadows:
+                              isFavorite ? [] : [const Shadow(blurRadius: 2)],
                         );
                       },
                     ),
@@ -80,12 +76,10 @@ class RecipeCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
-
-
                   ),
                 ),
               ),

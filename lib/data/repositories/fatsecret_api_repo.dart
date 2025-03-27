@@ -34,4 +34,3 @@ class FatsecretApiRepo {
     return Injection.I.read<FatsecretRemoteDatasource>().searchRecipe(params);
   }
 }
-
