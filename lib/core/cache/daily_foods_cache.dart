@@ -27,17 +27,18 @@ final class _DailyFoodsCache {
     DateTime date,
   ) async {
     final foods = getDailyFoods(date);
+    final cloneFood = food.clone();
 
     foods.foodEntries.putIfAbsent(type, () => []);
 
-    final hasFood = foods.foodEntries[type]!.any((e) => e.id == food.id);
-    if (!hasFood) {
-      foods.foodEntries[type]!.add(food);
+    final foodExist = foods.foodEntries[type]!.ext.where.firstOrNull(
+      (e) => e.id == food.id,
+    );
+    if (foodExist == null) {
+      foods.foodEntries[type]!.add(cloneFood);
+    } else {
+      ++foodExist.amount;
     }
-
-    ++foods.foodEntries[type]!
-        .firstWhere((element) => element.id == food.id)
-        .amount;
 
     await _dailyFoodsBox.put(
       DateFormat('yyyy-MM-dd').format(date.toUtc()),

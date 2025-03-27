@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 
 class MealCard extends StatefulWidget {
   const MealCard({
-    required this.meal,
-    required this.imagePath,
     required this.plannedMeal,
     required this.foods,
     required this.date,
@@ -18,9 +16,7 @@ class MealCard extends StatefulWidget {
     super.key,
   });
 
-  final String meal;
   final PlannedMealsEnum plannedMeal;
-  final String imagePath;
   final List<FoodModel> foods;
   final DateTime date;
   final VoidCallback? onAddPressed;
@@ -69,7 +65,7 @@ class MealCardState extends State<MealCard> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.asset(
-                      widget.imagePath,
+                      widget.plannedMeal.imagePath,
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
@@ -78,7 +74,7 @@ class MealCardState extends State<MealCard> {
                   const SizedBox(width: 15),
                   Expanded(
                     child: Text(
-                      '${widget.meal}: ${widget.foods.map((e) => e.servings.isNotEmpty ? (e.servings.first.calories ?? 0) * e.amount : 0).fold<double>(0, (a, b) => a + b)} kcal',
+                      '${widget.plannedMeal.displayName}: ${widget.foods.map((e) => e.servings.isNotEmpty ? (e.servings.first.calories ?? 0) * e.amount : 0).fold<double>(0, (a, b) => a + b)} kcal',
                       style: context.ext.theme.textTheme.titleMedium?.copyWith(
                         color:
                             context.appThemeExt.appColors.white

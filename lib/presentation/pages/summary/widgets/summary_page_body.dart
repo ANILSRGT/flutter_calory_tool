@@ -126,8 +126,6 @@ class _SummaryPageBodyState extends State<_SummaryPageBody> {
             ...PlannedMealsEnum.values
                 .map(
                   (e) => _SummaryPageMealItem(
-                    meal: e.displayName,
-                    imagePath: e.imagePath,
                     foods: foods?.foodEntries[e] ?? [],
                     plannedMeal: e,
                     date: _currentDate,

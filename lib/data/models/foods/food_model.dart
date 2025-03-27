@@ -84,4 +84,20 @@ class FoodModel extends HiveObject {
 
   @HiveField(10)
   int amount;
+
+  FoodModel clone() {
+    return FoodModel(
+      id: id,
+      name: name,
+      brandName: brandName,
+      type: type,
+      subCategories: List<String>.from(subCategories),
+      url: url,
+      allergens: List<FoodAllergenModel>.from(allergens),
+      preferences: List<FoodPreferenceModel>.from(preferences),
+      servings: List<FoodServingModel>.from(servings),
+      imageUrl: imageUrl,
+      amount: amount,
+    );
+  }
 }

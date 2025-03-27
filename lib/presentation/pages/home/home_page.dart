@@ -411,8 +411,6 @@ class _HomePageState extends State<HomePage> {
           PlannedMealsEnum.values
               .map(
                 (e) => MealCard(
-                  meal: e.displayName,
-                  imagePath: e.imagePath,
                   foods: foodsCache?.foodEntries[e] ?? [],
                   plannedMeal: e,
                   date: currentdateTime,

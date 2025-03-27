@@ -18,6 +18,7 @@ import 'package:calory_tool/enum/planned_meals_enum.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:penta_core/penta_core.dart';
 
 part 'cache_adapters.dart';
 part 'user_configs_cache.dart';
