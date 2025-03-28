@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/providers/favorite_provider.dart';
 import 'package:calory_tool/core/router/app_router.dart';
@@ -30,11 +31,20 @@ class RecipeCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           child: Stack(
             children: [
-              Image.network(
-                recipeModel.image ?? '',
+              CachedNetworkImage(
+                imageUrl: recipeModel.image ?? '',
                 height: 180,
                 width: double.infinity,
                 fit: BoxFit.cover,
+                errorWidget:
+                    (context, error, stackTrace) => const ColoredBox(
+                      color: Colors.grey,
+                      child: Icon(
+                        Icons.broken_image,
+                        size: 32,
+                        color: Colors.white,
+                      ),
+                    ),
               ),
 
               // Gradient Overlay

@@ -50,6 +50,7 @@ class MealCardState extends State<MealCard> {
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             GestureDetector(
               onTap: () {
@@ -99,108 +100,114 @@ class MealCardState extends State<MealCard> {
               ),
             ),
             if (_expandedMeals)
-              Padding(
-                padding: AppValues.sm.ext.padding.directional.top,
-                child: Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    children: [
-                      Column(
-                        children:
-                            widget.foods.map((e) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 15,
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  spacing: AppValues.sm.value,
+              Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children:
+                      widget.foods.map((e) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 12,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: AppValues.sm.value,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
-                                    Column(
-                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                    Text(
+                                      e.name ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        height: 1,
+                                      ),
+                                    ),
+                                    Text(
+                                      'x${e.amount}\t\t\t(${e.servings.first.description})',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey.shade500,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Wrap(
+                                      spacing: 11,
                                       children: [
                                         Text(
-                                          e.name ?? '',
-                                          style:TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black,
+                                          'C: ${e.servings.first.carbohydrate ?? ''}',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
                                             fontStyle: FontStyle.normal,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        SizedBox(height: 4),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'C: ${e.servings.first.carbohydrate ?? ''}',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.grey,
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            SizedBox(width: 11,),
-                                            Text(
-                                              'P: ${e.servings.first.protein ?? ''}',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.grey,
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            SizedBox(width: 11,),
-                                            Text(
-                                              'F: ${e.servings.first.fat ?? ''}',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.grey,
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            SizedBox(width: 11,),
-                                            Text(
-                                              'Cal:  ${widget.foods.map((e) => e.servings.isNotEmpty ? (e.servings.first.calories ?? 0) * e.amount : 0).fold<double>(0, (a, b) => a + b)} kcal',
-                                              style: TextStyle(
-                                                fontSize: 15,
-
-                                                color: Colors.grey,
-                                                fontStyle: FontStyle.normal,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-
-                                          ],
+                                        Text(
+                                          'P: ${e.servings.first.protein ?? ''}',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
+                                        Text(
+                                          'F: ${e.servings.first.fat ?? ''}',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Cal:  ${widget.foods.map((e) => e.servings.isNotEmpty ? (e.servings.first.calories ?? 0) * e.amount : 0).fold<double>(0, (a, b) => a + b)} kcal',
+                                          style: const TextStyle(
+                                            fontSize: 14,
 
-
+                                            color: Colors.grey,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
                                       ],
-                                    ),
-                                    SizedBox(width: 15,),
-                                    IconButton(
-                                      icon: Icon(Icons.dangerous_outlined, color: Colors.grey,size: 25,),
-                                      onPressed: () {
-                                        if (e.id == null) return;
-                                        context.read<FoodProvider>().removeSevenDaysFood(
-                                          e.id!,
-                                          widget.plannedMeal,
-                                          widget.date,
-                                        );
-                                      },
                                     ),
                                   ],
                                 ),
-                              );
-                            }).toList(),
-                      ),
-                    ],
-                  ),
+                              ),
+                              const SizedBox(width: 8),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.remove_circle_outline_outlined,
+                                  color: Colors.grey,
+                                  size: 25,
+                                ),
+                                onPressed: () {
+                                  if (e.id == null) return;
+                                  context
+                                      .read<FoodProvider>()
+                                      .removeSevenDaysFood(
+                                        e.id!,
+                                        widget.plannedMeal,
+                                        widget.date,
+                                      );
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                 ),
               ),
           ],

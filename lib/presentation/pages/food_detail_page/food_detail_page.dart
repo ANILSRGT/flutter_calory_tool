@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:calory_tool/core/providers/favorite_provider.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:calory_tool/presentation/pages/food_detail_page/allergens/food_detail_page_allergens.dart';
@@ -77,7 +78,18 @@ class _FoodDetailPageState extends State<FoodDetailPage>
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.network(widget.foodModel.imageUrl ?? ''),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.foodModel.imageUrl ?? '',
+                        errorWidget:
+                            (context, error, stackTrace) => const ColoredBox(
+                              color: Colors.grey,
+                              child: Icon(
+                                Icons.broken_image,
+                                size: 32,
+                                color: Colors.white,
+                              ),
+                            ),
+                      ),
                     ),
                   ),
                 ),

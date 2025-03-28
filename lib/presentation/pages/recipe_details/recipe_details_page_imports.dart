@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:calory_tool/core/providers/favorite_provider.dart';
 import 'package:calory_tool/data/models/recipes/recipe_model.dart';
 import 'package:flutter/material.dart';

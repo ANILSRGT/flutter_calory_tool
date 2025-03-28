@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:calory_tool/core/configs/theme/i_app_theme.dart';
 import 'package:calory_tool/core/providers/favorite_provider.dart';
 import 'package:calory_tool/core/providers/food_provider.dart';
@@ -37,16 +38,19 @@ class FoodCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  foodModel.imageUrl ?? '',
+                child: CachedNetworkImage(
+                  imageUrl: foodModel.imageUrl ?? '',
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
-                  errorBuilder:
-                      (context, error, stackTrace) => const Icon(
-                        Icons.broken_image,
-                        size: 80,
+                  errorWidget:
+                      (context, error, stackTrace) => const ColoredBox(
                         color: Colors.grey,
+                        child: Icon(
+                          Icons.broken_image,
+                          size: 32,
+                          color: Colors.white,
+                        ),
                       ),
                 ),
               ),
@@ -88,26 +92,31 @@ class FoodCard extends StatelessWidget {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children:
-                                PlannedMealsEnum.values.map((e) {
-                                  return GestureDetector(
-                                    onTap: () => context.router.popForced(e),
-                                    child: ListTile(
-                                      trailing: Icon(Icons.chevron_right),
-                                      title: Padding(
-                                      padding: const EdgeInsets.all(12),
-                                      child: Text(e.displayName,
-                                        style:TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.black45,
-                                          fontStyle: FontStyle.normal,
-                                          fontWeight: FontWeight.w700,
+                                PlannedMealsEnum.values
+                                    .map((e) {
+                                      return GestureDetector(
+                                        onTap:
+                                            () => context.router.popForced(e),
+                                        child: ListTile(
+                                          trailing: Icon(Icons.chevron_right),
+                                          title: Padding(
+                                            padding: const EdgeInsets.all(12),
+                                            child: Text(
+                                              e.displayName,
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black45,
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),),
-                                  );
-                                }).expand((e)=>[
-                                  e,Divider()
-                                ]).toList()..removeLast(),
+                                      );
+                                    })
+                                    .expand((e) => [e, Divider()])
+                                    .toList()
+                                  ..removeLast(),
                           ),
                         ),
                       );

@@ -68,11 +68,20 @@ class _RecipeDetailsPageBody extends StatelessWidget {
             bottomLeft: Radius.circular(30),
             bottomRight: Radius.circular(30),
           ),
-          child: Image.network(
-            recipeModel.image ?? '',
+          child: CachedNetworkImage(
+            imageUrl: recipeModel.image ?? '',
             width: double.infinity,
             height: MediaQuery.of(context).size.height * 0.45,
             fit: BoxFit.cover,
+            errorWidget:
+                (context, error, stackTrace) => const ColoredBox(
+                  color: Colors.grey,
+                  child: Icon(
+                    Icons.broken_image,
+                    size: 32,
+                    color: Colors.white,
+                  ),
+                ),
           ),
         ),
         Positioned(
