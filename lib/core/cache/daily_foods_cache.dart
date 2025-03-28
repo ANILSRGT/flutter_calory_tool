@@ -35,6 +35,7 @@ final class _DailyFoodsCache {
       (e) => e.id == food.id,
     );
     if (foodExist == null) {
+      cloneFood.amount = 1;
       foods.foodEntries[type]!.add(cloneFood);
     } else {
       ++foodExist.amount;
