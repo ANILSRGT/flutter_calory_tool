@@ -91,9 +91,23 @@ class FoodCard extends StatelessWidget {
                                 PlannedMealsEnum.values.map((e) {
                                   return GestureDetector(
                                     onTap: () => context.router.popForced(e),
-                                    child: ListTile(title: Text(e.displayName)),
+                                    child: ListTile(
+                                      trailing: Icon(Icons.chevron_right),
+                                      title: Padding(
+                                      padding: const EdgeInsets.all(12),
+                                      child: Text(e.displayName,
+                                        style:TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black45,
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),),
                                   );
-                                }).toList(),
+                                }).expand((e)=>[
+                                  e,Divider()
+                                ]).toList()..removeLast(),
                           ),
                         ),
                       );

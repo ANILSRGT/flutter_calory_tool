@@ -27,12 +27,15 @@ class _FoodDetailPageServingState extends State<FoodDetailPageServing> {
             mainAxisAlignment: MainAxisAlignment.end,
             spacing: AppValues.sm.value,
             children: [
-              Text(
-                selectedServingType.description ?? 'N/A',
-                textAlign: TextAlign.end,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+              Expanded(
+                child: Text(
+                  selectedServingType.description ?? 'N/A',
+                  style:TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               IconButton.filled(
@@ -172,8 +175,12 @@ class _FoodDetailPageServingState extends State<FoodDetailPageServing> {
         vertical: VisualDensity.minimumDensity,
       ),
       title: Text(
-        title,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        title, style: TextStyle(
+        fontSize: 18,
+        color: Colors.grey,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+      ),
       ),
       trailing: Text(
         '$value $unit',

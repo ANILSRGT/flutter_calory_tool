@@ -3,7 +3,6 @@ import 'package:calory_tool/core/providers/food_provider.dart';
 import 'package:calory_tool/data/models/foods/food_model.dart';
 import 'package:calory_tool/enum/planned_meals_enum.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:penta_core/penta_core.dart';
 import 'package:provider/provider.dart';
 
@@ -40,9 +39,7 @@ class MealCardState extends State<MealCard> {
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: context.appThemeExt.appColors.white.byBrightness(
-            context.ext.theme.isDark,
-          ),
+          color: Colors.grey.shade50,
           borderRadius: BorderRadius.circular(18),
           boxShadow: const [
             BoxShadow(
@@ -109,139 +106,100 @@ class MealCardState extends State<MealCard> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Column(
-                    children:
-                        widget.foods.map((e) {
-                          return Padding(
-                            padding:
-                                AppValues.sm.ext.padding.directional.bottom,
-                            child: Slidable(
-                              key: UniqueKey(),
-                              enabled: sameDay,
-                              endActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    label: 'Decrease',
-                                    backgroundColor:
-                                        context
-                                            .appThemeExt
-                                            .appColors
-                                            .error
-                                            .light,
-                                    foregroundColor:
-                                        context
-                                            .appThemeExt
-                                            .appColors
-                                            .error
-                                            .light
-                                            .onColor,
-                                    icon: Icons.remove,
-                                    onPressed: (context) {
-                                      if (e.id == null) return;
-
-                                      context
-                                          .read<FoodProvider>()
-                                          .removeSevenDaysFood(
-                                            e.id!,
-                                            widget.plannedMeal,
-                                            widget.date,
-                                          );
-                                    },
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
+                  child: Row(
+                    children: [
+                      Column(
+                        children:
+                            widget.foods.map((e) {
+                              return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 8,
+                                  vertical: 15,
                                 ),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   spacing: AppValues.sm.value,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius:
-                                          AppValues.xs.ext.radius.border.all,
-                                      child: Image.network(
-                                        e.imageUrl ?? '',
-                                        width: 42,
-                                        height: 42,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (
-                                          context,
-                                          error,
-                                          stackTrace,
-                                        ) {
-                                          return Container(
-                                            width: 42,
-                                            height: 42,
-                                            color:
-                                                context
-                                                    .appThemeExt
-                                                    .appColors
-                                                    .grey,
-                                            child: Center(
-                                              child: Icon(
-                                                Icons.error,
-                                                color:
-                                                    context
-                                                        .appThemeExt
-                                                        .appColors
-                                                        .lightGrey,
+                                    Column(
+                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          e.name ?? '',
+                                          style:TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black,
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'C: ${e.servings.first.carbohydrate ?? ''}',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.grey,
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w600,
                                               ),
                                             ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        e.name ?? '',
-                                        style: context
-                                            .ext
-                                            .theme
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.copyWith(
-                                              color:
-                                                  context
-                                                      .appThemeExt
-                                                      .appColors
-                                                      .white
-                                                      .byBrightness(
-                                                        context
-                                                            .ext
-                                                            .theme
-                                                            .isDark,
-                                                      )
-                                                      .onColor,
+                                            SizedBox(width: 11,),
+                                            Text(
+                                              'P: ${e.servings.first.protein ?? ''}',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.grey,
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                      ),
+                                            SizedBox(width: 11,),
+                                            Text(
+                                              'F: ${e.servings.first.fat ?? ''}',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.grey,
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            SizedBox(width: 11,),
+                                            Text(
+                                              'Cal:  ${widget.foods.map((e) => e.servings.isNotEmpty ? (e.servings.first.calories ?? 0) * e.amount : 0).fold<double>(0, (a, b) => a + b)} kcal',
+                                              style: TextStyle(
+                                                fontSize: 15,
+
+                                                color: Colors.grey,
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+
+
+                                      ],
                                     ),
-                                    Text(
-                                      '${e.servings.first.calories} x${e.amount} kcal',
-                                      style: context
-                                          .ext
-                                          .theme
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                            color:
-                                                context
-                                                    .appThemeExt
-                                                    .appColors
-                                                    .white
-                                                    .byBrightness(
-                                                      context.ext.theme.isDark,
-                                                    )
-                                                    .onColor,
-                                          ),
+                                    SizedBox(width: 15,),
+                                    IconButton(
+                                      icon: Icon(Icons.dangerous_outlined, color: Colors.grey,size: 25,),
+                                      onPressed: () {
+                                        if (e.id == null) return;
+                                        context.read<FoodProvider>().removeSevenDaysFood(
+                                          e.id!,
+                                          widget.plannedMeal,
+                                          widget.date,
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                              );
+                            }).toList(),
+                      ),
+                    ],
                   ),
                 ),
               ),

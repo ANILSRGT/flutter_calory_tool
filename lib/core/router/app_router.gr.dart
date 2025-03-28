@@ -32,14 +32,14 @@ class FavoritesRoute extends PageRouteInfo<void> {
 /// [FoodDetailPage]
 class FoodDetailRoute extends PageRouteInfo<FoodDetailRouteArgs> {
   FoodDetailRoute({
-    Key? key,
     required FoodModel foodModel,
+    Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           FoodDetailRoute.name,
           args: FoodDetailRouteArgs(
-            key: key,
             foodModel: foodModel,
+            key: key,
           ),
           initialChildren: children,
         );
@@ -51,8 +51,8 @@ class FoodDetailRoute extends PageRouteInfo<FoodDetailRouteArgs> {
     builder: (data) {
       final args = data.argsAs<FoodDetailRouteArgs>();
       return FoodDetailPage(
-        key: args.key,
         foodModel: args.foodModel,
+        key: args.key,
       );
     },
   );
@@ -60,17 +60,17 @@ class FoodDetailRoute extends PageRouteInfo<FoodDetailRouteArgs> {
 
 class FoodDetailRouteArgs {
   const FoodDetailRouteArgs({
-    this.key,
     required this.foodModel,
+    this.key,
   });
-
-  final Key? key;
 
   final FoodModel foodModel;
 
+  final Key? key;
+
   @override
   String toString() {
-    return 'FoodDetailRouteArgs{key: $key, foodModel: $foodModel}';
+    return 'FoodDetailRouteArgs{foodModel: $foodModel, key: $key}';
   }
 }
 
@@ -154,14 +154,14 @@ class MainRoute extends PageRouteInfo<void> {
 /// [RecipeDetailsPage]
 class RecipeDetailsRoute extends PageRouteInfo<RecipeDetailsRouteArgs> {
   RecipeDetailsRoute({
-    Key? key,
     required RecipeModel recipeModel,
+    Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           RecipeDetailsRoute.name,
           args: RecipeDetailsRouteArgs(
-            key: key,
             recipeModel: recipeModel,
+            key: key,
           ),
           initialChildren: children,
         );
@@ -173,8 +173,8 @@ class RecipeDetailsRoute extends PageRouteInfo<RecipeDetailsRouteArgs> {
     builder: (data) {
       final args = data.argsAs<RecipeDetailsRouteArgs>();
       return RecipeDetailsPage(
-        key: args.key,
         recipeModel: args.recipeModel,
+        key: args.key,
       );
     },
   );
@@ -182,17 +182,17 @@ class RecipeDetailsRoute extends PageRouteInfo<RecipeDetailsRouteArgs> {
 
 class RecipeDetailsRouteArgs {
   const RecipeDetailsRouteArgs({
-    this.key,
     required this.recipeModel,
+    this.key,
   });
-
-  final Key? key;
 
   final RecipeModel recipeModel;
 
+  final Key? key;
+
   @override
   String toString() {
-    return 'RecipeDetailsRouteArgs{key: $key, recipeModel: $recipeModel}';
+    return 'RecipeDetailsRouteArgs{recipeModel: $recipeModel, key: $key}';
   }
 }
 
