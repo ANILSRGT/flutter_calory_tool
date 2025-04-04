@@ -1,4 +1,4 @@
-# 🚀 Health Tracker: Flutter ile Kalori Takip Uygulaması 🥗📊
+# 🚀 Health Tracker: Flutter ile Kalori Takip Uygulaması 🥗
 
 ## 👊🏻 Proje Hakkında:
 
@@ -12,18 +12,16 @@ Ekip olarak çalıştık ve kullanıcıların günlük öğünlerini ekleyerek k
 
 ## 📹 Video Tanıtım:
 
-<video width="270" height="600" controls>
-  <source src="resources/HealthTracker.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/c9f1b21d-a4fe-4215-82b5-d19c8955603a
 
 ## 🛠 Backend Entegrasyonu:
 
-Bu projede Node.js ve Express kullanarak localhost üzerinde çalışan bir backend geliştirdik! 🖥️📡  
+Bu projede Node.js ve Express kullanarak localhost üzerinde çalışan bir backend geliştirdik! 🖥️  
 Böylece verileri yönetmek daha ölçeklenebilir ve esnek hale geldi.
 
 ## 🔥 FatSecret API Entegrasyonu:
 
-Kullanıcılar yiyecek bilgilerini manuel girmek zorunda kalmadan anlık olarak besin değerlerini çekebiliyor! 🛒✨
+Kullanıcılar yiyecek bilgilerini manuel girmek zorunda kalmadan anlık olarak besin değerlerini çekebiliyor! 🛒
 
 ## 🏗 Kullandığımız Teknolojiler:
 
