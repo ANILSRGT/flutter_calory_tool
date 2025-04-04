@@ -7,8 +7,8 @@ Ekip olarak çalıştık ve kullanıcıların günlük öğünlerini ekleyerek k
 
 ## 🙏🏻 Ekip:
 
-- **Mobil Geliştirici**: [@FarukBiberoglu](https://github.com/FarukBiberoglu)
 - **Full Stack Geliştirici**: [@ANILSRGT](https://github.com/ANILSRGT)
+- **Mobil Geliştirici**: [@FarukBiberoglu](https://github.com/FarukBiberoglu)
 
 ## 📹 Video Tanıtım:
 
